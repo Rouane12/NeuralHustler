@@ -25,9 +25,9 @@ I enjoy experimenting with AI models, APIs, and creative pipelines to solve real
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" width="40" height="40"/>  
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" width="40" height="40"/> 
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-original.svg" width="40" height="40"/> 
-<img src="https://user-images.githubusercontent.com/yourusername/fastapi-logo.gif" width="40" height="40"/>  
-<img src="https://user-images.githubusercontent.com/yourusername/gradio-demo.gif" width="40" height="40"/>  
-<img src="https://user-images.githubusercontent.com/yourusername/chatgpt-animation.gif" width="40" height="40"/>  
+<img src="https://raw.githubusercontent.com/Rouane12/Rouane12/main/assets/fastapi.gif" width="40" height="40"/>  
+<img src="https://raw.githubusercontent.com/Rouane12/Rouane12/main/assets/gradio-demo.gif" width="40" height="40"/>  
+<img src="https://raw.githubusercontent.com/Rouane12/Rouane12/main/assets/chatgpt-animation.gif" width="40" height="40"/>  
 
 **AI & Tools:**  
 <img src="https://img.shields.io/badge/OpenAI-API-blue?style=flat-square&logo=openai" height="25"/> 
@@ -39,8 +39,8 @@ I enjoy experimenting with AI models, APIs, and creative pipelines to solve real
 ---
 
 ### 📊 GitHub Stats
-![GitHub stats](https://github-readme-stats.vercel.app/api?username=your-github-username&show_icons=true&count_private=true&theme=radical)  
-![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=your-github-username&layout=compact&theme=radical)
+![GitHub stats](https://github-readme-stats.vercel.app/api?username=Rouane12&show_icons=true&count_private=true&theme=radical)  
+![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=Rouane12&layout=compact&theme=radical)
 
 ---
 
