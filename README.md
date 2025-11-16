@@ -52,14 +52,20 @@ I enjoy experimenting with AI models, APIs, and creative pipelines to solve real
 
 ---
 
+### 🌐 Neuralhustle.com
+This repository now powers **[Neuralhustle.com](https://neuralhustle.com)**—a landing
+page that highlights my Udemy cohorts, flagship projects, and curated YouTube
+videos.
+
+**Local development**
+1. Clone the repo and install any static server you like (Python works great!).
+2. From the project root run `python -m http.server 8000`.
+3. Visit `http://localhost:8000` and explore the site.
+
+The landing page lives in `index.html` with the styling inside `styles.css`. Both
+files are intentionally lightweight so the site can be deployed to any static
+host in seconds.
+
 ### 📫 Connect with Me
-- [LinkedIn](https://linkedin.com/in/rouane-mounssif-538171243)  
-- [Website](https://viralaiyoutubeacademy.com/)  
-
----
-
-✨ **Fun Features**
-- Dynamic GitHub stats & language charts  
-- Animated GIFs for languages, frameworks & AI tools (resized for neatness)  
-- Modern badges for quick skill recognition  
-- Clean, modular sections for readability
+- [LinkedIn](https://linkedin.com/in/rouane-mounssif-538171243)
+- [Website](https://viralaiyoutubeacademy.com/)
