@@ -53,18 +53,22 @@ I enjoy experimenting with AI models, APIs, and creative pipelines to solve real
 ---
 
 ### 🌐 Neuralhustle.com
-This repository now powers **[Neuralhustle.com](https://neuralhustle.com)**—a landing
-page that highlights my Udemy cohorts, flagship projects, and curated YouTube
-videos.
+This repository powers **[Neuralhustle.com](https://neuralhustle.com)**—a single
+page site that combines:
+
+- A hero + about section introducing my AI integration practice
+- Udemy course cards with quick calls-to-action
+- Project highlights that recap automation builds
+- YouTube video callouts and a contact form for collaborations
 
 **Local development**
 1. Clone the repo and install any static server you like (Python works great!).
 2. From the project root run `python -m http.server 8000`.
 3. Visit `http://localhost:8000` and explore the site.
 
-The landing page lives in `index.html` with the styling inside `styles.css`. Both
-files are intentionally lightweight so the site can be deployed to any static
-host in seconds.
+The landing page lives in `index.html` with styling in `styles.css`. Both files
+are intentionally lightweight so the site can deploy to any static host in
+seconds.
 
 ### 📫 Connect with Me
 - [LinkedIn](https://linkedin.com/in/rouane-mounssif-538171243)
