@@ -239,22 +239,32 @@
           <h2>Need a custom automation or want to collaborate?</h2>
         </div>
 
-        <form class="contact-form">
-          <label>
-            Name <input type="text" name="name" required />
-          </label>
+        <form class="contact-form" action="https://formsubmit.co/rouane.mounssif12@gmail.com" method="POST">
+  
+  <!-- Avoid spam bots -->
+  <input type="hidden" name="_captcha" value="false">
 
-          <label>
-            Email <input type="email" name="email" required />
-          </label>
+  <!-- Redirect to thank you page after sending (optional) -->
+  <input type="hidden" name="_next" value="https://neuralhustle.com/">
 
-          <label>
-            Message
-            <textarea name="message" rows="4"></textarea>
-          </label>
+  <label>
+    Name
+    <input type="text" name="name" required />
+  </label>
 
-          <button type="submit" class="btn primary">Send message</button>
-        </form>
+  <label>
+    Email
+    <input type="email" name="email" required />
+  </label>
+
+  <label>
+    Message
+    <textarea name="message" rows="4"></textarea>
+  </label>
+
+  <button type="submit" class="btn primary">Send message</button>
+</form>
+
       </section>
     </main>
 
