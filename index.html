@@ -3,11 +3,36 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>Neural Hustle | Rouane Mounssif</title>
+
+    <!-- Primary SEO -->
     <meta
       name="description"
       content="Neuralhustle.com brings Rouane Mounssif's Udemy courses, projects, and AI-powered YouTube channels together so you can learn, build, and launch with automation."
     />
+    <link rel="canonical" href="https://neuralhustle.com/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://neuralhustle.com/" />
+    <meta property="og:title" content="Neural Hustle | Rouane Mounssif" />
+    <meta
+      property="og:description"
+      content="Learn AI automation, content systems, and YouTube workflows from Rouane Mounssif — courses, projects, and AI-powered channels in one place."
+    />
+    <!-- If you add a social image later, update this -->
+    <!-- <meta property="og:image" content="https://neuralhustle.com/og-image.png" /> -->
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Neural Hustle | Rouane Mounssif" />
+    <meta
+      name="twitter:description"
+      content="Courses, projects, and AI-powered YouTube channels to help you ship smarter workflows with automation."
+    />
+
+    <!-- Fonts & Styles -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -15,12 +40,67 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
+
+    <!-- Light theme overrides + basic animations (uses your existing CSS variables) -->
+    <style>
+      /* Light theme using your CSS variable system */
+      [data-theme="light"] {
+        --bg: #f6f6fb;
+        --bg-alt: #ffffff;
+        --card: #f0f2ff;
+        --text: #05060a;
+        --muted: rgba(5, 6, 10, 0.65);
+        --border: rgba(5, 6, 10, 0.08);
+      }
+
+      .theme-toggle {
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--text);
+        padding: 0.45rem 0.9rem;
+        font-size: 0.85rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+      }
+
+      .theme-toggle span {
+        font-size: 1rem;
+      }
+
+      .fade-in-up {
+        opacity: 0;
+        transform: translateY(16px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+
+      .fade-in-up.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+
+    <!-- Analytics placeholder (add your own script/ID here when ready) -->
+    <!--
+    <script>
+      // Example Google Analytics gtag snippet goes here once you have an ID.
+    </script>
+    -->
   </head>
 
   <body>
     <header class="hero" id="top">
       <nav class="nav">
         <div class="logo">Neuralhustle<span>.com</span></div>
+
+        <!-- Dark / Light mode toggle -->
+        <button class="theme-toggle" type="button" id="themeToggle" aria-label="Toggle dark or light mode">
+          <span id="themeIcon">🌙</span>
+          <span id="themeLabel">Dark</span>
+        </button>
+
         <button class="nav-toggle" aria-label="Toggle navigation">
           <span></span><span></span><span></span>
         </button>
@@ -28,12 +108,13 @@
           <li><a href="#about">About</a></li>
           <li><a href="#courses">Courses</a></li>
           <li><a href="#projects">Projects</a></li>
+          <li><a href="#blog">Blog</a></li>
           <li><a href="#videos">Videos</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
 
-      <div class="hero-content">
+      <div class="hero-content fade-in-up">
         <p class="eyebrow">Rouane Mounssif · AI Integration & Creative Automation</p>
         <h1>Ship smarter workflows with AI copilots.</h1>
         <p class="lead">
@@ -47,7 +128,7 @@
         </div>
       </div>
 
-      <div class="hero-highlight">
+      <div class="hero-highlight fade-in-up">
         <div>
           <span class="metric">12k+</span>
           <p>Students leveling up through Udemy cohorts</p>
@@ -65,16 +146,16 @@
 
     <main>
       <section class="section" id="about">
-        <div class="section-heading">
+        <div class="section-heading fade-in-up">
           <p class="eyebrow">Meet Rouane</p>
-          <h2>Software engigneer and Builder of AI-first workflows, courses, and content.</h2>
+          <h2>Software engineer & builder of AI-first workflows, courses, and content.</h2>
           <p>
             I'm an AI integration and content automation specialist focused on
             turning prompts into production systems.
           </p>
         </div>
 
-        <div class="about-grid">
+        <div class="about-grid fade-in-up">
           <article>
             <h3>What I ship</h3>
             <ul>
@@ -98,24 +179,30 @@
       </section>
 
       <section class="section alt" id="courses">
-        <div class="section-heading">
+        <div class="section-heading fade-in-up">
           <p class="eyebrow">Udemy Courses</p>
           <h2>Guided cohorts to master AI automation.</h2>
           <p>Each cohort includes project labs, templates, and office hours.</p>
         </div>
 
-        <div class="cards-grid">
+        <div class="cards-grid fade-in-up">
           <article class="card">
             <div class="card-top gradient-purple">
               <h3>AI Content Creation</h3>
-              <p>A brief tutorial on how to create viral ai shorts that actually pay.</p>
+              <p>A brief tutorial on how to create viral AI shorts that actually pay.</p>
             </div>
             <ul>
               <li>20+ workflow recipes & prompt packs</li>
-              <li>Fully automated build using chatgpt and other ai tools.</li>
-              <li>Capcut: Editing masterclass</li>
+              <li>Fully automated builds using ChatGPT and other AI tools</li>
+              <li>CapCut: editing masterclass</li>
             </ul>
-            <a class="btn secondary" href="https://www.udemy.com/user/kingster-5/" target="_blank">Join on Udemy</a>
+            <a
+              class="btn secondary"
+              href="https://www.udemy.com/user/kingster-5/"
+              target="_blank"
+              rel="noreferrer"
+              >Join on Udemy</a
+            >
           </article>
 
           <article class="card">
@@ -128,32 +215,47 @@
               <li>Voice + video repurposing workflows</li>
               <li>Notion + Airtable templates</li>
             </ul>
-            <a class="btn secondary" href="https://www.udemy.com/user/kingster-5/" target="_blank">Join on Udemy</a>
+            <a
+              class="btn secondary"
+              href="https://www.udemy.com/user/kingster-5/"
+              target="_blank"
+              rel="noreferrer"
+              >Join on Udemy</a
+            >
           </article>
 
           <article class="card">
             <div class="card-top gradient-orange">
-              <h3>Gradio builder tool</h3>
-              <p>Prototype custom agent integrated with openai API to allow you to generate a storyboard with one prompt.</p>
+              <h3>Gradio Builder Tool</h3>
+              <p>
+                Prototype a custom agent integrated with the OpenAI API to generate storyboards with a single
+                prompt.
+              </p>
             </div>
             <ul>
               <li>Python + Gradio</li>
               <li>OpenAI API</li>
-              <li>Deployment is coming soo to udemy</li>
+              <li>Deployment is coming soon to Udemy</li>
             </ul>
-            <a class="btn secondary" href="https://www.udemy.com/user/kingster-5/" target="_blank">Join on Udemy</a>
+            <a
+              class="btn secondary"
+              href="https://www.udemy.com/user/kingster-5/"
+              target="_blank"
+              rel="noreferrer"
+              >Join on Udemy</a
+            >
           </article>
         </div>
       </section>
 
       <section class="section" id="projects">
-        <div class="section-heading">
+        <div class="section-heading fade-in-up">
           <p class="eyebrow">Project Drops</p>
           <h2>Builds that turn prompts into production.</h2>
           <p>Consulting projects mixing research, automation, and delivery.</p>
         </div>
 
-        <div class="projects">
+        <div class="projects fade-in-up">
           <article>
             <div class="project-meta">
               <span class="tag">Python · LangChain · Pinecone</span>
@@ -189,23 +291,38 @@
         </div>
       </section>
 
-      <!-- ⭐⭐⭐ FINAL UPDATED YOUTUBE SECTION -->
-      <section class="section alt" id="videos">
-        <div class="section-heading">
-          <p class="eyebrow">YouTube Channels</p>
-          <h2>AI football shorts · AI animal stories · high-speed creative builds.</h2>
+      <!-- Simple blog system -->
+      <section class="section alt" id="blog">
+        <div class="section-heading fade-in-up">
+          <p class="eyebrow">Blog Drops</p>
+          <h2>Notes from the build process.</h2>
           <p>
-            Rouane runs two AI-powered content channels: NeuralFC — viral and comedic AI football
-            shorts — and Ainimal, a cinematic AI animal storytelling channel.
+            Short breakdowns of experiments, tools, and workflows I’m testing in AI automation and
+            content systems.
           </p>
         </div>
 
-        <div class="video-grid">
+        <div class="cards-grid fade-in-up" id="blogPosts">
+          <!-- Populated by JavaScript below -->
+        </div>
+      </section>
 
+      <!-- YouTube section -->
+      <section class="section" id="videos">
+        <div class="section-heading fade-in-up">
+          <p class="eyebrow">YouTube Channels</p>
+          <h2>AI football shorts · AI animal stories · high-speed creative builds.</h2>
+          <p>
+            Rouane runs two AI-powered content channels: <strong>NeuralFC</strong> — viral and comedic AI football
+            shorts — and <strong>Ainimal</strong>, a cinematic AI animal storytelling channel.
+          </p>
+        </div>
+
+        <div class="video-grid fade-in-up">
           <article class="video-card">
             <h3>NeuralFC · AI Football Shorts</h3>
             <p>Fast-paced, comedic AI football clips and viral match moments.</p>
-            <a href="https://youtube.com/@neuralfc" class="btn ghost" target="_blank">
+            <a href="https://youtube.com/@neuralfc" class="btn ghost" target="_blank" rel="noreferrer">
               Visit NeuralFC Channel
             </a>
           </article>
@@ -213,7 +330,7 @@
           <article class="video-card">
             <h3>Ainimal · AI Animal Stories</h3>
             <p>Cinematic AI-generated animal adventures, creatures, and storytelling.</p>
-            <a href="https://youtube.com/@ainimal-f5r" class="btn ghost" target="_blank">
+            <a href="https://youtube.com/@ainimal-f5r" class="btn ghost" target="_blank" rel="noreferrer">
               Visit Ainimal Channel
             </a>
           </article>
@@ -222,49 +339,56 @@
             <h3>Explore Both Worlds</h3>
             <p>Football or animals — choose your universe. Fully AI-driven content.</p>
 
-            <a href="https://youtube.com/@neuralfc" class="btn ghost" target="_blank" style="margin-bottom:0.75rem;">
-              NeuralFC
-            </a>
-            <a href="https://youtube.com/@ainimal-f5r" class="btn ghost" target="_blank">
+            <a
+              href="https://youtube.com/@neuralfc"
+              class="btn ghost"
+              target="_blank"
+              rel="noreferrer"
+              style="margin-bottom: 0.75rem;"
+              >NeuralFC</a
+            >
+            <a href="https://youtube.com/@ainimal-f5r" class="btn ghost" target="_blank" rel="noreferrer">
               Ainimal
             </a>
           </article>
-
         </div>
       </section>
 
       <section class="section" id="contact">
-        <div class="section-heading">
+        <div class="section-heading fade-in-up">
           <p class="eyebrow">Book a build</p>
           <h2>Need a custom automation or want to collaborate?</h2>
         </div>
 
-        <form class="contact-form" action="https://formsubmit.co/rouane.mounssif12@gmail.com" method="POST">
-  
-  <!-- Avoid spam bots -->
-  <input type="hidden" name="_captcha" value="false">
+        <!-- FormSubmit sends messages directly to your email -->
+        <form
+          class="contact-form fade-in-up"
+          action="https://formsubmit.co/rouane.mounssif12@gmail.com"
+          method="POST"
+        >
+          <!-- Avoid spam bots -->
+          <input type="hidden" name="_captcha" value="false" />
 
-  <!-- Redirect to thank you page after sending (optional) -->
-  <input type="hidden" name="_next" value="https://neuralhustle.com/">
+          <!-- Redirect after submit -->
+          <input type="hidden" name="_next" value="https://neuralhustle.com/" />
 
-  <label>
-    Name
-    <input type="text" name="name" required />
-  </label>
+          <label>
+            Name
+            <input type="text" name="name" required />
+          </label>
 
-  <label>
-    Email
-    <input type="email" name="email" required />
-  </label>
+          <label>
+            Email
+            <input type="email" name="email" required />
+          </label>
 
-  <label>
-    Message
-    <textarea name="message" rows="4"></textarea>
-  </label>
+          <label>
+            Message
+            <textarea name="message" rows="4"></textarea>
+          </label>
 
-  <button type="submit" class="btn primary">Send message</button>
-</form>
-
+          <button type="submit" class="btn primary">Send message</button>
+        </form>
       </section>
     </main>
 
@@ -274,27 +398,120 @@
       </div>
 
       <div class="footer-links">
-      <a href="https://linkedin.com/in/rouane-mounssif-538171243" target="_blank">LinkedIn</a>
-      <a href="https://viralaiyoutubeacademy.com/" target="_blank">Join our Academy</a>
-     <a href="https://mail.google.com/mail/?view=cm&to=rouane.mounssif12@gmail.com" target="_blank">
+        <a href="https://linkedin.com/in/rouane-mounssif-538171243" target="_blank" rel="noreferrer"
+          >LinkedIn</a
+        >
+        <a href="https://viralaiyoutubeacademy.com/" target="_blank" rel="noreferrer">Join our Academy</a>
+        <!-- Opens Gmail compose with your address prefilled -->
+        <a
+          href="https://mail.google.com/mail/?view=cm&to=rouane.mounssif12@gmail.com"
+          target="_blank"
+          rel="noreferrer"
+        >
           Email
-    </a>
-
-      </div>
-
+        </a>
       </div>
     </footer>
 
     <script>
+      // Mobile nav
       const navToggle = document.querySelector(".nav-toggle");
       const navLinks = document.querySelector(".nav-links");
-
       navToggle.addEventListener("click", () => {
         navLinks.classList.toggle("open");
         navToggle.classList.toggle("active");
       });
 
+      // Year in footer
       document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Theme toggle (dark / light) using localStorage
+      const body = document.body;
+      const themeToggle = document.getElementById("themeToggle");
+      const themeIcon = document.getElementById("themeIcon");
+      const themeLabel = document.getElementById("themeLabel");
+
+      const storedTheme = localStorage.getItem("neuralhustle-theme");
+      if (storedTheme === "light") {
+        body.setAttribute("data-theme", "light");
+        themeIcon.textContent = "☀️";
+        themeLabel.textContent = "Light";
+      }
+
+      themeToggle.addEventListener("click", () => {
+        const isLight = body.getAttribute("data-theme") === "light";
+        if (isLight) {
+          body.removeAttribute("data-theme");
+          themeIcon.textContent = "🌙";
+          themeLabel.textContent = "Dark";
+          localStorage.setItem("neuralhustle-theme", "dark");
+        } else {
+          body.setAttribute("data-theme", "light");
+          themeIcon.textContent = "☀️";
+          themeLabel.textContent = "Light";
+          localStorage.setItem("neuralhustle-theme", "light");
+        }
+      });
+
+      // Scroll-in animations
+      const animated = document.querySelectorAll(".fade-in-up");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.15 }
+      );
+
+      animated.forEach((el) => observer.observe(el));
+
+      // Simple blog "system" – edit or add posts here
+      const blogPosts = [
+        {
+          title: "How I Built NeuralFC With AI Tools",
+          date: "2025-10-01",
+          tag: "AI Shorts",
+          summary:
+            "From prompts to fully automated football shorts, this breakdown shows the exact tools and steps.",
+        },
+        {
+          title: "Turning Long-Form Ideas Into 30s Clips",
+          date: "2025-09-20",
+          tag: "Workflow",
+          summary:
+            "A pipeline that goes from brainstorm to storyboard to edited short using ChatGPT, Sora-style tools, and CapCut.",
+        },
+        {
+          title: "Shipping Client Automations Without Burning Out",
+          date: "2025-08-28",
+          tag: "Consulting",
+          summary:
+            "How I scope, test, and deliver AI automations for clients while keeping everything modular and reusable.",
+        },
+      ];
+
+      const blogContainer = document.getElementById("blogPosts");
+      blogPosts.forEach((post) => {
+        const article = document.createElement("article");
+        article.className = "card";
+
+        article.innerHTML = `
+          <div class="card-top gradient-teal">
+            <h3>${post.title}</h3>
+            <p>${post.summary}</p>
+          </div>
+          <ul>
+            <li><strong>${post.tag}</strong></li>
+            <li>${new Date(post.date).toLocaleDateString()}</li>
+          </ul>
+        `;
+
+        blogContainer.appendChild(article);
+      });
     </script>
   </body>
 </html>
