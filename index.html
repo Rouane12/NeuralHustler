@@ -21,15 +21,13 @@
       property="og:description"
       content="Learn AI automation, content systems, and YouTube workflows from Rouane Mounssif — courses, projects, and AI-powered channels in one place."
     />
-    <!-- If you add a social image later, update this -->
-    <!-- <meta property="og:image" content="https://neuralhustle.com/og-image.png" /> -->
 
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Neural Hustle | Rouane Mounssif" />
     <meta
       name="twitter:description"
-      content="Courses, projects, and AI-powered YouTube channels to help you ship smarter workflows with automation."
+      content="Courses, projects, and AI-powered channels to help you ship smarter workflows with automation."
     />
 
     <!-- Fonts & Styles -->
@@ -41,9 +39,8 @@
     />
     <link rel="stylesheet" href="styles.css" />
 
-    <!-- Light theme overrides + basic animations (uses your existing CSS variables) -->
+    <!-- Light theme CSS -->
     <style>
-      /* Light theme using your CSS variable system */
       [data-theme="light"] {
         --bg: #f6f6fb;
         --bg-alt: #ffffff;
@@ -52,42 +49,7 @@
         --muted: rgba(5, 6, 10, 0.65);
         --border: rgba(5, 6, 10, 0.08);
       }
-
-      .theme-toggle {
-        border-radius: 999px;
-        border: 1px solid var(--border);
-        background: rgba(255, 255, 255, 0.06);
-        color: var(--text);
-        padding: 0.45rem 0.9rem;
-        font-size: 0.85rem;
-        cursor: pointer;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.35rem;
-      }
-
-      .theme-toggle span {
-        font-size: 1rem;
-      }
-
-      .fade-in-up {
-        opacity: 0;
-        transform: translateY(16px);
-        transition: opacity 0.5s ease, transform 0.5s ease;
-      }
-
-      .fade-in-up.is-visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
     </style>
-
-    <!-- Analytics placeholder (add your own script/ID here when ready) -->
-    <!--
-    <script>
-      // Example Google Analytics gtag snippet goes here once you have an ID.
-    </script>
-    -->
   </head>
 
   <body>
@@ -95,8 +57,8 @@
       <nav class="nav">
         <div class="logo">Neuralhustle<span>.com</span></div>
 
-        <!-- Dark / Light mode toggle -->
-        <button class="theme-toggle" type="button" id="themeToggle" aria-label="Toggle dark or light mode">
+        <!-- Theme toggle -->
+        <button class="theme-toggle" type="button" id="themeToggle" aria-label="Toggle theme">
           <span id="themeIcon">🌙</span>
           <span id="themeLabel">Dark</span>
         </button>
@@ -104,6 +66,7 @@
         <button class="nav-toggle" aria-label="Toggle navigation">
           <span></span><span></span><span></span>
         </button>
+
         <ul class="nav-links">
           <li><a href="#about">About</a></li>
           <li><a href="#courses">Courses</a></li>
@@ -129,18 +92,9 @@
       </div>
 
       <div class="hero-highlight fade-in-up">
-        <div>
-          <span class="metric">12k+</span>
-          <p>Students leveling up through Udemy cohorts</p>
-        </div>
-        <div>
-          <span class="metric">40+</span>
-          <p>Automation playbooks & AI integrations delivered</p>
-        </div>
-        <div>
-          <span class="metric">100+</span>
-          <p>Videos, livestreams, and downloadable systems</p>
-        </div>
+        <div><span class="metric">12k+</span><p>Students leveling up</p></div>
+        <div><span class="metric">40+</span><p>Automation playbooks</p></div>
+        <div><span class="metric">100+</span><p>Videos & systems</p></div>
       </div>
     </header>
 
@@ -148,102 +102,78 @@
       <section class="section" id="about">
         <div class="section-heading fade-in-up">
           <p class="eyebrow">Meet Rouane</p>
-          <h2>Software engineer & builder of AI-first workflows, courses, and content.</h2>
-          <p>
-            I'm an AI integration and content automation specialist focused on
-            turning prompts into production systems.
-          </p>
+          <h2>Software engineer & builder of AI-first workflows.</h2>
+          <p>I'm an AI automation specialist turning prompts into production systems.</p>
         </div>
 
         <div class="about-grid fade-in-up">
           <article>
             <h3>What I ship</h3>
             <ul>
-              <li>Workflow automation for creators & operators</li>
-              <li>Agent copilots that plug into CRMs & docs</li>
-              <li>AI-generated content systems for video & social</li>
-              <li>Hands-on cohorts to teach the stack end-to-end</li>
+              <li>Workflow automation</li>
+              <li>Agent copilots</li>
+              <li>AI content systems</li>
+              <li>Hands-on cohorts</li>
             </ul>
           </article>
 
           <article>
             <h3>Toolbox</h3>
             <ul>
-              <li>Python, C#, JavaScript, FastAPI, Django</li>
-              <li>LangChain, LangGraph, vector search, embeddings</li>
-              <li>Automation rails with Zapier, Make, custom APIs</li>
-              <li>Gradio demos, REST integrations, CI-ready deploys</li>
+              <li>Python, C#, JavaScript</li>
+              <li>LangChain, vector search</li>
+              <li>Zapier, Make, APIs</li>
+              <li>Gradio & fast deploys</li>
             </ul>
           </article>
         </div>
       </section>
 
-      <section class="section alt" id="courses">
+      <section class="section" id="courses">
         <div class="section-heading fade-in-up">
           <p class="eyebrow">Udemy Courses</p>
           <h2>Guided cohorts to master AI automation.</h2>
-          <p>Each cohort includes project labs, templates, and office hours.</p>
+          <p>Includes projects, templates, and office hours.</p>
         </div>
 
         <div class="cards-grid fade-in-up">
           <article class="card">
             <div class="card-top gradient-purple">
               <h3>AI Content Creation</h3>
-              <p>A brief tutorial on how to create viral AI shorts that actually pay.</p>
+              <p>Create viral AI shorts.</p>
             </div>
             <ul>
-              <li>20+ workflow recipes & prompt packs</li>
-              <li>Fully automated builds using ChatGPT and other AI tools</li>
-              <li>CapCut: editing masterclass</li>
+              <li>Workflow recipes</li>
+              <li>Automated builds</li>
+              <li>CapCut masterclass</li>
             </ul>
-            <a
-              class="btn secondary"
-              href="https://www.udemy.com/user/kingster-5/"
-              target="_blank"
-              rel="noreferrer"
-              >Join on Udemy</a
-            >
+            <a class="btn secondary" href="https://www.udemy.com/user/kingster-5/" target="_blank">Join</a>
           </article>
 
           <article class="card">
             <div class="card-top gradient-teal">
-              <h3>Creator Ops with AI</h3>
-              <p>Train copilots for YouTube, scripts, and social drops.</p>
+              <h3>Creator Ops</h3>
+              <p>Train copilots for YouTube workflow.</p>
             </div>
             <ul>
-              <li>Content intelligence dashboards</li>
-              <li>Voice + video repurposing workflows</li>
-              <li>Notion + Airtable templates</li>
+              <li>Dashboards</li>
+              <li>Repurposing systems</li>
+              <li>Templates</li>
             </ul>
-            <a
-              class="btn secondary"
-              href="https://www.udemy.com/user/kingster-5/"
-              target="_blank"
-              rel="noreferrer"
-              >Join on Udemy</a
-            >
+            <a class="btn secondary" href="https://www.udemy.com/user/kingster-5/" target="_blank">Join</a>
           </article>
 
           <article class="card">
             <div class="card-top gradient-orange">
-              <h3>Gradio Builder Tool</h3>
-              <p>
-                Prototype a custom agent integrated with the OpenAI API to generate storyboards with a single
-                prompt.
-              </p>
+              <h3>Gradio Builder</h3>
+              <p>Prototype custom AI agents.</p>
             </div>
             <ul>
-              <li>Python + Gradio</li>
+              <li>Python</li>
               <li>OpenAI API</li>
-              <li>Deployment is coming soon to Udemy</li>
+              <li>Deployment soon</li>
             </ul>
-            <a
-              class="btn secondary"
-              href="https://www.udemy.com/user/kingster-5/"
-              target="_blank"
-              rel="noreferrer"
-              >Join on Udemy</a
-            >
+            <a class="btn secondary" href="https://www.udemy.com/user/kingster-5/" target="_blank">Join</a>
           </article>
         </div>
       </section>
@@ -252,104 +182,41 @@
         <div class="section-heading fade-in-up">
           <p class="eyebrow">Project Drops</p>
           <h2>Builds that turn prompts into production.</h2>
-          <p>Consulting projects mixing research, automation, and delivery.</p>
         </div>
 
         <div class="projects fade-in-up">
-          <article>
-            <div class="project-meta">
-              <span class="tag">Python · LangChain · Pinecone</span>
-              <span class="project-year">2024</span>
-            </div>
-            <h3>Signal Forge</h3>
-            <p>
-              Multi-agent loop aggregating filings, news, and social chatter for investment teams.
-            </p>
-          </article>
-
-          <article>
-            <div class="project-meta">
-              <span class="tag">Gradio · Whisper · FFMPEG</span>
-              <span class="project-year">2024</span>
-            </div>
-            <h3>Creator Sync</h3>
-            <p>
-              Clip factory that ingests long-form video, cuts chapters, and drafts hooks for shorts.
-            </p>
-          </article>
-
-          <article>
-            <div class="project-meta">
-              <span class="tag">FastAPI · LangGraph · Supabase</span>
-              <span class="project-year">2025</span>
-            </div>
-            <h3>Ops Copilot</h3>
-            <p>
-              Internal agent that audits SOPs and fires automations straight from chat.
-            </p>
-          </article>
+          <article><h3>Signal Forge</h3><p>Multi-agent research engine.</p></article>
+          <article><h3>Creator Sync</h3><p>Clip factory for YouTube creators.</p></article>
+          <article><h3>Ops Copilot</h3><p>Internal automation auditor.</p></article>
         </div>
       </section>
 
-      <!-- Simple blog system -->
       <section class="section alt" id="blog">
         <div class="section-heading fade-in-up">
           <p class="eyebrow">Blog Drops</p>
           <h2>Notes from the build process.</h2>
-          <p>
-            Short breakdowns of experiments, tools, and workflows I’m testing in AI automation and
-            content systems.
-          </p>
         </div>
 
-        <div class="cards-grid fade-in-up" id="blogPosts">
-          <!-- Populated by JavaScript below -->
-        </div>
+        <div class="cards-grid fade-in-up" id="blogPosts"></div>
       </section>
 
-      <!-- YouTube section -->
       <section class="section" id="videos">
         <div class="section-heading fade-in-up">
           <p class="eyebrow">YouTube Channels</p>
-          <h2>AI football shorts · AI animal stories · high-speed creative builds.</h2>
-          <p>
-            Rouane runs two AI-powered content channels: <strong>NeuralFC</strong> — viral and comedic AI football
-            shorts — and <strong>Ainimal</strong>, a cinematic AI animal storytelling channel.
-          </p>
+          <h2>AI Football Shorts & Animal Stories</h2>
         </div>
 
         <div class="video-grid fade-in-up">
           <article class="video-card">
-            <h3>NeuralFC · AI Football Shorts</h3>
-            <p>Fast-paced, comedic AI football clips and viral match moments.</p>
-            <a href="https://youtube.com/@neuralfc" class="btn ghost" target="_blank" rel="noreferrer">
-              Visit NeuralFC Channel
-            </a>
+            <h3>NeuralFC</h3>
+            <p>AI football shorts.</p>
+            <a class="btn ghost" href="https://youtube.com/@neuralfc" target="_blank">Visit</a>
           </article>
 
           <article class="video-card">
-            <h3>Ainimal · AI Animal Stories</h3>
-            <p>Cinematic AI-generated animal adventures, creatures, and storytelling.</p>
-            <a href="https://youtube.com/@ainimal-f5r" class="btn ghost" target="_blank" rel="noreferrer">
-              Visit Ainimal Channel
-            </a>
-          </article>
-
-          <article class="video-card">
-            <h3>Explore Both Worlds</h3>
-            <p>Football or animals — choose your universe. Fully AI-driven content.</p>
-
-            <a
-              href="https://youtube.com/@neuralfc"
-              class="btn ghost"
-              target="_blank"
-              rel="noreferrer"
-              style="margin-bottom: 0.75rem;"
-              >NeuralFC</a
-            >
-            <a href="https://youtube.com/@ainimal-f5r" class="btn ghost" target="_blank" rel="noreferrer">
-              Ainimal
-            </a>
+            <h3>Ainimal</h3>
+            <p>Cinematic AI animal stories.</p>
+            <a class="btn ghost" href="https://youtube.com/@ainimal-f5r" target="_blank">Visit</a>
           </article>
         </div>
       </section>
@@ -357,161 +224,50 @@
       <section class="section" id="contact">
         <div class="section-heading fade-in-up">
           <p class="eyebrow">Book a build</p>
-          <h2>Need a custom automation or want to collaborate?</h2>
+          <h2>Need automation or collaboration?</h2>
         </div>
 
-        <!-- FormSubmit sends messages directly to your email -->
         <form
           class="contact-form fade-in-up"
           action="https://formsubmit.co/rouane.mounssif12@gmail.com"
-          method="POST"
-        >
-          <!-- Avoid spam bots -->
+          method="POST">
           <input type="hidden" name="_captcha" value="false" />
-
-          <!-- Redirect after submit -->
           <input type="hidden" name="_next" value="https://neuralhustle.com/" />
-
-          <label>
-            Name
-            <input type="text" name="name" required />
-          </label>
-
-          <label>
-            Email
-            <input type="email" name="email" required />
-          </label>
-
-          <label>
-            Message
-            <textarea name="message" rows="4"></textarea>
-          </label>
-
-          <button type="submit" class="btn primary">Send message</button>
+          <label>Name<input type="text" name="name" required /></label>
+          <label>Email<input type="email" name="email" required /></label>
+          <label>Message<textarea name="message" rows="4"></textarea></label>
+          <button class="btn primary">Send</button>
         </form>
       </section>
     </main>
 
     <footer class="footer">
-      <div>
-        <p>© <span id="year"></span> Neuralhustle.com · Built by Rouane Mounssif</p>
-      </div>
-
+      <p>© <span id="year"></span> Neuralhustle.com · Built by Rouane Mounssif</p>
       <div class="footer-links">
-        <a href="https://linkedin.com/in/rouane-mounssif-538171243" target="_blank" rel="noreferrer"
-          >LinkedIn</a
-        >
-        <a href="https://viralaiyoutubeacademy.com/" target="_blank" rel="noreferrer">Join our Academy</a>
-        <!-- Opens Gmail compose with your address prefilled -->
-        <a
-          href="https://mail.google.com/mail/?view=cm&to=rouane.mounssif12@gmail.com"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Email
-        </a>
+        <a href="https://linkedin.com/in/rouane-mounssif-538171243" target="_blank">LinkedIn</a>
+        <a href="https://viralaiyoutubeacademy.com/" target="_blank">Academy</a>
+        <a href="mailto:rouane.mounssif12@gmail.com">Email</a>
       </div>
     </footer>
 
+    <!-- ⭐ D-ID FLOATING AVATAR WIDGET -->
+    <div id="did-avatar-wrapper"></div>
+
+    <script type="module"
+      src="https://agent.d-id.com/v2/index.js"
+      data-mode="fabio"
+      data-client-key="Z29yZ2xlLW9hdXR0NmwxMTQ2NTU1OTc0MjM1ND"
+      data-agent-id="v2_agt_7IN1Ch8z"
+      data-name="did-agent"
+      data-monitor="true"
+      data-orientation="horizontal">
+    </script>
+
     <script>
-      // Mobile nav
-      const navToggle = document.querySelector(".nav-toggle");
-      const navLinks = document.querySelector(".nav-links");
-      navToggle.addEventListener("click", () => {
-        navLinks.classList.toggle("open");
-        navToggle.classList.toggle("active");
-      });
-
-      // Year in footer
-      document.getElementById("year").textContent = new Date().getFullYear();
-
-      // Theme toggle (dark / light) using localStorage
-      const body = document.body;
-      const themeToggle = document.getElementById("themeToggle");
-      const themeIcon = document.getElementById("themeIcon");
-      const themeLabel = document.getElementById("themeLabel");
-
-      const storedTheme = localStorage.getItem("neuralhustle-theme");
-      if (storedTheme === "light") {
-        body.setAttribute("data-theme", "light");
-        themeIcon.textContent = "☀️";
-        themeLabel.textContent = "Light";
-      }
-
-      themeToggle.addEventListener("click", () => {
-        const isLight = body.getAttribute("data-theme") === "light";
-        if (isLight) {
-          body.removeAttribute("data-theme");
-          themeIcon.textContent = "🌙";
-          themeLabel.textContent = "Dark";
-          localStorage.setItem("neuralhustle-theme", "dark");
-        } else {
-          body.setAttribute("data-theme", "light");
-          themeIcon.textContent = "☀️";
-          themeLabel.textContent = "Light";
-          localStorage.setItem("neuralhustle-theme", "light");
-        }
-      });
-
-      // Scroll-in animations
-      const animated = document.querySelectorAll(".fade-in-up");
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("is-visible");
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.15 }
-      );
-
-      animated.forEach((el) => observer.observe(el));
-
-      // Simple blog "system" – edit or add posts here
-      const blogPosts = [
-        {
-          title: "How I Built NeuralFC With AI Tools",
-          date: "2025-10-01",
-          tag: "AI Shorts",
-          summary:
-            "From prompts to fully automated football shorts, this breakdown shows the exact tools and steps.",
-        },
-        {
-          title: "Turning Long-Form Ideas Into 30s Clips",
-          date: "2025-09-20",
-          tag: "Workflow",
-          summary:
-            "A pipeline that goes from brainstorm to storyboard to edited short using ChatGPT, Sora-style tools, and CapCut.",
-        },
-        {
-          title: "Shipping Client Automations Without Burning Out",
-          date: "2025-08-28",
-          tag: "Consulting",
-          summary:
-            "How I scope, test, and deliver AI automations for clients while keeping everything modular and reusable.",
-        },
-      ];
-
-      const blogContainer = document.getElementById("blogPosts");
-      blogPosts.forEach((post) => {
-        const article = document.createElement("article");
-        article.className = "card";
-
-        article.innerHTML = `
-          <div class="card-top gradient-teal">
-            <h3>${post.title}</h3>
-            <p>${post.summary}</p>
-          </div>
-          <ul>
-            <li><strong>${post.tag}</strong></li>
-            <li>${new Date(post.date).toLocaleDateString()}</li>
-          </ul>
-        `;
-
-        blogContainer.appendChild(article);
-      });
+      const navToggle=document.querySelector(".nav-toggle");
+      const navLinks=document.querySelector(".nav-links");
+      navToggle.addEventListener("click",()=>{navLinks.classList.toggle("open");navToggle.classList.toggle("active")});
+      document.getElementById("year").textContent=new Date().getFullYear();
     </script>
   </body>
 </html>
