@@ -29,6 +29,21 @@ body {
   min-height: 100vh;
 }
 
+html.light body {
+  background: #f7f9fc !important;
+  color: #0d1117 !important;
+}
+
+html.light h1,
+html.light h2,
+html.light h3,
+html.light h4,
+html.light h5,
+html.light p {
+  color: #0a0a0a !important;
+  text-shadow: 0 0 4px rgba(255, 255, 255, 0.9);
+}
+
 p {
   line-height: 1.7;
 }
@@ -54,6 +69,7 @@ a {
 #hero-vanta {
   position: relative;
   overflow: hidden;
+  z-index: 0;
 }
 
 #hero-vanta canvas {
@@ -64,6 +80,11 @@ a {
   height: 100%;
   z-index: 0;
   pointer-events: none;
+}
+
+#hero-section {
+  position: relative;
+  z-index: 10;
 }
 
 nav,
