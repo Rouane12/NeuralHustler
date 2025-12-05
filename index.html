@@ -105,8 +105,8 @@
   </head>
 
   <body>
-    <header class="hero" id="top">
-      <div id="vanta-bg"></div>
+    <section id="hero-vanta">
+      <header class="hero" id="top">
       <nav class="nav">
         <div class="logo">Neuralhustle<span> Academy</span></div>
 
@@ -157,7 +157,8 @@
           <p>Videos, livestreams, and downloadable systems</p>
         </div>
       </div>
-    </header>
+      </header>
+    </section>
 
     <main>
       <!-- About -->
@@ -704,10 +705,10 @@
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.net.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.mesh.min.js"></script>
     <script>
-      VANTA.NET({
-        el: "#vanta-bg",
+      VANTA.MESH({
+        el: "#hero-vanta",
         mouseControls: true,
         touchControls: true,
         minHeight: 200.0,
