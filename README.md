@@ -14,8 +14,7 @@ The site is a simple, fast, static page built with **HTML + CSS + a little vanil
 - About section with skills & tech stack  
 - Udemy courses section with links to live cohorts  
 - Project highlights for AI / automation builds  
-- Blog “drops” generated on the client side with JavaScript  
-- YouTube channels (NeuralFC & Ainimal) section with external links  
+- YouTube channels (NeuralFC & Ainimal) section with external links
 - Contact form powered by [FormSubmit](https://formsubmit.co/)  
 - Dark / light theme toggle (stored in `localStorage`)  
 - Scroll-in animations for sections  
@@ -29,11 +28,10 @@ The site is a simple, fast, static page built with **HTML + CSS + a little vanil
 - **HTML5** – layout and semantic structure  
 - **CSS3** – custom styling in `styles.css`  
 - **Vanilla JavaScript** in `index.html` for:
-  - mobile navigation toggle  
-  - theme toggle  
-  - scroll animations  
-  - blog posts rendering  
-- **FormSubmit** – serverless contact form handling  
+  - mobile navigation toggle
+  - theme toggle
+  - scroll animations
+- **FormSubmit** – serverless contact form handling
 - **D-ID Agent** – AI video copilot widget  
 - **GitHub Pages** – static hosting  
 - **Namecheap** – custom domain DNS pointing to GitHub Pages

@@ -550,17 +550,6 @@
         </div>
       </section>
 
-      <!-- Blog -->
-      <section class="section alt" id="blog">
-        <div class="section-heading fade-in-up">
-          <p class="eyebrow">Blog Drops</p>
-          <h2>Notes from the build process.</h2>
-          <p>Short breakdowns of experiments, tools, and workflows.</p>
-        </div>
-
-        <div class="cards-grid fade-in-up" id="blogPosts"></div>
-      </section>
-
       <!-- Videos -->
       <section class="section" id="videos">
         <div class="section-heading fade-in-up">
@@ -735,15 +724,26 @@
       animated.forEach(el => observer.observe(el));
     </script>
 
-    <!-- Blog placeholder if empty -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.net.min.js"></script>
     <script>
-      const blogPosts = document.getElementById("blogPosts");
-      if (blogPosts && blogPosts.children.length === 0) {
-        blogPosts.innerHTML = `
-      <p style="color: var(--muted); font-size: 1rem; opacity:.8;">
-          🚧 Blog posts coming soon — new drops every week.
-      </p>`;
-      }
+      window.vantaEffect = VANTA.NET({
+        el: "#hero-vanta",
+        mouseControls: true,
+        touchControls: true,
+        minHeight: 200.0,
+        minWidth: 200.0,
+        scale: 1.4,
+        scaleMobile: 1.8,
+        color: 0x00e1ff,
+        backgroundAlpha: 0.15,
+        points: 14.0,
+        maxDistance: 28.0,
+        spacing: 16.0,
+      });
+
+      const isDarkTheme = body.getAttribute("data-theme") !== "light";
+      updateVantaTheme(isDarkTheme);
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
