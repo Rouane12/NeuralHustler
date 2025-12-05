@@ -47,6 +47,30 @@ a {
   padding: 2.5rem clamp(1.5rem, 6vw, 6rem) 4rem;
   background: linear-gradient(135deg, rgba(11, 13, 19, 0.95), rgba(5, 6, 10, 0.95));
   border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+#hero-vanta {
+  position: relative;
+  overflow: hidden;
+}
+
+#hero-vanta canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+nav,
+header,
+.theme-toggle {
+  position: relative;
+  z-index: 10;
 }
 
 .nav {

@@ -105,7 +105,8 @@
   </head>
 
   <body>
-    <header class="hero" id="top">
+    <section id="hero-vanta">
+      <header class="hero" id="top">
       <nav class="nav">
         <div class="logo">Neuralhustle<span> Academy</span></div>
 
@@ -156,7 +157,8 @@
           <p>Videos, livestreams, and downloadable systems</p>
         </div>
       </div>
-    </header>
+      </header>
+    </section>
 
     <main>
       <!-- About -->
@@ -700,6 +702,25 @@
           🚧 Blog posts coming soon — new drops every week.
       </p>`;
       }
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.mesh.min.js"></script>
+    <script>
+      VANTA.MESH({
+        el: "#hero-vanta",
+        mouseControls: true,
+        touchControls: true,
+        minHeight: 200.0,
+        minWidth: 200.0,
+        scale: 1.0,
+        scaleMobile: 1.0,
+        color: "#1dffe2",
+        backgroundColor: "#0a0a0a",
+        points: 8.0,
+        maxDistance: 18.0,
+        spacing: 16.0,
+      });
     </script>
 
     <!-- D-ID AI Copilot Script -->
