@@ -269,6 +269,39 @@ main {
   color: var(--muted);
 }
 
+.upwork-section {
+  text-align: center;
+}
+
+.upwork-cta {
+  max-width: 780px;
+  margin: 0 auto;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.upwork-cta h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.upwork-cta p {
+  color: var(--muted);
+  font-size: 1.1rem;
+}
+
+.upwork-btn {
+  background: linear-gradient(120deg, #22c55e, #a3e635);
+  color: #05060a;
+  border: none;
+  box-shadow: 0 12px 30px rgba(34, 197, 94, 0.25);
+}
+
+.upwork-btn:hover,
+.upwork-btn:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 34px rgba(34, 197, 94, 0.32);
+}
+
 /* TIMELINE */
 .timeline-grid {
   display: grid;
