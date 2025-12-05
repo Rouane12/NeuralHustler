@@ -194,9 +194,24 @@ h3 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 0.5rem;
   border: 1px solid transparent;
   transition: transform 0.2s ease, border 0.2s ease;
   cursor: pointer;
+}
+
+.btn .icon-youtube {
+  width: 1.15rem;
+  height: 1.15rem;
+  flex-shrink: 0;
+  fill: currentColor;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.btn:hover .icon-youtube,
+.btn:focus-visible .icon-youtube {
+  transform: translateY(-1px) scale(1.12);
+  filter: brightness(1.25) drop-shadow(0 0 4px rgba(255, 0, 0, 0.45));
 }
 
 .btn.primary {
