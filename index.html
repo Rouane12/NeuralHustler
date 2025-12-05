@@ -680,6 +680,31 @@
       const themeToggle = document.getElementById("themeToggle");
       const themeIcon = document.getElementById("themeIcon");
       const themeLabel = document.getElementById("themeLabel");
+      const heroVanta = document.getElementById("hero-vanta");
+      const heroSection = document.getElementById("hero-section");
+
+      function syncHeroVantaHeight() {
+        if (!heroVanta || !heroSection) return;
+
+        const heroHeight = heroSection.getBoundingClientRect().height;
+        heroVanta.style.minHeight = `${heroHeight}px`;
+        heroVanta.style.height = `${heroHeight}px`;
+
+        if (window.vantaEffect && typeof window.vantaEffect.resize === "function") {
+          window.requestAnimationFrame(() => window.vantaEffect.resize());
+        }
+      }
+
+      const heroResizeObserver =
+        typeof ResizeObserver !== "undefined"
+          ? new ResizeObserver(() => syncHeroVantaHeight())
+          : null;
+
+      if (heroResizeObserver && heroSection) {
+        heroResizeObserver.observe(heroSection);
+      }
+
+      window.addEventListener("resize", syncHeroVantaHeight);
 
       function updateVantaTheme(isDark) {
         if (!window.vantaEffect) return;
@@ -690,6 +715,8 @@
           points: isDark ? 16 : 12,
           maxDistance: isDark ? 32 : 24,
         });
+
+        syncHeroVantaHeight();
       }
 
       function applyTheme(isLight) {
@@ -708,6 +735,7 @@
         }
 
         updateVantaTheme(!isLight);
+        syncHeroVantaHeight();
       }
 
       const storedTheme = localStorage.getItem("neuralhustle-theme");
@@ -723,6 +751,8 @@
           updateVantaTheme(body.getAttribute("data-theme") !== "light")
         );
       });
+
+      syncHeroVantaHeight();
 
       const animated = document.querySelectorAll(".fade-in-up");
       const observer = new IntersectionObserver(
@@ -742,23 +772,34 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.net.min.js"></script>
     <script>
-      window.vantaEffect = VANTA.NET({
-        el: "#hero-vanta",
-        mouseControls: true,
-        touchControls: true,
-        minHeight: 200.0,
-        minWidth: 200.0,
-        scale: 1.4,
-        scaleMobile: 1.8,
-        color: 0x00e1ff,
-        backgroundAlpha: 0.15,
-        points: 14.0,
-        maxDistance: 28.0,
-        spacing: 16.0,
-      });
+      const heroTarget = document.getElementById("hero-vanta");
+      const heroContent = document.getElementById("hero-section");
+      const heroContentHeight =
+        heroContent?.getBoundingClientRect().height || 560;
+
+      if (heroTarget) {
+        window.vantaEffect = VANTA.NET({
+          el: "#hero-vanta",
+          mouseControls: true,
+          touchControls: true,
+          minHeight: heroContentHeight,
+          minWidth: 200.0,
+          scale: 1.4,
+          scaleMobile: 1.8,
+          color: 0x00e1ff,
+          backgroundAlpha: 0.15,
+          points: 14.0,
+          maxDistance: 28.0,
+          spacing: 16.0,
+        });
+      }
 
       const isDarkTheme = body.getAttribute("data-theme") !== "light";
       updateVantaTheme(isDarkTheme);
+
+      if (typeof syncHeroVantaHeight === "function") {
+        syncHeroVantaHeight();
+      }
     </script>
 
     <!-- D-ID AI Copilot Script -->
