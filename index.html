@@ -106,6 +106,7 @@
 
   <body>
     <header class="hero" id="top">
+      <div id="vanta-bg"></div>
       <nav class="nav">
         <div class="logo">Neuralhustle<span> Academy</span></div>
 
@@ -700,6 +701,25 @@
           🚧 Blog posts coming soon — new drops every week.
       </p>`;
       }
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.net.min.js"></script>
+    <script>
+      VANTA.NET({
+        el: "#vanta-bg",
+        mouseControls: true,
+        touchControls: true,
+        minHeight: 200.0,
+        minWidth: 200.0,
+        scale: 1.0,
+        scaleMobile: 1.0,
+        color: "#1dffe2",
+        backgroundColor: "#0a0a0a",
+        points: 8.0,
+        maxDistance: 18.0,
+        spacing: 16.0,
+      });
     </script>
 
     <!-- D-ID AI Copilot Script -->
