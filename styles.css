@@ -30,7 +30,17 @@ body {
 }
 
 html.light body {
-  background: #f7f9fc !important;
+  background: radial-gradient(
+      circle at 20% -10%,
+      rgba(123, 92, 255, 0.12),
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 80% 0%,
+      rgba(47, 218, 184, 0.12),
+      transparent 45%
+    ),
+    #f6f6fb !important;
   color: #0d1117 !important;
 }
 
@@ -72,6 +82,7 @@ a {
   z-index: 0;
   height: auto !important;
   max-height: 560px;
+  background: transparent !important;
 }
 
 #hero-vanta canvas {
@@ -269,7 +280,7 @@ main {
 }
 
 .section.alt {
-  background: var(--bg-alt);
+  background: transparent;
   padding: 4rem clamp(1.5rem, 6vw, 4rem);
   margin: 4rem calc(-1 * clamp(1.5rem, 6vw, 6rem));
 }

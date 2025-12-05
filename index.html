@@ -63,20 +63,6 @@
         --border: rgba(5, 6, 10, 0.1);
       }
 
-      [data-theme="light"] body {
-        background: radial-gradient(
-            circle at 20% -10%,
-            rgba(123, 92, 255, 0.12),
-            transparent 40%
-          ),
-          radial-gradient(
-            circle at 80% 0%,
-            rgba(47, 218, 184, 0.12),
-            transparent 45%
-          ),
-          #f6f6fb;
-      }
-
       .theme-toggle {
         border-radius: 999px;
         border: 1px solid var(--border);
@@ -726,10 +712,16 @@
 
       const storedTheme = localStorage.getItem("neuralhustle-theme");
       applyTheme(storedTheme === "light");
+      requestAnimationFrame(() =>
+        updateVantaTheme(body.getAttribute("data-theme") !== "light")
+      );
 
       themeToggle.addEventListener("click", () => {
         const isLight = body.getAttribute("data-theme") === "light";
         applyTheme(!isLight);
+        requestAnimationFrame(() =>
+          updateVantaTheme(body.getAttribute("data-theme") !== "light")
+        );
       });
 
       const animated = document.querySelectorAll(".fade-in-up");
