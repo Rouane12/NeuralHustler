@@ -105,7 +105,8 @@
   </head>
 
   <body>
-    <header class="hero" id="top">
+    <section id="hero-vanta">
+      <header class="hero" id="hero-section">
       <nav class="nav">
         <div class="logo">Neuralhustle<span> Academy</span></div>
 
@@ -122,7 +123,14 @@
           <li><a href="#courses">Courses</a></li>
           <li><a href="#projects">Projects</a></li>
           <li><a href="#portfolio">Portfolio</a></li>
-          <li><a href="#blog">Blog</a></li>
+          <li>
+            <a
+              href="https://www.upwork.com/freelancers/~014f1c5a4da976d3ac"
+              target="_blank"
+              rel="noopener"
+              >Upwork</a
+            >
+          </li>
           <li><a href="#videos">Videos</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
@@ -156,9 +164,29 @@
           <p>Videos, livestreams, and downloadable systems</p>
         </div>
       </div>
-    </header>
+      </header>
+    </section>
 
     <main>
+      <section class="section alt upwork-section" id="upwork">
+        <div class="upwork-cta fade-in-up">
+          <h2>Work With Me on Upwork</h2>
+          <p>
+            I help businesses automate workflows, build AI systems, and ship
+            smarter digital experiences. You can hire me for AI development,
+            automation engineering, API integration, and custom AI copilots.
+          </p>
+
+          <a
+            href="https://www.upwork.com/freelancers/~014f1c5a4da976d3ac"
+            target="_blank"
+            rel="noopener"
+            class="btn upwork-btn"
+            >View My Upwork Profile</a
+          >
+        </div>
+      </section>
+
       <!-- About -->
       <section class="section" id="about">
         <div class="section-heading fade-in-up">
@@ -522,17 +550,6 @@
         </div>
       </section>
 
-      <!-- Blog -->
-      <section class="section alt" id="blog">
-        <div class="section-heading fade-in-up">
-          <p class="eyebrow">Blog Drops</p>
-          <h2>Notes from the build process.</h2>
-          <p>Short breakdowns of experiments, tools, and workflows.</p>
-        </div>
-
-        <div class="cards-grid fade-in-up" id="blogPosts"></div>
-      </section>
-
       <!-- Videos -->
       <section class="section" id="videos">
         <div class="section-heading fade-in-up">
@@ -650,30 +667,46 @@
         new Date().getFullYear();
 
       const body = document.body;
+      const root = document.documentElement;
       const themeToggle = document.getElementById("themeToggle");
       const themeIcon = document.getElementById("themeIcon");
       const themeLabel = document.getElementById("themeLabel");
 
-      const storedTheme = localStorage.getItem("neuralhustle-theme");
-      if (storedTheme === "light") {
-        body.setAttribute("data-theme", "light");
-        themeIcon.textContent = "☀️";
-        themeLabel.textContent = "Light";
+      function updateVantaTheme(isDark) {
+        if (!window.vantaEffect) return;
+
+        window.vantaEffect.setOptions({
+          color: isDark ? 0x00e1ff : 0x005577,
+          backgroundAlpha: isDark ? 0.1 : 0.35,
+          points: isDark ? 16 : 12,
+          maxDistance: isDark ? 32 : 24,
+        });
       }
 
-      themeToggle.addEventListener("click", () => {
-        const isLight = body.getAttribute("data-theme") === "light";
+      function applyTheme(isLight) {
         if (isLight) {
-          body.removeAttribute("data-theme");
-          themeIcon.textContent = "🌙";
-          themeLabel.textContent = "Dark";
-          localStorage.setItem("neuralhustle-theme", "dark");
-        } else {
           body.setAttribute("data-theme", "light");
+          root.classList.add("light");
           themeIcon.textContent = "☀️";
           themeLabel.textContent = "Light";
           localStorage.setItem("neuralhustle-theme", "light");
+        } else {
+          body.removeAttribute("data-theme");
+          root.classList.remove("light");
+          themeIcon.textContent = "🌙";
+          themeLabel.textContent = "Dark";
+          localStorage.setItem("neuralhustle-theme", "dark");
         }
+
+        updateVantaTheme(!isLight);
+      }
+
+      const storedTheme = localStorage.getItem("neuralhustle-theme");
+      applyTheme(storedTheme === "light");
+
+      themeToggle.addEventListener("click", () => {
+        const isLight = body.getAttribute("data-theme") === "light";
+        applyTheme(!isLight);
       });
 
       const animated = document.querySelectorAll(".fade-in-up");
@@ -691,15 +724,26 @@
       animated.forEach(el => observer.observe(el));
     </script>
 
-    <!-- Blog placeholder if empty -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.net.min.js"></script>
     <script>
-      const blogPosts = document.getElementById("blogPosts");
-      if (blogPosts && blogPosts.children.length === 0) {
-        blogPosts.innerHTML = `
-      <p style="color: var(--muted); font-size: 1rem; opacity:.8;">
-          🚧 Blog posts coming soon — new drops every week.
-      </p>`;
-      }
+      window.vantaEffect = VANTA.NET({
+        el: "#hero-vanta",
+        mouseControls: true,
+        touchControls: true,
+        minHeight: 200.0,
+        minWidth: 200.0,
+        scale: 1.4,
+        scaleMobile: 1.8,
+        color: 0x00e1ff,
+        backgroundAlpha: 0.15,
+        points: 14.0,
+        maxDistance: 28.0,
+        spacing: 16.0,
+      });
+
+      const isDarkTheme = body.getAttribute("data-theme") !== "light";
+      updateVantaTheme(isDarkTheme);
     </script>
 
     <!-- D-ID AI Copilot Script -->

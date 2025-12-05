@@ -29,6 +29,21 @@ body {
   min-height: 100vh;
 }
 
+html.light body {
+  background: #f7f9fc !important;
+  color: #0d1117 !important;
+}
+
+html.light h1,
+html.light h2,
+html.light h3,
+html.light h4,
+html.light h5,
+html.light p {
+  color: #0a0a0a !important;
+  text-shadow: 0 0 4px rgba(255, 255, 255, 0.9);
+}
+
 p {
   line-height: 1.7;
 }
@@ -44,9 +59,42 @@ a {
 
 /* HERO */
 .hero {
-  padding: 2.5rem clamp(1.5rem, 6vw, 6rem) 4rem;
+  padding: 2rem clamp(1.5rem, 6vw, 6rem) 2.5rem;
   background: linear-gradient(135deg, rgba(11, 13, 19, 0.95), rgba(5, 6, 10, 0.95));
   border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+#hero-vanta {
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+  height: auto !important;
+  max-height: 560px;
+}
+
+#hero-vanta canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100% !important;
+  max-height: inherit;
+  z-index: 0;
+  pointer-events: none;
+}
+
+#hero-section {
+  position: relative;
+  z-index: 10;
+}
+
+nav,
+header,
+.theme-toggle {
+  position: relative;
+  z-index: 10;
 }
 
 .nav {
@@ -197,6 +245,7 @@ h3 {
 /* SECTIONS */
 main {
   padding: clamp(1.5rem, 6vw, 6rem);
+  padding-top: clamp(1.5rem, 4vw, 3.5rem);
 }
 
 .section {
@@ -222,6 +271,40 @@ main {
 
 .section-heading p {
   color: var(--muted);
+}
+
+.upwork-section {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.upwork-cta {
+  max-width: 780px;
+  margin: 0 auto;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.upwork-cta h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.upwork-cta p {
+  color: var(--muted);
+  font-size: 1.1rem;
+}
+
+.upwork-btn {
+  background: linear-gradient(120deg, #22c55e, #a3e635);
+  color: #05060a;
+  border: none;
+  box-shadow: 0 12px 30px rgba(34, 197, 94, 0.25);
+}
+
+.upwork-btn:hover,
+.upwork-btn:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 34px rgba(34, 197, 94, 0.32);
 }
 
 /* TIMELINE */
