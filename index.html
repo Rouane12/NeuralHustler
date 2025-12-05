@@ -3,37 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <title>Neural Hustle | Rouane Mounssif</title>
+    <title>Rouane Mounssif | Neural Hustle Academy</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="favicon_32.png" />
 
-    <!-- Primary SEO -->
+    <!-- SEO -->
     <meta
       name="description"
-      content="Neuralhustle.com brings Rouane Mounssif's Courcify courses, projects, and AI-powered YouTube channels together so you can learn, build, and launch with automation."
+      content="Rouane Mounssif — AI automation engineer. Courses, open-source projects, and fully AI-powered YouTube channels (NeuralFC & Ainimal)."
     />
     <link rel="canonical" href="https://neuralhustle.com/" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://neuralhustle.com/" />
-    <meta property="og:title" content="Neural Hustle | Rouane Mounssif" />
-    <meta
-      property="og:description"
-      content="Learn AI automation, content systems, and YouTube workflows from Rouane Mounssif — courses, projects, and AI-powered channels in one place."
-    />
+    <meta property="og:title" content="Rouane Mounssif | Neural Hustle Academy" />
+    <meta property="og:description" content="Learn AI automation, ship production-grade agents, and launch viral content systems." />
 
-    <!-- Twitter Cards -->
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Neural Hustle | Rouane Mounssif" />
-    <meta
-      name="twitter:description"
-      content="Courses, projects, and AI-powered YouTube channels to help you ship smarter workflows with automation."
-    />
+    <meta name="twitter:title" content="Rouane Mounssif | Neural Hustle Academy" />
+    <meta name="twitter:description" content="Cohorts · Projects · AI-powered channels." />
 
-    <!-- Fonts & Styles -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -41,15 +34,16 @@
       rel="stylesheet"
     />
 
-    <!-- Font Awesome for GitHub icon -->
+    <!-- Font Awesome -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
     />
 
+    <!-- Main Styles -->
     <link rel="stylesheet" href="styles.css" />
 
-    <!-- Light theme overrides + animations -->
+    <!-- Light theme variables + animations -->
     <style>
       [data-theme="light"] {
         --bg: #f6f6fb;
@@ -61,20 +55,6 @@
         --accent-2: #02b3a4;
         --accent-3: #ff8e3c;
         --border: rgba(5, 6, 10, 0.1);
-      }
-
-      [data-theme="light"] body {
-        background: radial-gradient(
-            circle at 20% -10%,
-            rgba(123, 92, 255, 0.12),
-            transparent 40%
-          ),
-          radial-gradient(
-            circle at 80% 0%,
-            rgba(47, 218, 184, 0.12),
-            transparent 45%
-          ),
-          #f6f6fb;
       }
 
       .theme-toggle {
@@ -93,12 +73,18 @@
       .fade-in-up {
         opacity: 0;
         transform: translateY(16px);
-        transition: opacity 0.5s ease, transform 0.5s ease;
+        transition: opacity 0.6s ease, transform 0.6s ease;
       }
-
       .fade-in-up.is-visible {
         opacity: 1;
         transform: translateY(0);
+      }
+
+      .btn-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-top: 1rem;
       }
     </style>
   </head>
@@ -109,13 +95,14 @@
         <div class="logo">Neuralhustle<span> Academy</span></div>
 
         <button class="theme-toggle" type="button" id="themeToggle">
-          <span id="themeIcon">🌙</span>
+          <span id="themeIcon">Dark mode</span>
           <span id="themeLabel">Dark</span>
         </button>
 
         <button class="nav-toggle" aria-label="Toggle navigation">
           <span></span><span></span><span></span>
         </button>
+
         <ul class="nav-links">
           <li><a href="#about">About</a></li>
           <li><a href="#courses">Courses</a></li>
@@ -131,10 +118,8 @@
         <p class="eyebrow">Rouane Mounssif · AI Integration & Creative Automation</p>
         <h1>Ship smarter workflows with AI copilots.</h1>
         <p class="lead">
-          NeuralhustleAcademy.com is the digital HQ for Rouane's Udemy cohorts,
-          behind-the-scenes projects, and YouTube breakdowns.
+          The digital HQ for my AI automation cohorts, open-source projects, and fully AI-powered YouTube channels.
         </p>
-
         <div class="hero-cta">
           <a class="btn primary" href="#courses">Explore cohorts</a>
           <a class="btn ghost" href="#videos">Watch tutorials</a>
@@ -144,15 +129,15 @@
       <div class="hero-highlight fade-in-up">
         <div>
           <span class="metric">12k+</span>
-          <p>Students leveling up through Udemy cohorts</p>
+          <p>Students leveling up through cohorts</p>
         </div>
         <div>
           <span class="metric">40+</span>
-          <p>Automation playbooks & AI integrations delivered</p>
+          <p>Automation playbooks delivered</p>
         </div>
         <div>
           <span class="metric">100+</span>
-          <p>Videos, livestreams, and downloadable systems</p>
+          <p>Videos & downloadable systems</p>
         </div>
       </div>
     </header>
@@ -162,14 +147,8 @@
       <section class="section" id="about">
         <div class="section-heading fade-in-up">
           <p class="eyebrow">Meet Rouane</p>
-          <h2>
-            Software engineer & builder of AI-first workflows, courses, and
-            content.
-          </h2>
-          <p>
-            I'm an AI integration and content automation specialist focused on
-            turning prompts into production systems.
-          </p>
+          <h2>Software engineer & builder of AI-first workflows, courses, and content.</h2>
+          <p>I'm an AI integration and content automation specialist focused on turning prompts into production systems.</p>
         </div>
 
         <div class="about-grid fade-in-up">
@@ -182,7 +161,6 @@
               <li>Hands-on cohorts to teach the stack end-to-end</li>
             </ul>
           </article>
-
           <article>
             <h3>Toolbox</h3>
             <ul>
@@ -198,7 +176,7 @@
       <!-- Courses -->
       <section class="section alt" id="courses">
         <div class="section-heading fade-in-up">
-          <p class="eyebrow">Udemy Courses</p>
+          <p class="eyebrow">Guided Cohorts</p>
           <h2>Guided cohorts to master AI automation.</h2>
           <p>Each cohort includes project labs, templates, and office hours.</p>
         </div>
@@ -207,22 +185,14 @@
           <article class="card">
             <div class="card-top gradient-purple">
               <h3>AI Content Creation</h3>
-              <p>
-                A brief tutorial on how to create viral AI shorts that actually
-                pay.
-              </p>
+              <p>A brief tutorial on how to create viral AI shorts that actually pay.</p>
             </div>
             <ul>
               <li>20+ workflow recipes & prompt packs</li>
               <li>Fully automated builds using ChatGPT and other AI tools</li>
               <li>CapCut: editing masterclass</li>
             </ul>
-            <a
-              class="btn secondary"
-              href="https://neuralhustle-academy.coursify.me/"
-              target="_blank"
-              >Join on Coursify</a
-            >
+            <a class="btn secondary" href="https://neuralhustle-academy.coursify.me/" target="_blank">Join on Coursify</a>
           </article>
 
           <article class="card">
@@ -235,33 +205,20 @@
               <li>Voice + video repurposing workflows</li>
               <li>Notion + Airtable templates</li>
             </ul>
-            <a
-              class="btn secondary"
-              href="https://neuralhustle-academy.coursify.me/"
-              target="_blank"
-              >Join on Coursify</a
-            >
+            <a class="btn secondary" href="https://neuralhustle-academy.coursify.me/" target="_blank">Join on Coursify</a>
           </article>
 
           <article class="card">
             <div class="card-top gradient-orange">
               <h3>Gradio Builder Tool</h3>
-              <p>
-                Prototype a custom agent integrated with the OpenAI API to
-                generate storyboards with a single prompt.
-              </p>
+              <p>Prototype a custom agent with a single prompt.</p>
             </div>
             <ul>
               <li>Python + Gradio</li>
               <li>OpenAI API</li>
-              <li>Deployment is coming soon to Udemy</li>
+              <li>Deployment coming soon</li>
             </ul>
-            <a
-              class="btn secondary"
-              href="https://neuralhustle-academy.coursify.me/"
-              target="_blank"
-              >Join on Coursify</a
-            >
+            <a class="btn secondary" href="https://neuralhustle-academy.coursify.me/" target="_blank">Join on Coursify</a>
           </article>
         </div>
       </section>
@@ -271,9 +228,7 @@
         <div class="section-heading fade-in-up">
           <p class="eyebrow">Project Drops</p>
           <h2>Builds that turn prompts into production.</h2>
-          <p>
-            Consulting projects mixing research, automation, and delivery.
-          </p>
+          <p>Consulting projects mixing research, automation, and delivery.</p>
         </div>
 
         <div class="projects fade-in-up">
@@ -283,34 +238,23 @@
               <span class="project-year">2024</span>
             </div>
             <h3>Signal Forge</h3>
-            <p>
-              Multi-agent loop aggregating filings, news, and social chatter
-              for investment teams.
-            </p>
+            <p>Multi-agent loop aggregating filings, news, and social chatter for investment teams.</p>
           </article>
-
           <article>
             <div class="project-meta">
               <span class="tag">Gradio · Whisper · FFMPEG</span>
               <span class="project-year">2024</span>
             </div>
             <h3>Creator Sync</h3>
-            <p>
-              Clip factory that ingests long-form video, cuts chapters, and
-              drafts hooks for shorts.
-            </p>
+            <p>Clip factory that ingests long-form video and drafts hooks for shorts.</p>
           </article>
-
           <article>
             <div class="project-meta">
               <span class="tag">FastAPI · LangGraph · Supabase</span>
               <span class="project-year">2025</span>
             </div>
             <h3>Ops Copilot</h3>
-            <p>
-              Internal agent that audits SOPs and fires automations straight
-              from chat.
-            </p>
+            <p>Internal agent that audits SOPs and fires automations from chat.</p>
           </article>
         </div>
       </section>
@@ -334,13 +278,8 @@
               <li>Bearer token authentication</li>
               <li>Railway deploy ready</li>
             </ul>
-            <a
-              class="btn secondary"
-              href="https://github.com/Rouane12/wardrobe-ai-backend"
-              target="_blank"
-            >
-              <i class="fab fa-github" style="margin-right: 0.45rem"></i>
-              View on GitHub
+            <a class="btn secondary" href="https://github.com/Rouane12/wardrobe-ai-backend" target="_blank">
+              <i class="fab fa-github"></i> View on GitHub
             </a>
           </article>
 
@@ -354,13 +293,8 @@
               <li>Agent style orchestration</li>
               <li>Future personal tooling base</li>
             </ul>
-            <a
-              class="btn secondary"
-              href="https://github.com/Rouane12/SoraAgent"
-              target="_blank"
-            >
-              <i class="fab fa-github" style="margin-right: 0.45rem"></i>
-              View on GitHub
+            <a class="btn secondary" href="https://github.com/Rouane12/SoraAgent" target="_blank">
+              <i class="fab fa-github"></i> View on GitHub
             </a>
           </article>
         </div>
@@ -373,56 +307,41 @@
           <h2>Notes from the build process.</h2>
           <p>Short breakdowns of experiments, tools, and workflows.</p>
         </div>
-
-        <div class="cards-grid fade-in-up" id="blogPosts"></div>
+        <div class="cards-grid fade-in-up" id="blogPosts">
+          <p style="color: var(--muted); font-size: 1rem; opacity:.8; grid-column: 1 / -1; text-align: center; padding: 2rem;">
+            Blog posts coming soon — new drops every week.
+          </p>
+        </div>
       </section>
 
       <!-- Videos -->
       <section class="section" id="videos">
         <div class="section-heading fade-in-up">
           <p class="eyebrow">YouTube Channels</p>
-          <h2>
-            AI football shorts · AI animal stories · high-speed creative builds.
-          </h2>
-          <p>
-            Rouane runs two AI-powered channels:
-            <strong>NeuralFC</strong> and <strong>Ainimal</strong>.
-          </p>
+          <h2>AI football shorts · AI animal stories · high-speed creative builds.</h2>
+          <p>Rouane runs two AI-powered channels: <strong>NeuralFC</strong> and <strong>Ainimal</strong>.</p>
         </div>
 
         <div class="video-grid fade-in-up">
           <article class="video-card">
             <h3>NeuralFC · AI Football Shorts</h3>
             <p>Fast paced comedic AI football clips.</p>
-            <a href="https://youtube.com/@neuralfc" class="btn ghost" target="_blank"
-              >Visit NeuralFC</a
-            >
+            <a href="https://youtube.com/@neuralfc" class="btn ghost" target="_blank">Visit NeuralFC</a>
           </article>
 
           <article class="video-card">
             <h3>Ainimal · AI Animal Stories</h3>
             <p>Cinematic AI-driven animal adventures.</p>
-            <a href="https://youtube.com/@ainimal-f5r" class="btn ghost" target="_blank"
-              >Visit Ainimal</a
-            >
+            <a href="https://youtube.com/@ainimal-f5r" class="btn ghost" target="_blank">Visit Ainimal</a>
           </article>
 
           <article class="video-card">
             <h3>Explore Both Worlds</h3>
             <p>Pick your universe.</p>
-            <a
-              href="https://youtube.com/@neuralfc"
-              class="btn ghost"
-              target="_blank"
-              style="margin-bottom: 0.75rem"
-              >NeuralFC</a
-            >
-            <a
-              href="https://youtube.com/@ainimal-f5r"
-              class="btn ghost"
-              target="_blank"
-              >Ainimal</a
-            >
+            <div class="btn-group">
+              <a href="https://youtube.com/@neuralfc" class="btn ghost" target="_blank">NeuralFC</a>
+              <a href="https://youtube.com/@ainimal-f5r" class="btn ghost" target="_blank">Ainimal</a>
+            </div>
           </article>
         </div>
       </section>
@@ -434,18 +353,14 @@
           <h2>Need a custom automation or want to collaborate?</h2>
         </div>
 
-        <form
-          class="contact-form fade-in-up"
-          action="https://formsubmit.co/rouane.mounssif12@gmail.com"
-          method="POST"
-        >
+        <form class="contact-form fade-in-up"
+          action="https://formsubmit.co/rouane.mounssif12@gmail.com" method="POST">
           <input type="hidden" name="_captcha" value="false" />
           <input type="hidden" name="_next" value="https://neuralhustle.com/" />
 
           <label>Name <input type="text" name="name" required /></label>
           <label>Email <input type="email" name="email" required /></label>
-          <label>Message <textarea name="message" rows="4"></textarea></label>
-
+          <label>Message <textarea name="message" rows="5" required></textarea></label>
           <button type="submit" class="btn primary">Send message</button>
         </form>
       </section>
@@ -453,30 +368,18 @@
 
     <footer class="footer">
       <div>
-        <p>
-          © <span id="year"></span> Neuralhustle.com · Built by Rouane Mounssif
-        </p>
+        <p>© <span id="year"></span> Neuralhustle.com · Built by Rouane Mounssif</p>
       </div>
-
       <div class="footer-links">
-        <a
-          href="https://linkedin.com/in/rouane-mounssif-538171243"
-          target="_blank"
-          >LinkedIn</a
-        >
-        <a href="https://viralaiyoutubeacademy.com/" target="_blank"
-          >Join our Academy</a
-        >
-        <a
-          href="https://mail.google.com/mail/?view=cm&to=rouane.mounssif12@gmail.com"
-          target="_blank"
-          >Email</a
-        >
+        <a href="https://linkedin.com/in/rouane-mounssif-538171243" target="_blank">LinkedIn</a>
+        <a href="https://viralaiyoutubeacademy.com/" target="_blank">Join our Academy</a>
+        <a href="mailto:rouane.mounssif12@gmail.com">Email</a>
       </div>
     </footer>
 
-    <!-- JS SECTION -->
+    <!-- Scripts -->
     <script>
+      // Mobile menu
       const navToggle = document.querySelector(".nav-toggle");
       const navLinks = document.querySelector(".nav-links");
       navToggle.addEventListener("click", () => {
@@ -484,9 +387,10 @@
         navToggle.classList.toggle("active");
       });
 
-      document.getElementById("year").textContent =
-        new Date().getFullYear();
+      // Year
+      document.getElementById("year").textContent = new Date().getFullYear();
 
+      // Theme toggle
       const body = document.body;
       const themeToggle = document.getElementById("themeToggle");
       const themeIcon = document.getElementById("themeIcon");
@@ -495,62 +399,45 @@
       const storedTheme = localStorage.getItem("neuralhustle-theme");
       if (storedTheme === "light") {
         body.setAttribute("data-theme", "light");
-        themeIcon.textContent = "☀️";
+        themeIcon.textContent = "Sun";
         themeLabel.textContent = "Light";
       }
 
       themeToggle.addEventListener("click", () => {
-        const isLight = body.getAttribute("data-theme") === "light";
-        if (isLight) {
+        if (body.hasAttribute("data-theme")) {
           body.removeAttribute("data-theme");
-          themeIcon.textContent = "🌙";
+          themeIcon.textContent = "Moon";
           themeLabel.textContent = "Dark";
           localStorage.setItem("neuralhustle-theme", "dark");
         } else {
           body.setAttribute("data-theme", "light");
-          themeIcon.textContent = "☀️";
+          themeIcon.textContent = "Sun";
           themeLabel.textContent = "Light";
           localStorage.setItem("neuralhustle-theme", "light");
         }
       });
 
-      const animated = document.querySelectorAll(".fade-in-up");
-      const observer = new IntersectionObserver(
-        entries => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("is-visible");
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.15 }
-      );
-      animated.forEach(el => observer.observe(el));
+      // Fade-in animations
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+          }
+        });
+      }, { threshold: 0.15 });
+
+      document.querySelectorAll(".fade-in-up").forEach(el => observer.observe(el));
     </script>
 
-    <!-- Blog placeholder if empty -->
-    <script>
-      const blogPosts = document.getElementById("blogPosts");
-      if (blogPosts && blogPosts.children.length === 0) {
-        blogPosts.innerHTML = `
-      <p style="color: var(--muted); font-size: 1rem; opacity:.8;">
-          🚧 Blog posts coming soon — new drops every week.
-      </p>`;
-      }
-    </script>
-
-    <!-- D-ID AI Copilot Script -->
-    <script
-      type="module"
-      src="https://agent.d-id.com/v2/index.js"
+    <!-- D-ID AI Copilot (optional) -->
+    <script type="module" src="https://agent.d-id.com/v2/index.js"
       data-mode="fabio"
       data-client-key="Z29vZ2xlLW9hdXRoMnwxMTQ2NTU1OTc0MjM1NDYwMDIwMTc6clIyM0lMMHFjNjRiLVN5SzNMTW91"
       data-agent-id="v2_agt_7IN1Ch8z"
       data-name="did-agent"
       data-monitor="true"
       data-orientation="horizontal"
-      data-position="right"
-    ></script>
+      data-position="right">
+    </script>
   </body>
 </html>
