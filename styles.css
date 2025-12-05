@@ -1,3 +1,4 @@
+/* ROOT THEME */
 :root {
   --bg: #05060a;
   --bg-alt: #0b0d13;
@@ -10,6 +11,7 @@
   --border: rgba(255, 255, 255, 0.08);
 }
 
+/* GLOBAL RESET */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -32,6 +34,7 @@ a {
   text-decoration: none;
 }
 
+/* HERO */
 .hero {
   padding: 2.5rem clamp(1.5rem, 6vw, 6rem) 4rem;
   background: linear-gradient(135deg, rgba(11, 13, 19, 0.95), rgba(5, 6, 10, 0.95));
@@ -152,6 +155,7 @@ h1 {
   transform: translateY(-2px);
 }
 
+/* HERO METRICS */
 .hero-highlight {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -202,6 +206,7 @@ main {
   color: var(--muted);
 }
 
+/* ABOUT */
 .about-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -228,6 +233,7 @@ main {
   margin-top: 0.65rem;
 }
 
+/* CARD SYSTEM */
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -242,6 +248,7 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .card-top {
@@ -252,17 +259,9 @@ main {
   list-style: none;
   padding: 0 1.75rem 1.75rem;
   color: var(--muted);
-  flex: 1;
 }
 
-.card ul li {
-  margin-bottom: 0.75rem;
-}
-
-.card .btn {
-  margin: 0 1.5rem 1.5rem;
-}
-
+/* GRADIENTS */
 .gradient-purple {
   background: linear-gradient(135deg, rgba(123, 92, 255, 0.35), rgba(5, 6, 10, 0.95));
 }
@@ -275,6 +274,7 @@ main {
   background: linear-gradient(135deg, rgba(255, 142, 60, 0.4), rgba(5, 6, 10, 0.95));
 }
 
+/* PROJECTS GRID */
 .projects {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -309,6 +309,7 @@ main {
   color: var(--accent-2);
 }
 
+/* VIDEO CARD */
 .video-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -331,6 +332,7 @@ main {
   margin-bottom: 1rem;
 }
 
+/* FORM */
 .contact-form {
   display: grid;
   gap: 1rem;
@@ -361,6 +363,7 @@ main {
   border-color: var(--accent-2);
 }
 
+/* FOOTER */
 .footer {
   padding: 2rem clamp(1.5rem, 6vw, 6rem) 3rem;
   display: flex;
@@ -382,6 +385,84 @@ main {
   font-weight: 600;
 }
 
+/* ========================================================= */
+/* ⭐ PORTFOLIO STYLING ⭐ */
+/* ========================================================= */
+
+#portfolio .section-heading h2 {
+  color: var(--accent-2);
+}
+
+/* Card hover upscale */
+#portfolio .card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Portfolio card text */
+#portfolio .card-top p {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-top: 0.35rem;
+}
+
+/* bullets for features */
+#portfolio .card ul li {
+  color: var(--muted);
+  font-size: 0.9rem;
+  position: relative;
+  padding-left: 1rem;
+}
+
+#portfolio .card ul li::before {
+  content: "•";
+  color: var(--accent-2);
+  position: absolute;
+  left: 0;
+}
+
+/* badges */
+.badges {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  padding: 0 1.5rem 0.75rem;
+}
+
+.badge {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid var(--accent-2);
+  color: var(--accent-2);
+  background: rgba(47, 218, 184, 0.1);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* GitHub button with icon */
+#portfolio .btn.secondary {
+  border-color: var(--accent);
+  color: var(--accent);
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+#portfolio .btn.secondary::before {
+  content: "\f09b";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  margin-right: 0.5rem;
+  font-size: 0.9rem;
+}
+
+#portfolio .btn.secondary:hover,
+#portfolio .btn.secondary:focus-visible {
+  background: var(--accent);
+  color: var(--bg);
+  transform: translateY(-2px);
+}
+
+/* NAV + RESPONSIVE BEHAVIOR */
 @media (max-width: 900px) {
   .nav-toggle {
     display: flex;
