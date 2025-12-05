@@ -63,20 +63,6 @@
         --border: rgba(5, 6, 10, 0.1);
       }
 
-      [data-theme="light"] body {
-        background: radial-gradient(
-            circle at 20% -10%,
-            rgba(123, 92, 255, 0.12),
-            transparent 40%
-          ),
-          radial-gradient(
-            circle at 80% 0%,
-            rgba(47, 218, 184, 0.12),
-            transparent 45%
-          ),
-          #f6f6fb;
-      }
-
       .theme-toggle {
         border-radius: 999px;
         border: 1px solid var(--border);
@@ -105,7 +91,8 @@
   </head>
 
   <body>
-    <header class="hero" id="top">
+    <section id="hero-vanta">
+      <header class="hero" id="hero-section">
       <nav class="nav">
         <div class="logo">Neuralhustle<span> Academy</span></div>
 
@@ -122,7 +109,14 @@
           <li><a href="#courses">Courses</a></li>
           <li><a href="#projects">Projects</a></li>
           <li><a href="#portfolio">Portfolio</a></li>
-          <li><a href="#blog">Blog</a></li>
+          <li>
+            <a
+              href="https://www.upwork.com/freelancers/~014f1c5a4da976d3ac"
+              target="_blank"
+              rel="noopener"
+              >Upwork</a
+            >
+          </li>
           <li><a href="#videos">Videos</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
@@ -156,9 +150,29 @@
           <p>Videos, livestreams, and downloadable systems</p>
         </div>
       </div>
-    </header>
+      </header>
+    </section>
 
     <main>
+      <section class="section alt upwork-section" id="upwork">
+        <div class="upwork-cta fade-in-up">
+          <h2>Work With Me on Upwork</h2>
+          <p>
+            I help businesses automate workflows, build AI systems, and ship
+            smarter digital experiences. You can hire me for AI development,
+            automation engineering, API integration, and custom AI copilots.
+          </p>
+
+          <a
+            href="https://www.upwork.com/freelancers/~014f1c5a4da976d3ac"
+            target="_blank"
+            rel="noopener"
+            class="btn upwork-btn"
+            >View My Upwork Profile</a
+          >
+        </div>
+      </section>
+
       <!-- About -->
       <section class="section" id="about">
         <div class="section-heading fade-in-up">
@@ -522,70 +536,82 @@
         </div>
       </section>
 
-      <!-- Blog -->
-      <section class="section alt" id="blog">
-        <div class="section-heading fade-in-up">
-          <p class="eyebrow">Blog Drops</p>
-          <h2>Notes from the build process.</h2>
-          <p>Short breakdowns of experiments, tools, and workflows.</p>
-        </div>
+      <!-- Videos / YouTube Channels -->
+      <section id="youtube" class="py-24 container mx-auto youtube-section fade-in-up">
+        <h2 class="text-5xl font-bold mb-10">
+          AI football shorts • AI animal stories • high-speed creative builds.
+        </h2>
 
-        <div class="cards-grid fade-in-up" id="blogPosts"></div>
-      </section>
+        <p class="text-lg opacity-70 mb-16">
+          Rouane runs two AI-powered entertainment channels: <strong>NeuralFC</strong>
+          and <strong>Ainimal</strong>.
+        </p>
 
-      <!-- Videos -->
-      <section class="section" id="videos">
-        <div class="section-heading fade-in-up">
-          <p class="eyebrow">YouTube Channels</p>
-          <h2>
-            AI football shorts · AI animal stories · high-speed creative builds.
-          </h2>
-          <p>
-            Rouane runs two AI-powered channels:
-            <strong>NeuralFC</strong> and <strong>Ainimal</strong>.
-          </p>
-        </div>
+        <div class="grid youtube-grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="bg-primary-900/40 youtube-card p-8 rounded-xl border border-white/5">
+            <h3 class="text-xl font-semibold mb-3">NeuralFC • AI Football Shorts</h3>
+            <p class="opacity-70 mb-6">Fast paced comedic AI football clips.</p>
 
-        <div class="video-grid fade-in-up">
-          <article class="video-card">
-            <h3>NeuralFC · AI Football Shorts</h3>
-            <p>Fast paced comedic AI football clips.</p>
             <a
-              href="https://youtube.com/@neuralfc"
-              class="btn ghost"
+              href="https://youtube.com/@NeuralFC"
               target="_blank"
-              >Visit NeuralFC</a
+              rel="noopener"
+              class="flex items-center gap-2 px-5 py-2 rounded-lg bg-white text-black font-semibold hover:scale-105 transition youtube-btn"
             >
-          </article>
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M10 15l5.19-3L10 9v6zm12-3c0-2.76-2.24-5-5-5H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h10c2.76 0 5-2.24 5-5z" />
+              </svg>
+              Visit NeuralFC
+            </a>
+          </div>
 
-          <article class="video-card">
-            <h3>Ainimal · AI Animal Stories</h3>
-            <p>Cinematic AI-driven animal adventures.</p>
-            <a
-              href="https://youtube.com/@ainimal-f5r"
-              class="btn ghost"
-              target="_blank"
-              >Visit Ainimal</a
-            >
-          </article>
+          <div class="bg-primary-900/40 youtube-card p-8 rounded-xl border border-white/5">
+            <h3 class="text-xl font-semibold mb-3">Ainimal • AI Animal Stories</h3>
+            <p class="opacity-70 mb-6">Cinematic AI-driven animal adventures.</p>
 
-          <article class="video-card">
-            <h3>Explore Both Worlds</h3>
-            <p>Pick your universe.</p>
             <a
-              href="https://youtube.com/@neuralfc"
-              class="btn ghost"
+              href="https://youtube.com/@AinimalAI"
               target="_blank"
-              style="margin-bottom: 0.75rem"
-              >NeuralFC</a
+              rel="noopener"
+              class="flex items-center gap-2 px-5 py-2 rounded-lg bg-white text-black font-semibold hover:scale-105 transition youtube-btn"
             >
-            <a
-              href="https://youtube.com/@ainimal-f5r"
-              class="btn ghost"
-              target="_blank"
-              >Ainimal</a
-            >
-          </article>
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M10 15l5.19-3L10 9v6zm12-3c0-2.76-2.24-5-5-5H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h10c2.76 0 5-2.24 5-5z" />
+              </svg>
+              Visit Ainimal
+            </a>
+          </div>
+
+          <div class="bg-primary-900/40 youtube-card p-8 rounded-xl border border-white/5">
+            <h3 class="text-xl font-semibold mb-3">Explore both worlds</h3>
+            <p class="opacity-70 mb-6">Choose your creative universe.</p>
+
+            <div class="flex gap-3 flex-wrap">
+              <a
+                href="https://youtube.com/@NeuralFC"
+                target="_blank"
+                rel="noopener"
+                class="flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-white text-black font-semibold hover:scale-105 transition youtube-btn"
+              >
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M10 15l5.19-3L10 9v6zm12-3c0-2.76-2.24-5-5-5H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h10c2.76 0 5-2.24 5-5z" />
+                </svg>
+                NeuralFC
+              </a>
+
+              <a
+                href="https://youtube.com/@AinimalAI"
+                target="_blank"
+                rel="noopener"
+                class="flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-white text-black font-semibold hover:scale-105 transition youtube-btn"
+              >
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M10 15l5.19-3L10 9v6zm12-3c0-2.76-2.24-5-5-5H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h10c2.76 0 5-2.24 5-5z" />
+                </svg>
+                Ainimal
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -650,31 +676,83 @@
         new Date().getFullYear();
 
       const body = document.body;
+      const root = document.documentElement;
       const themeToggle = document.getElementById("themeToggle");
       const themeIcon = document.getElementById("themeIcon");
       const themeLabel = document.getElementById("themeLabel");
+      const heroVanta = document.getElementById("hero-vanta");
+      const heroSection = document.getElementById("hero-section");
 
-      const storedTheme = localStorage.getItem("neuralhustle-theme");
-      if (storedTheme === "light") {
-        body.setAttribute("data-theme", "light");
-        themeIcon.textContent = "☀️";
-        themeLabel.textContent = "Light";
+      function syncHeroVantaHeight() {
+        if (!heroVanta || !heroSection) return;
+
+        const heroHeight = heroSection.getBoundingClientRect().height;
+        heroVanta.style.minHeight = `${heroHeight}px`;
+        heroVanta.style.height = `${heroHeight}px`;
+
+        if (window.vantaEffect && typeof window.vantaEffect.resize === "function") {
+          window.requestAnimationFrame(() => window.vantaEffect.resize());
+        }
       }
 
-      themeToggle.addEventListener("click", () => {
-        const isLight = body.getAttribute("data-theme") === "light";
+      const heroResizeObserver =
+        typeof ResizeObserver !== "undefined"
+          ? new ResizeObserver(() => syncHeroVantaHeight())
+          : null;
+
+      if (heroResizeObserver && heroSection) {
+        heroResizeObserver.observe(heroSection);
+      }
+
+      window.addEventListener("resize", syncHeroVantaHeight);
+
+      function updateVantaTheme(isDark) {
+        if (!window.vantaEffect) return;
+
+        window.vantaEffect.setOptions({
+          color: isDark ? 0x00e1ff : 0x005577,
+          backgroundAlpha: isDark ? 0.1 : 0.35,
+          points: isDark ? 16 : 12,
+          maxDistance: isDark ? 32 : 24,
+        });
+
+        syncHeroVantaHeight();
+      }
+
+      function applyTheme(isLight) {
         if (isLight) {
-          body.removeAttribute("data-theme");
-          themeIcon.textContent = "🌙";
-          themeLabel.textContent = "Dark";
-          localStorage.setItem("neuralhustle-theme", "dark");
-        } else {
           body.setAttribute("data-theme", "light");
+          root.classList.add("light");
           themeIcon.textContent = "☀️";
           themeLabel.textContent = "Light";
           localStorage.setItem("neuralhustle-theme", "light");
+        } else {
+          body.removeAttribute("data-theme");
+          root.classList.remove("light");
+          themeIcon.textContent = "🌙";
+          themeLabel.textContent = "Dark";
+          localStorage.setItem("neuralhustle-theme", "dark");
         }
+
+        updateVantaTheme(!isLight);
+        syncHeroVantaHeight();
+      }
+
+      const storedTheme = localStorage.getItem("neuralhustle-theme");
+      applyTheme(storedTheme === "light");
+      requestAnimationFrame(() =>
+        updateVantaTheme(body.getAttribute("data-theme") !== "light")
+      );
+
+      themeToggle.addEventListener("click", () => {
+        const isLight = body.getAttribute("data-theme") === "light";
+        applyTheme(!isLight);
+        requestAnimationFrame(() =>
+          updateVantaTheme(body.getAttribute("data-theme") !== "light")
+        );
       });
+
+      syncHeroVantaHeight();
 
       const animated = document.querySelectorAll(".fade-in-up");
       const observer = new IntersectionObserver(
@@ -691,14 +769,36 @@
       animated.forEach(el => observer.observe(el));
     </script>
 
-    <!-- Blog placeholder if empty -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.net.min.js"></script>
     <script>
-      const blogPosts = document.getElementById("blogPosts");
-      if (blogPosts && blogPosts.children.length === 0) {
-        blogPosts.innerHTML = `
-      <p style="color: var(--muted); font-size: 1rem; opacity:.8;">
-          🚧 Blog posts coming soon — new drops every week.
-      </p>`;
+      const heroTarget = document.getElementById("hero-vanta");
+      const heroContent = document.getElementById("hero-section");
+      const heroContentHeight =
+        heroContent?.getBoundingClientRect().height || 560;
+
+      if (heroTarget) {
+        window.vantaEffect = VANTA.NET({
+          el: "#hero-vanta",
+          mouseControls: true,
+          touchControls: true,
+          minHeight: heroContentHeight,
+          minWidth: 200.0,
+          scale: 1.4,
+          scaleMobile: 1.8,
+          color: 0x00e1ff,
+          backgroundAlpha: 0.15,
+          points: 14.0,
+          maxDistance: 28.0,
+          spacing: 16.0,
+        });
+      }
+
+      const isDarkTheme = body.getAttribute("data-theme") !== "light";
+      updateVantaTheme(isDarkTheme);
+
+      if (typeof syncHeroVantaHeight === "function") {
+        syncHeroVantaHeight();
       }
     </script>
 
