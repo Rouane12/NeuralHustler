@@ -91,9 +91,11 @@
   </head>
 
   <body>
+    <!-- HERO / VANTA WRAPPER -->
     <section id="hero-vanta">
       <header class="hero" id="hero-section">
         <div class="page-shell">
+          <!-- NAVBAR -->
           <nav class="nav">
             <div class="logo">Neuralhustle<span> Academy</span></div>
 
@@ -105,6 +107,7 @@
             <button class="nav-toggle" aria-label="Toggle navigation">
               <span></span><span></span><span></span>
             </button>
+
             <ul class="nav-links">
               <li><a href="#about">About</a></li>
               <li><a href="#courses">Courses</a></li>
@@ -118,30 +121,58 @@
                   >Upwork</a
                 >
               </li>
-              <li><a href="#videos">Videos</a></li>
+              <!-- fixed: link points to actual id="youtube" -->
+              <li><a href="#youtube">Videos</a></li>
               <li><a href="#contact">Contact</a></li>
             </ul>
           </nav>
 
+          <!-- HERO GRID -->
           <div class="hero-layout">
+            <!-- LEFT: COPY -->
             <div class="hero-content fade-in-up">
-              <div class="hero-badge">Automation × Design × Delivery</div>
-              <p class="eyebrow">Rouane Mounssif · AI Integration & Creative Automation</p>
+              <div class="hero-badge">
+                Automation × AI Systems × Creative Ops
+              </div>
+
+              <p class="eyebrow">
+                Rouane Mounssif · AI Integration & Creative Automation
+              </p>
+
               <h1>Ship smarter workflows with AI copilots.</h1>
+
               <p class="lead">
-                NeuralhustleAcademy.com is the digital HQ for Rouane's cohorts,
+                NeuralhustleAcademy.com is the digital HQ for Rouane’s cohorts,
                 behind-the-scenes projects, and YouTube breakdowns.
               </p>
 
               <div class="hero-cta">
                 <a class="btn primary" href="#courses">Explore cohorts</a>
-                <a class="btn ghost" href="#videos">Watch tutorials</a>
+                <a class="btn ghost" href="#youtube">Watch tutorials</a>
               </div>
             </div>
 
+            <!-- RIGHT: PROFILE + METRICS -->
             <div class="hero-visual fade-in-up">
-              <div class="orb"></div>
-              <div class="orb orb-secondary"></div>
+              <!-- PROFILE CARD with your picture -->
+              <div class="hero-profile-card">
+                <div class="hero-profile-photo-wrap">
+                  <!-- change src to your final file name in the repo -->
+                  <img
+                    src="my-image-in-portfo.webp"
+                    alt="Portrait of Rouane Mounssif"
+                    class="hero-profile-photo"
+                  />
+                </div>
+                <div class="hero-profile-text">
+                  <p class="hero-profile-name">Rouane Mounssif</p>
+                  <p class="hero-profile-role">
+                    AI Integration Engineer · Automation & Content Systems
+                  </p>
+                </div>
+              </div>
+
+              <!-- METRICS -->
               <div class="hero-highlight">
                 <div>
                   <span class="metric">12+</span>
@@ -157,12 +188,13 @@
                 </div>
               </div>
 
+              <!-- FLOATING CARD -->
               <div class="floating-card">
                 <p class="muted">Currently shipping</p>
                 <div class="floating-pill-group">
-                  <span class="pill">Fast API builds</span>
-                  <span class="pill">LangChain</span>
-                  <span class="pill">Creative Ops</span>
+                  <span class="pill">FastAPI builds</span>
+                  <span class="pill">LangChain & agents</span>
+                  <span class="pill">Creative ops systems</span>
                 </div>
               </div>
             </div>
@@ -172,7 +204,7 @@
     </section>
 
     <main>
-      <!-- About -->
+      <!-- ABOUT -->
       <section class="section" id="about">
         <div class="section-heading fade-in-up">
           <p class="eyebrow">Meet Rouane</p>
@@ -208,22 +240,25 @@
         </div>
       </section>
 
-      <!-- Resume Timeline -->
+      <!-- RESUME TIMELINE -->
       <section class="section alt" id="resume">
         <div class="section-heading fade-in-up">
           <p class="eyebrow">Resume</p>
           <h2>Experience, education, and certifications.</h2>
           <p>
-            A quick timeline of recent roles, studies, and credentials guiding my
-            builds.
+            A quick timeline of recent roles, studies, and credentials guiding
+            my builds.
           </p>
         </div>
 
         <div class="timeline-grid">
+          <!-- EXPERIENCE -->
           <div class="timeline-group fade-in-up">
             <div class="timeline-group-header">
               <h3>Professional Experience</h3>
-              <p class="muted">Recent engineering roles and applied projects.</p>
+              <p class="muted">
+                Recent engineering roles and applied projects.
+              </p>
             </div>
 
             <div class="timeline">
@@ -260,14 +295,15 @@
                   <h4>Initial Internship</h4>
                   <p class="timeline-entity">DFI International</p>
                   <p class="timeline-meta">
-                    Contributed to optimization of data processes and
-                    knowledge systems.
+                    Contributed to optimization of data processes and knowledge
+                    systems.
                   </p>
                 </div>
               </article>
             </div>
           </div>
 
+          <!-- EDUCATION -->
           <div class="timeline-group fade-in-up">
             <div class="timeline-group-header">
               <h3>Education</h3>
@@ -295,10 +331,13 @@
             </div>
           </div>
 
+          <!-- CERTIFICATIONS -->
           <div class="timeline-group fade-in-up">
             <div class="timeline-group-header">
               <h3>Certifications</h3>
-              <p class="muted">Foundational credentials that support my builds.</p>
+              <p class="muted">
+                Foundational credentials that support my builds.
+              </p>
             </div>
 
             <div class="timeline">
@@ -362,53 +401,54 @@
         </div>
       </section>
 
-      <!-- Projects -->
+      <!-- PROJECTS -->
       <section class="section" id="projects">
         <div class="section-heading fade-in-up">
           <p class="eyebrow">Academic Projects</p>
-          <h2>Personal projects that I developed in my interships.</h2>
-          <p>
-            Consulting projects mixing research, automation, and delivery.
-          </p>
+          <h2>Personal projects that I developed in my internships.</h2>
+          <p>Consulting-style builds mixing research, automation, and delivery.</p>
         </div>
 
         <div class="projects fade-in-up">
           <article>
             <div class="project-meta">
-              <span class="tag">Zapier · Wordpress · API Integration</span>
+              <span class="tag">Zapier · WordPress · API Integration</span>
               <span class="project-year">2023</span>
             </div>
-            <h3>SEO optimised wordpress plugin and Zapier automations</h3>
+            <h3>SEO-Optimized WordPress Plugin & Zapier Automations</h3>
             <p>
-              Built for bloggers and journalists to help facilitate their tasks using Openai API integration tools.
+              Built for bloggers and journalists to streamline workflows using
+              OpenAI-powered automation tools.
             </p>
           </article>
 
           <article>
             <div class="project-meta">
-              <span class="tag">Flutter · Bloc pattern · Firebase</span>
+              <span class="tag">Flutter · Bloc Pattern · Firebase</span>
               <span class="project-year">2022</span>
             </div>
-            <h3>Online course app</h3>
+            <h3>Online Course App</h3>
             <p>
-              An app created with flutter and firebase to help create courses online and publish them freely.
+              A Flutter + Firebase app to create, manage, and publish courses
+              online.
             </p>
           </article>
 
           <article>
             <div class="project-meta">
-              <span class="tag">SQL · Query · Database</span>
+              <span class="tag">SQL · Query Design · Databases</span>
               <span class="project-year">2021</span>
             </div>
-            <h3>Database management</h3>
+            <h3>Database Management</h3>
             <p>
-              Internal management of meta data and databases of an entreprise that specialises in delivery.
+              Internal management of metadata and databases for a delivery-focused
+              enterprise.
             </p>
           </article>
         </div>
       </section>
 
-      <!-- Courses -->
+      <!-- COURSES -->
       <section class="section alt" id="courses">
         <div class="section-heading fade-in-up">
           <p class="eyebrow">Courcify Courses</p>
@@ -479,7 +519,7 @@
         </div>
       </section>
 
-      <!-- Portfolio -->
+      <!-- PORTFOLIO / GITHUB -->
       <section class="section" id="portfolio">
         <div class="section-heading fade-in-up">
           <p class="eyebrow">Portfolio</p>
@@ -492,8 +532,7 @@
             <div class="card-top gradient-teal">
               <h3>Wardrobe AI Backend</h3>
               <p>
-                FastAPI backend integrating OpenAI vision and structured
-                outputs.
+                FastAPI backend integrating OpenAI vision and structured outputs.
               </p>
             </div>
             <ul>
@@ -512,13 +551,11 @@
           <article class="card">
             <div class="card-top gradient-purple">
               <h3>SoraAgent</h3>
-              <p>
-                Experimental agent automation project for media workflows.
-              </p>
+              <p>Experimental agent automation project for media workflows.</p>
             </div>
             <ul>
               <li>Prompt + workflow engineering</li>
-              <li>Agent style orchestration</li>
+              <li>Agent-style orchestration</li>
               <li>Future personal tooling base</li>
             </ul>
             <a
@@ -531,21 +568,30 @@
         </div>
       </section>
 
-      <!-- Videos / YouTube Channels -->
-      <section id="youtube" class="py-24 container mx-auto youtube-section fade-in-up">
+      <!-- YOUTUBE CHANNELS -->
+      <section
+        id="youtube"
+        class="py-24 container mx-auto youtube-section fade-in-up"
+      >
         <h2 class="text-5xl font-bold mb-10">
           AI football shorts • AI animal stories • high-speed creative builds.
         </h2>
 
         <p class="text-lg opacity-70 mb-16">
-          Rouane runs two AI-powered entertainment channels: <strong>NeuralFC</strong>
-          and <strong>Ainimal</strong>.
+          Rouane runs two AI-powered entertainment channels:
+          <strong>NeuralFC</strong> and <strong>Ainimal</strong>.
         </p>
 
         <div class="grid youtube-grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div class="bg-primary-900/40 youtube-card p-8 rounded-xl border border-white/5">
-            <h3 class="text-xl font-semibold mb-3">NeuralFC • AI Football Shorts</h3>
-            <p class="opacity-70 mb-6">Fast paced comedic AI football clips.</p>
+          <div
+            class="bg-primary-900/40 youtube-card p-8 rounded-xl border border-white/5"
+          >
+            <h3 class="text-xl font-semibold mb-3">
+              NeuralFC • AI Football Shorts
+            </h3>
+            <p class="opacity-70 mb-6">
+              Fast paced comedic AI football clips.
+            </p>
 
             <a
               href="https://youtube.com/@NeuralFC"
@@ -553,16 +599,30 @@
               rel="noopener"
               class="flex items-center gap-2 px-5 py-2 rounded-lg bg-white text-black font-semibold hover:scale-105 transition youtube-btn"
             >
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path d="M10 15l5.19-3L10 9v6zm12-3c0-2.76-2.24-5-5-5H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h10c2.76 0 5-2.24 5-5z" />
+              <svg
+                class="w-5 h-5"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path
+                  d="M10 15l5.19-3L10 9v6zm12-3c0-2.76-2.24-5-5-5H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h10c2.76 0 5-2.24 5-5z"
+                />
               </svg>
               Visit NeuralFC
             </a>
           </div>
 
-          <div class="bg-primary-900/40 youtube-card p-8 rounded-xl border border-white/5">
-            <h3 class="text-xl font-semibold mb-3">Ainimal • AI Animal Stories</h3>
-            <p class="opacity-70 mb-6">Cinematic AI-driven animal adventures.</p>
+          <div
+            class="bg-primary-900/40 youtube-card p-8 rounded-xl border border-white/5"
+          >
+            <h3 class="text-xl font-semibold mb-3">
+              Ainimal • AI Animal Stories
+            </h3>
+            <p class="opacity-70 mb-6">
+              Cinematic AI-driven animal adventures.
+            </p>
 
             <a
               href="https://youtube.com/@AinimalAI"
@@ -570,14 +630,24 @@
               rel="noopener"
               class="flex items-center gap-2 px-5 py-2 rounded-lg bg-white text-black font-semibold hover:scale-105 transition youtube-btn"
             >
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path d="M10 15l5.19-3L10 9v6zm12-3c0-2.76-2.24-5-5-5H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h10c2.76 0 5-2.24 5-5z" />
+              <svg
+                class="w-5 h-5"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path
+                  d="M10 15l5.19-3L10 9v6zm12-3c0-2.76-2.24-5-5-5H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h10c2.76 0 5-2.24 5-5z"
+                />
               </svg>
               Visit Ainimal
             </a>
           </div>
 
-          <div class="bg-primary-900/40 youtube-card p-8 rounded-xl border border-white/5">
+          <div
+            class="bg-primary-900/40 youtube-card p-8 rounded-xl border border-white/5"
+          >
             <h3 class="text-xl font-semibold mb-3">Explore both worlds</h3>
             <p class="opacity-70 mb-6">Choose your creative universe.</p>
 
@@ -588,8 +658,16 @@
                 rel="noopener"
                 class="flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-white text-black font-semibold hover:scale-105 transition youtube-btn"
               >
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                  <path d="M10 15l5.19-3L10 9v6zm12-3c0-2.76-2.24-5-5-5H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h10c2.76 0 5-2.24 5-5z" />
+                <svg
+                  class="w-4 h-4"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path
+                    d="M10 15l5.19-3L10 9v6zm12-3c0-2.76-2.24-5-5-5H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h10c2.76 0 5-2.24 5-5z"
+                  />
                 </svg>
                 NeuralFC
               </a>
@@ -600,8 +678,16 @@
                 rel="noopener"
                 class="flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-white text-black font-semibold hover:scale-105 transition youtube-btn"
               >
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                  <path d="M10 15l5.19-3L10 9v6zm12-3c0-2.76-2.24-5-5-5H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h10c2.76 0 5-2.24 5-5z" />
+                <svg
+                  class="w-4 h-4"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path
+                    d="M10 15l5.19-3L10 9v6zm12-3c0-2.76-2.24-5-5-5H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h10c2.76 0 5-2.24 5-5z"
+                  />
                 </svg>
                 Ainimal
               </a>
@@ -610,7 +696,7 @@
         </div>
       </section>
 
-      <!-- Contact -->
+      <!-- CONTACT -->
       <section class="section" id="contact">
         <div class="section-heading fade-in-up">
           <p class="eyebrow">Book a build</p>
@@ -625,19 +711,32 @@
           <input type="hidden" name="_captcha" value="false" />
           <input type="hidden" name="_next" value="https://neuralhustle.com/" />
 
-          <label>Name <input type="text" name="name" required /></label>
-          <label>Email <input type="email" name="email" required /></label>
-          <label>Message <textarea name="message" rows="4"></textarea></label>
+          <label>
+            Name
+            <input type="text" name="name" required />
+          </label>
+
+          <label>
+            Email
+            <input type="email" name="email" required />
+          </label>
+
+          <label>
+            Message
+            <textarea name="message" rows="4"></textarea>
+          </label>
 
           <button type="submit" class="btn primary">Send message</button>
         </form>
       </section>
     </main>
 
+    <!-- FOOTER -->
     <footer class="footer">
       <div>
         <p>
-          © <span id="year"></span> Neuralhustle.com · Built by Rouane Mounssif
+          © <span id="year"></span> Neuralhustle.com · Built by Rouane
+          Mounssif
         </p>
       </div>
 
@@ -660,16 +759,24 @@
 
     <!-- JS SECTION -->
     <script>
+      // Mobile nav toggle
       const navToggle = document.querySelector(".nav-toggle");
       const navLinks = document.querySelector(".nav-links");
-      navToggle.addEventListener("click", () => {
-        navLinks.classList.toggle("open");
-        navToggle.classList.toggle("active");
-      });
 
-      document.getElementById("year").textContent =
-        new Date().getFullYear();
+      if (navToggle && navLinks) {
+        navToggle.addEventListener("click", () => {
+          navLinks.classList.toggle("open");
+          navToggle.classList.toggle("active");
+        });
+      }
 
+      // Footer year
+      const yearSpan = document.getElementById("year");
+      if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+      }
+
+      // Theme + Vanta integration
       const body = document.body;
       const root = document.documentElement;
       const themeToggle = document.getElementById("themeToggle");
@@ -680,12 +787,14 @@
 
       function syncHeroVantaHeight() {
         if (!heroVanta || !heroSection) return;
-
         const heroHeight = heroSection.getBoundingClientRect().height;
         heroVanta.style.minHeight = `${heroHeight}px`;
         heroVanta.style.height = `${heroHeight}px`;
 
-        if (window.vantaEffect && typeof window.vantaEffect.resize === "function") {
+        if (
+          window.vantaEffect &&
+          typeof window.vantaEffect.resize === "function"
+        ) {
           window.requestAnimationFrame(() => window.vantaEffect.resize());
         }
       }
@@ -718,14 +827,14 @@
         if (isLight) {
           body.setAttribute("data-theme", "light");
           root.classList.add("light");
-          themeIcon.textContent = "☀️";
-          themeLabel.textContent = "Light";
+          if (themeIcon) themeIcon.textContent = "☀️";
+          if (themeLabel) themeLabel.textContent = "Light";
           localStorage.setItem("neuralhustle-theme", "light");
         } else {
           body.removeAttribute("data-theme");
           root.classList.remove("light");
-          themeIcon.textContent = "🌙";
-          themeLabel.textContent = "Dark";
+          if (themeIcon) themeIcon.textContent = "🌙";
+          if (themeLabel) themeLabel.textContent = "Dark";
           localStorage.setItem("neuralhustle-theme", "dark");
         }
 
@@ -735,24 +844,28 @@
 
       const storedTheme = localStorage.getItem("neuralhustle-theme");
       applyTheme(storedTheme === "light");
+
       requestAnimationFrame(() =>
         updateVantaTheme(body.getAttribute("data-theme") !== "light")
       );
 
-      themeToggle.addEventListener("click", () => {
-        const isLight = body.getAttribute("data-theme") === "light";
-        applyTheme(!isLight);
-        requestAnimationFrame(() =>
-          updateVantaTheme(body.getAttribute("data-theme") !== "light")
-        );
-      });
+      if (themeToggle) {
+        themeToggle.addEventListener("click", () => {
+          const isLight = body.getAttribute("data-theme") === "light";
+          applyTheme(!isLight);
+          requestAnimationFrame(() =>
+            updateVantaTheme(body.getAttribute("data-theme") !== "light")
+          );
+        });
+      }
 
       syncHeroVantaHeight();
 
+      // Intersection observer for fade-in
       const animated = document.querySelectorAll(".fade-in-up");
       const observer = new IntersectionObserver(
-        entries => {
-          entries.forEach(entry => {
+        (entries) => {
+          entries.forEach((entry) => {
             if (entry.isIntersecting) {
               entry.target.classList.add("is-visible");
               observer.unobserve(entry.target);
@@ -761,9 +874,11 @@
         },
         { threshold: 0.15 }
       );
-      animated.forEach(el => observer.observe(el));
+
+      animated.forEach((el) => observer.observe(el));
     </script>
 
+    <!-- VANTA / THREE -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.net.min.js"></script>
     <script>
