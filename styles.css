@@ -510,7 +510,7 @@ main {
 
 .section-heading {
   max-width: 680px;
-  margin-bottom: 4rem; /* increased for more space below the description text */
+  margin-bottom: 3.5rem; /* increased for more space below the description text */
   position: relative;
   z-index: 1;
 }
