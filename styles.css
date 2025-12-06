@@ -515,6 +515,10 @@ main {
   z-index: 1;
 }
 
+#resume .section-heading {
+  margin-bottom: 3.5rem; /* or whatever space you want */
+}
+
 .section-heading h2 {
   font-size: clamp(2rem, 4vw, 3rem);
   margin-bottom: 1rem;
