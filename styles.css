@@ -299,17 +299,11 @@ main {
 .about-upwork-cta {
   display: flex;
   justify-content: center;
+  margin-top: clamp(0.25rem, 1vw, 0.75rem);
   margin-top: clamp(0.5rem, 2vw, 1.5rem);
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-}
-
-.upwork-label {
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-weight: 700;
-  color: var(--muted);
 }
 
 .upwork-card {
@@ -337,15 +331,19 @@ main {
     box-shadow: 0 30px 70px rgba(0, 0, 0, 0.14), 0 1px 0 rgba(255, 255, 255, 0.45) inset;
   }
 
-  .upwork-card::before {
-    content: "";
-    position: absolute;
+.upwork-card::before {
+  content: "";
+  position: absolute;
   inset: 0;
   background: radial-gradient(circle at 18% 20%, rgba(123, 92, 255, 0.28), transparent 45%),
     radial-gradient(circle at 82% 12%, rgba(47, 218, 184, 0.26), transparent 42%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 60%);
   opacity: 0.9;
   pointer-events: none;
+}
+
+#about .section-heading {
+  margin: 0 auto 1.75rem;
 }
 
 .upwork-card-inner {
