@@ -1,3 +1,4 @@
+/* FIXED SPACING VERSION */
 /* ROOT THEME TOKENS */
 :root {
   --bg: #05060a;
@@ -216,8 +217,7 @@ header,
 }
 
 /* HERO BADGE / TYPOGRAPHY */
-.hero-badge {
-  display: inline-flex;
+.hero-badge { display: inline-flex;
   align-items: center;
   gap: 0.4rem;
   padding: 0.55rem 1rem;
@@ -236,7 +236,6 @@ header,
   animation: badgeGlow 4.5s ease-in-out infinite;
   margin-bottom: 1rem;
 }
-
 
 .eyebrow {
   color: var(--accent-2);
@@ -511,7 +510,7 @@ main {
 
 .section-heading {
   max-width: 680px;
-  margin-bottom: 3.5rem; /* increased for more space below the description text */
+  margin-bottom: 4.5rem; /* increased for more space below the description text */
   position: relative;
   z-index: 1;
 }
