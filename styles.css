@@ -519,6 +519,11 @@ main {
   margin-bottom: 3.5rem; /* or whatever space you want */
 }
 
+#courses .section-heading {
+  margin-bottom: 3.5rem;
+}
+
+
 .section-heading h2 {
   font-size: clamp(2rem, 4vw, 3rem);
   margin-bottom: 1rem;
