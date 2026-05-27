@@ -776,6 +776,11 @@ html.light .upwork-card {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.3);
+}
+
 .card-top {
   padding: 1.75rem;
   display: grid;
