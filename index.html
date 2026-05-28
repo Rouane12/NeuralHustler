@@ -913,67 +913,91 @@
     </script>
     <!-- Draggable D-ID Agent -->
     <script>
-      function makeDraggable() {
-        const agent = document.querySelector('did-agent');
-        if (!agent) { setTimeout(makeDraggable, 500); return; }
+    function makeDraggable() {
+    const agent = document.querySelector('did-agent');
+    if (!agent) { setTimeout(makeDraggable, 500); return; }
 
-        agent.style.position = 'fixed';
-        agent.style.cursor = 'grab';
-        agent.style.zIndex = '9999';
-        agent.style.userSelect = 'none';
+    const handle = document.createElement('div');
+    handle.style.cssText = `
+      position: fixed;
+      width: 60px;
+      height: 60px;
+      bottom: 20px;
+      right: 20px;
+      z-index: 10000;
+      cursor: grab;
+      border-radius: 50%;
+      background: rgba(123, 92, 255, 0.3);
+      border: 2px dashed rgba(123, 92, 255, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      user-select: none;
+      pointer-events: all;
+    `;
+    handle.innerHTML = '✥';
+    document.body.appendChild(handle);
 
-        let isDragging = false;
-        let offsetX, offsetY;
+    let isDragging = false;
+    let startX, startY, offsetX, offsetY;
 
-        agent.addEventListener('mousedown', (e) => {
+    handle.addEventListener('mousedown', (e) => {
+      startX = e.clientX;
+      startY = e.clientY;
+      offsetX = e.clientX - handle.getBoundingClientRect().left;
+      offsetY = e.clientY - handle.getBoundingClientRect().top;
+      handle.style.cursor = 'grabbing';
+      e.preventDefault();
+      e.stopPropagation();
+
+      function onMouseMove(e) {
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        if (!isDragging && (Math.abs(dx) > 3 || Math.abs(dy) > 3)) {
           isDragging = true;
-          offsetX = e.clientX - agent.getBoundingClientRect().left;
-          offsetY = e.clientY - agent.getBoundingClientRect().top;
-          agent.style.cursor = 'grabbing';
-        });
+        }
+        if (!isDragging) return;
 
-        document.addEventListener('mousemove', (e) => {
-          if (!isDragging) return;
-          agent.style.left = `${e.clientX - offsetX}px`;
-          agent.style.top  = `${e.clientY - offsetY}px`;
-          agent.style.right = 'auto';
-          agent.style.bottom = 'auto';
-        });
-
-        document.addEventListener('mouseup', () => {
-          isDragging = false;
-          agent.style.cursor = 'grab';
-        });
-
-        agent.addEventListener('touchstart', (e) => {
-          const touch = e.touches[0];
-          offsetX = touch.clientX - agent.getBoundingClientRect().left;
-          offsetY = touch.clientY - agent.getBoundingClientRect().top;
-        });
-
-        document.addEventListener('touchmove', (e) => {
-          const touch = e.touches[0];
-          agent.style.left   = `${touch.clientX - offsetX}px`;
-          agent.style.top    = `${touch.clientY - offsetY}px`;
-          agent.style.right  = 'auto';
-          agent.style.bottom = 'auto';
-        });
+        const x = e.clientX - offsetX;
+        const y = e.clientY - offsetY;
+        handle.style.left   = `${x}px`;
+        handle.style.top    = `${y}px`;
+        handle.style.right  = 'auto';
+        handle.style.bottom = 'auto';
+        agent.style.position = 'fixed';
+        agent.style.left    = `${x - 10}px`;
+        agent.style.top     = `${y - 10}px`;
+        agent.style.right   = 'auto';
+        agent.style.bottom  = 'auto';
       }
 
-      makeDraggable();
-      
-    </script>
-    <!-- D-ID AI Copilot Script -->
-    <script
-      type="module"
-      src="https://agent.d-id.com/v2/index.js"
-      data-mode="fabio"
-      data-client-key="Z29vZ2xlLW9hdXRoMnwxMTQ2NTU1OTc0MjM1NDYwMDIwMTc6clIyM0lMMHFjNjRiLVN5SzNMTW91"
-      data-agent-id="v2_agt_7IN1Ch8z"
-      data-name="did-agent"
-      data-monitor="true"
-      data-orientation="horizontal"
-      data-position="right"
-    ></script>
+      function onMouseUp() {
+        isDragging = false;
+        handle.style.cursor = 'grab';
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+      }
+
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', onMouseUp);
+    });
+  }
+
+  makeDraggable();
+</script>
+
+<!-- D-ID AI Copilot Script -->
+<script
+  type="module"
+  src="https://agent.d-id.com/v2/index.js"
+  data-mode="fabio"
+  data-client-key="Z29vZ2xlLW9hdXRoMnwxMTQ2NTU1OTc0MjM1NDYwMDIwMTc6clIyM0lMMHFjNjRiLVN5SzNMTW91"
+  data-agent-id="v2_agt_7IN1Ch8z"
+  data-name="did-agent"
+  data-monitor="true"
+  data-orientation="horizontal"
+  data-position="right"
+  ></script>
   </body>
 </html>
