@@ -57,6 +57,16 @@ html.light p {
   text-shadow: 0 0 4px rgba(255, 255, 255, 0.9);
 }
 
+body:not([data-theme="light"]) h1,
+body:not([data-theme="light"]) h2,
+body:not([data-theme="light"]) h3,
+body:not([data-theme="light"]) h4,
+body:not([data-theme="light"]) h5,
+body:not([data-theme="light"]) p {
+  color: var(--text) !important;
+  text-shadow: none !important;
+}
+
 p {
   line-height: 1.7;
 }
