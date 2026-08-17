@@ -14,19 +14,22 @@
       name="description"
       content="Neuralhustle.com brings Rouane Mounssif's Courcify courses, projects, and AI-powered YouTube channels together so you can learn, build, and launch with automation."
     />
-    <link rel="canonical" href="https://neuralhustle.com/" />
+    <link rel="canonical" href="https://neuralhustleacademy.com/" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://neuralhustle.com/" />
+    <meta property="og:url" content="https://neuralhustleacademy.com/" />
     <meta property="og:title" content="Neural Hustle | Rouane Mounssif" />
     <meta
       property="og:description"
       content="Learn AI automation, content systems, and YouTube workflows from Rouane Mounssif — courses, projects, and AI-powered channels in one place."
     />
+    <meta property="og:image" content="https://neuralhustleacademy.com/NeuralHustle%20Logo.png" />
+    <meta property="og:site_name" content="NeuralHustle Academy" />
 
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://neuralhustleacademy.com/NeuralHustle%20Logo.png" />
     <meta name="twitter:title" content="Neural Hustle | Rouane Mounssif" />
     <meta
       name="twitter:description"
@@ -104,11 +107,11 @@
               <span id="themeLabel">Dark</span>
             </button>
 
-            <button class="nav-toggle" aria-label="Toggle navigation">
+            <button class="nav-toggle" type="button" aria-label="Open navigation" aria-controls="primary-navigation" aria-expanded="false">
               <span></span><span></span><span></span>
             </button>
 
-            <ul class="nav-links">
+            <ul class="nav-links" id="primary-navigation">
               <li><a href="#about">About</a></li>
               <li><a href="#courses">Courses</a></li>
               <li><a href="#projects">Projects</a></li>
@@ -139,7 +142,7 @@
                 Rouane Mounssif · AI Integration & Creative Automation
               </p>
 
-              <h1>Ship smarter workflows with AI Engigneering.</h1>
+              <h1>Ship smarter workflows with AI Engineering.</h1>
 
               <p class="lead">
                 NeuralhustleAcademy.com is the digital HQ for Rouane’s portfolio and resume,
@@ -767,6 +770,18 @@
         navToggle.addEventListener("click", () => {
           navLinks.classList.toggle("open");
           navToggle.classList.toggle("active");
+          const isOpen = navLinks.classList.contains("open");
+          navToggle.setAttribute("aria-expanded", String(isOpen));
+          navToggle.setAttribute("aria-label", isOpen ? "Close navigation" : "Open navigation");
+        });
+
+        navLinks.querySelectorAll("a").forEach((link) => {
+          link.addEventListener("click", () => {
+            navLinks.classList.remove("open");
+            navToggle.classList.remove("active");
+            navToggle.setAttribute("aria-expanded", "false");
+            navToggle.setAttribute("aria-label", "Open navigation");
+          });
         });
       }
 
@@ -863,6 +878,7 @@
 
       // Intersection observer for fade-in
       const animated = document.querySelectorAll(".fade-in-up");
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
@@ -875,7 +891,10 @@
         { threshold: 0.15 }
       );
 
-      animated.forEach((el) => observer.observe(el));
+      animated.forEach((el) => {
+        if (prefersReducedMotion) el.classList.add("is-visible");
+        else observer.observe(el);
+      });
     </script>
 
     <!-- VANTA / THREE -->
