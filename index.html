@@ -1032,6 +1032,16 @@
         }, 200);
       }
 
+      function isProfileCloseEvent(event) {
+        return event.target instanceof Element && Boolean(event.target.closest(".hero-profile-close"));
+      }
+
+      function handleProfileClose(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        closeProfile();
+      }
+
       if (profileCard) {
         profileCard.addEventListener("pointerenter", () => {
           if (!preciseHover.matches) return;
@@ -1046,7 +1056,8 @@
         });
         profileCard.addEventListener("focus", () => openProfile());
         profileCard.addEventListener("click", (event) => {
-          if (!preciseHover.matches && !event.target.closest(".hero-profile-close")) openProfile();
+          if (isProfileCloseEvent(event)) return;
+          if (!preciseHover.matches) openProfile();
         });
         profileCard.addEventListener("keydown", (event) => {
           if ((event.key === "Enter" || event.key === " ") && profileState === PROFILE_STATES.CLOSED) {
@@ -1055,10 +1066,11 @@
           }
         });
       }
-      profileClose?.addEventListener("click", (event) => {
+      profileClose?.addEventListener("pointerdown", (event) => {
+        event.preventDefault();
         event.stopPropagation();
-        closeProfile();
       });
+      profileClose?.addEventListener("click", handleProfileClose);
       profileBackdrop?.addEventListener("click", () => closeProfile());
       document.addEventListener("keydown", (event) => {
         if (event.key === "Escape" && profileState !== PROFILE_STATES.CLOSED) closeProfile();
