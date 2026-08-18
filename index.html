@@ -806,98 +806,180 @@
       const profileClose = profileCard?.querySelector(".hero-profile-close");
       const preciseHover = window.matchMedia("(hover: hover) and (pointer: fine)");
       const reducedProfileMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-      let profileIsOpen = false;
+      const PROFILE_STATES = Object.freeze({
+        CLOSED: "closed",
+        OPENING: "opening",
+        OPEN: "open",
+        CLOSING: "closing"
+      });
+      let profileState = PROFILE_STATES.CLOSED;
       let profileCloseTimer;
       let profileAnimation;
       let profileHistoryEntry = false;
+      let profileTransitionId = 0;
+      let pointerInsideProfile = false;
 
       function profileDuration() {
         return reducedProfileMotion.matches ? 0 : 460;
       }
 
-      function animateProfile(fromRect, opening) {
-        profileAnimation?.cancel();
-        const toRect = opening
-          ? profileCard.getBoundingClientRect()
-          : profileSlot.getBoundingClientRect();
-        const expandedRect = opening ? toRect : fromRect;
-        const destinationRect = opening ? fromRect : toRect;
+      function cancelProfileAnimation({ preserveCurrentStyle = false } = {}) {
+        if (!profileAnimation) return;
+        if (preserveCurrentStyle) {
+          try {
+            profileAnimation.commitStyles();
+          } catch (_) {
+            // The animation may already have finished or been detached.
+          }
+        }
+        profileAnimation.cancel();
+        profileAnimation = null;
+      }
+
+      function compactProfileTransform(expandedRect, destinationRect) {
         const dx = destinationRect.left + destinationRect.width / 2 -
           (expandedRect.left + expandedRect.width / 2);
         const dy = destinationRect.top + destinationRect.height / 2 -
           (expandedRect.top + expandedRect.height / 2);
         const sx = destinationRect.width / expandedRect.width;
         const sy = destinationRect.height / expandedRect.height;
-        const resting = "translate(-50%, -50%) scale(1)";
-        const compact = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) scale(${sx}, ${sy})`;
+        return `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) scale(${sx}, ${sy})`;
+      }
 
+      function expandedProfileLayoutRect() {
+        const width = profileCard.offsetWidth;
+        const height = profileCard.offsetHeight;
+        return {
+          left: window.innerWidth / 2 - width / 2,
+          top: window.innerHeight / 2 - height / 2,
+          width,
+          height
+        };
+      }
+
+      function animateProfile(fromTransform, toTransform) {
+        cancelProfileAnimation();
         profileAnimation = profileCard.animate(
-          opening ? [{ transform: compact }, { transform: resting }] :
-            [{ transform: resting }, { transform: compact }],
+          [{ transform: fromTransform }, { transform: toTransform }],
           { duration: profileDuration(), easing: "cubic-bezier(0.22, 1, 0.36, 1)", fill: "both" }
         );
-        return profileAnimation.finished.catch(() => {});
+        return profileAnimation.finished;
+      }
+
+      function resetProfile({ fromHistory = false } = {}) {
+        if (!profileCard) return;
+        clearTimeout(profileCloseTimer);
+        profileCloseTimer = undefined;
+        profileTransitionId += 1;
+        cancelProfileAnimation();
+        profileCard.getAnimations().forEach((animation) => animation.cancel());
+        profileCard.removeAttribute("style");
+        profileCard.classList.remove("is-expanded");
+        profileCard.setAttribute("aria-expanded", "false");
+        profileDetails?.setAttribute("aria-hidden", "true");
+        profileBackdrop?.classList.remove("is-visible");
+        profileBackdrop?.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("profile-panel-open");
+        profileSlot?.appendChild(profileCard);
+        profileSlot?.style.removeProperty("height");
+        profileState = PROFILE_STATES.CLOSED;
+        pointerInsideProfile = false;
+        if (profileHistoryEntry && !fromHistory) history.back();
+        profileHistoryEntry = false;
       }
 
       async function openProfile({ addHistory = true } = {}) {
-        if (!profileCard || profileIsOpen) return;
+        if (!profileCard || profileState === PROFILE_STATES.OPENING || profileState === PROFILE_STATES.OPEN) return;
         clearTimeout(profileCloseTimer);
-        const startRect = profileCard.getBoundingClientRect();
-        profileIsOpen = true;
-        profileSlot.style.height = `${startRect.height}px`;
-        document.body.appendChild(profileCard);
-        profileCard.classList.add("is-expanded");
+        const transitionId = ++profileTransitionId;
+        const reversingClose = profileState === PROFILE_STATES.CLOSING;
+        let fromTransform;
+
+        if (reversingClose) {
+          fromTransform = getComputedStyle(profileCard).transform;
+          cancelProfileAnimation({ preserveCurrentStyle: true });
+        } else {
+          const startRect = profileCard.getBoundingClientRect();
+          profileSlot.style.height = `${startRect.height}px`;
+          document.body.appendChild(profileCard);
+          profileCard.classList.add("is-expanded");
+          const expandedRect = expandedProfileLayoutRect();
+          fromTransform = compactProfileTransform(expandedRect, startRect);
+          if (!preciseHover.matches && addHistory) {
+            history.pushState({ profilePanel: true }, "");
+            profileHistoryEntry = true;
+          }
+        }
+        profileState = PROFILE_STATES.OPENING;
         profileCard.setAttribute("aria-expanded", "true");
         profileDetails.setAttribute("aria-hidden", "false");
         document.body.classList.add("profile-panel-open");
         profileBackdrop.classList.add("is-visible");
         profileBackdrop.setAttribute("aria-hidden", "false");
-        if (!preciseHover.matches && addHistory) {
-          history.pushState({ profilePanel: true }, "");
-          profileHistoryEntry = true;
+
+        try {
+          await animateProfile(fromTransform, "translate(-50%, -50%) scale(1)");
+        } catch (_) {
+          // Cancellation is expected when a close interrupts opening.
+        } finally {
+          if (transitionId !== profileTransitionId || profileState !== PROFILE_STATES.OPENING) return;
+          cancelProfileAnimation();
+          profileCard.style.removeProperty("transform");
+          profileState = PROFILE_STATES.OPEN;
+          if (preciseHover.matches && !pointerInsideProfile && !profileCard.matches(":hover")) {
+            scheduleProfileClose();
+          }
         }
-        await animateProfile(startRect, true);
       }
 
       async function closeProfile({ fromHistory = false } = {}) {
-        if (!profileCard || !profileIsOpen) return;
+        if (!profileCard || profileState === PROFILE_STATES.CLOSED || profileState === PROFILE_STATES.CLOSING) return;
         clearTimeout(profileCloseTimer);
-        profileIsOpen = false;
-        const expandedRect = profileCard.getBoundingClientRect();
+        const transitionId = ++profileTransitionId;
+        const currentTransform = getComputedStyle(profileCard).transform;
+        cancelProfileAnimation({ preserveCurrentStyle: true });
+        const compact = compactProfileTransform(expandedProfileLayoutRect(), profileSlot.getBoundingClientRect());
+        profileState = PROFILE_STATES.CLOSING;
         profileBackdrop.classList.remove("is-visible");
         profileBackdrop.setAttribute("aria-hidden", "true");
         profileDetails.setAttribute("aria-hidden", "true");
-        await animateProfile(expandedRect, false);
-        profileAnimation?.cancel();
-        profileCard.classList.remove("is-expanded");
-        profileCard.setAttribute("aria-expanded", "false");
-        profileSlot.appendChild(profileCard);
-        profileSlot.style.height = "";
-        document.body.classList.remove("profile-panel-open");
-        if (profileHistoryEntry && !fromHistory) history.back();
-        profileHistoryEntry = false;
+        try {
+          await animateProfile(currentTransform, compact);
+        } catch (_) {
+          // Cleanup below also covers cancelled or rejected animations.
+        } finally {
+          if (transitionId === profileTransitionId && profileState === PROFILE_STATES.CLOSING) {
+            resetProfile({ fromHistory });
+          }
+        }
       }
 
       function scheduleProfileClose() {
         clearTimeout(profileCloseTimer);
-        profileCloseTimer = window.setTimeout(() => closeProfile(), 200);
+        if (profileState === PROFILE_STATES.OPENING) return;
+        profileCloseTimer = window.setTimeout(() => {
+          if (!pointerInsideProfile && !profileCard.matches(":hover")) closeProfile();
+        }, 200);
       }
 
       if (profileCard) {
         profileCard.addEventListener("pointerenter", () => {
           if (!preciseHover.matches) return;
+          pointerInsideProfile = true;
           clearTimeout(profileCloseTimer);
           openProfile();
         });
         profileCard.addEventListener("pointerleave", () => {
-          if (preciseHover.matches) scheduleProfileClose();
+          if (!preciseHover.matches) return;
+          pointerInsideProfile = false;
+          scheduleProfileClose();
         });
         profileCard.addEventListener("focus", () => openProfile());
         profileCard.addEventListener("click", (event) => {
           if (!preciseHover.matches && !event.target.closest(".hero-profile-close")) openProfile();
         });
         profileCard.addEventListener("keydown", (event) => {
-          if ((event.key === "Enter" || event.key === " ") && !profileIsOpen) {
+          if ((event.key === "Enter" || event.key === " ") && profileState === PROFILE_STATES.CLOSED) {
             event.preventDefault();
             openProfile();
           }
@@ -909,10 +991,16 @@
       });
       profileBackdrop?.addEventListener("click", () => closeProfile());
       document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape" && profileIsOpen) closeProfile();
+        if (event.key === "Escape" && profileState !== PROFILE_STATES.CLOSED) closeProfile();
       });
       window.addEventListener("popstate", () => {
-        if (profileIsOpen) closeProfile({ fromHistory: true });
+        if (profileState !== PROFILE_STATES.CLOSED) closeProfile({ fromHistory: true });
+      });
+      window.addEventListener("blur", () => {
+        if (profileState === PROFILE_STATES.OPENING || profileState === PROFILE_STATES.CLOSING) resetProfile();
+      });
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden && profileState !== PROFILE_STATES.CLOSED) resetProfile();
       });
 
       // Footer year
