@@ -36,32 +36,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-html.light body {
-  background:
-    radial-gradient(
-      circle at 20% -10%,
-      rgba(123, 92, 255, 0.12),
-      transparent 40%
-    ),
-    radial-gradient(
-      circle at 80% 0%,
-      rgba(47, 218, 184, 0.12),
-      transparent 45%
-    ),
-    #f6f6fb !important;
-  color: #0d1117 !important;
-}
-
-html.light h1,
-html.light h2,
-html.light h3,
-html.light h4,
-html.light h5,
-html.light p {
-  color: #0a0a0a !important;
-  text-shadow: 0 0 4px rgba(255, 255, 255, 0.9);
-}
-
 body:not([data-theme="light"]) h1,
 body:not([data-theme="light"]) h2,
 body:not([data-theme="light"]) h3,
@@ -1532,6 +1506,243 @@ html.light .youtube-card p {
 .footer a {
   color: var(--text);
   font-weight: 600;
+}
+
+/* COHESIVE LIGHT THEME
+   These semantic tokens and explicit component overrides prevent dark-theme
+   glass, glows, and text treatments from leaking into the light surface. */
+html.light body[data-theme="light"] {
+  --bg: #f3f7fc;
+  --bg-alt: #eaf1f8;
+  --card: rgba(255, 255, 255, 0.82);
+  --text: #12213a;
+  --muted: #53637a;
+  --accent: #6d4ee8;
+  --accent-2: #087f83;
+  --accent-3: #256f9f;
+  --border: rgba(80, 70, 145, 0.18);
+  --surface-glass: rgba(250, 252, 255, 0.82);
+  --focus: #087f83;
+  --button-text: #ffffff;
+  --backdrop: rgba(226, 233, 243, 0.72);
+  --animation-line: #55bfc3;
+  --animation-glow-purple: rgba(109, 78, 232, 0.1);
+  --animation-glow-cyan: rgba(23, 159, 183, 0.09);
+  --animation-glow-teal: rgba(8, 127, 131, 0.08);
+  --shadow-soft: 0 16px 42px rgba(42, 55, 86, 0.11);
+  background:
+    radial-gradient(circle at 18% 0%, var(--animation-glow-purple), transparent 36%),
+    radial-gradient(circle at 82% 3%, var(--animation-glow-teal), transparent 40%),
+    var(--bg);
+  color: var(--text);
+}
+
+html.light body[data-theme="light"],
+html.light body[data-theme="light"] h1,
+html.light body[data-theme="light"] h2,
+html.light body[data-theme="light"] h3,
+html.light body[data-theme="light"] h4,
+html.light body[data-theme="light"] h5,
+html.light body[data-theme="light"] p,
+html.light body[data-theme="light"] a,
+html.light body[data-theme="light"] span,
+html.light body[data-theme="light"] button,
+html.light body[data-theme="light"] label {
+  text-shadow: none !important;
+  -webkit-text-stroke: 0 !important;
+}
+
+html.light #hero-vanta {
+  background: #f3f7fc !important;
+}
+
+html.light #hero-vanta canvas {
+  opacity: 0.48;
+}
+
+html.light .hero {
+  background: rgba(243, 247, 252, 0.62);
+  border-bottom-color: var(--border);
+}
+
+html.light .hero::before {
+  background:
+    radial-gradient(circle at 24% 18%, var(--animation-glow-purple), transparent 34%),
+    radial-gradient(circle at 78% 12%, var(--animation-glow-cyan), transparent 38%),
+    radial-gradient(circle at 65% 80%, var(--animation-glow-teal), transparent 42%);
+  filter: blur(18px);
+  opacity: 0.65;
+}
+
+html.light .hero::after {
+  border-color: rgba(109, 78, 232, 0.1);
+}
+
+html.light .logo,
+html.light .hero-content h1,
+html.light .metric,
+html.light .hero-profile-name {
+  color: var(--text) !important;
+}
+
+html.light .logo span,
+html.light .eyebrow,
+html.light .hero-profile-kicker {
+  color: var(--accent-2) !important;
+}
+
+html.light .lead,
+html.light .hero-profile-role,
+html.light .hero-highlight p,
+html.light .floating-card .muted,
+html.light .section-heading p {
+  color: var(--muted) !important;
+}
+
+html.light .nav {
+  padding-inline: 1rem;
+  border: 1px solid rgba(109, 78, 232, 0.12);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.68);
+  box-shadow: 0 10px 30px rgba(42, 55, 86, 0.07);
+  backdrop-filter: blur(12px);
+}
+
+html.light .nav-links a {
+  color: #465870;
+}
+
+html.light .nav-links a:hover,
+html.light .nav-links a:focus-visible {
+  color: var(--text);
+}
+
+html.light .theme-toggle {
+  border-color: rgba(109, 78, 232, 0.24);
+  background: rgba(255, 255, 255, 0.88);
+  color: var(--text);
+  box-shadow: 0 5px 16px rgba(42, 55, 86, 0.08);
+}
+
+html.light .hero-badge {
+  background: linear-gradient(120deg, rgba(109, 78, 232, 0.14), rgba(8, 127, 131, 0.14));
+  border: 1px solid rgba(109, 78, 232, 0.2);
+  color: #293557;
+  box-shadow: 0 8px 24px rgba(65, 54, 118, 0.1);
+  animation: none;
+}
+
+html.light .btn.primary {
+  background: linear-gradient(120deg, #6d4ee8, #087f83);
+  color: var(--button-text);
+  box-shadow: 0 12px 28px rgba(93, 68, 198, 0.23);
+}
+
+html.light .btn.ghost,
+html.light .btn.secondary {
+  border-color: rgba(109, 78, 232, 0.38);
+  background: rgba(255, 255, 255, 0.7);
+  color: #49359b;
+  box-shadow: 0 6px 18px rgba(42, 55, 86, 0.07);
+}
+
+html.light .hero-profile-card,
+html.light .hero-profile-card.is-expanded {
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.94), rgba(235, 240, 255, 0.88));
+  border-color: rgba(109, 78, 232, 0.22);
+  color: var(--text);
+  box-shadow: 0 18px 45px rgba(42, 55, 86, 0.13), 0 1px 0 #fff inset;
+}
+
+html.light .hero-profile-card.is-expanded {
+  box-shadow: 0 28px 76px rgba(42, 55, 86, 0.2), 0 1px 0 #fff inset;
+}
+
+html.light .hero-profile-details,
+html.light .hero-profile-details p,
+html.light .hero-profile-availability {
+  color: var(--muted) !important;
+}
+
+html.light .hero-profile-tags span,
+html.light .pill {
+  border-color: rgba(109, 78, 232, 0.28);
+  background: rgba(109, 78, 232, 0.09);
+  color: #42317f;
+}
+
+html.light .hero-profile-close {
+  border-color: rgba(109, 78, 232, 0.25);
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--text);
+  box-shadow: 0 6px 18px rgba(42, 55, 86, 0.1);
+}
+
+html.light .hero-profile-photo {
+  border-color: rgba(255, 255, 255, 0.96);
+}
+
+html.light .hero-highlight div,
+html.light .floating-card {
+  border-color: rgba(109, 78, 232, 0.16);
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 14px 36px rgba(42, 55, 86, 0.1), 0 1px 0 #fff inset;
+}
+
+html.light .floating-card::before {
+  background: radial-gradient(circle, rgba(23, 159, 183, 0.12), transparent 55%);
+  filter: blur(22px);
+  opacity: 0.55;
+}
+
+html.light .profile-backdrop {
+  background: var(--backdrop);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+}
+
+html.light .timeline-group,
+html.light .timeline-card,
+html.light .card,
+html.light .projects article,
+html.light .upwork-card,
+html.light .youtube-card {
+  background: var(--card);
+  border-color: var(--border);
+  box-shadow: var(--shadow-soft);
+}
+
+html.light .gradient-purple {
+  background: linear-gradient(135deg, rgba(109, 78, 232, 0.16), rgba(255, 255, 255, 0.84));
+}
+
+html.light .gradient-teal {
+  background: linear-gradient(135deg, rgba(8, 127, 131, 0.14), rgba(255, 255, 255, 0.84));
+}
+
+html.light .gradient-orange {
+  background: linear-gradient(135deg, rgba(37, 111, 159, 0.14), rgba(255, 255, 255, 0.84));
+}
+
+html.light .contact-form input,
+html.light .contact-form textarea {
+  background: rgba(255, 255, 255, 0.86);
+  color: var(--text);
+  border-color: var(--border);
+}
+
+html.light .footer {
+  background: var(--bg-alt);
+}
+
+html.light .youtube-btn,
+html.light .upwork-btn {
+  color: #12213a;
+}
+
+html.light .youtube-btn:hover svg,
+html.light .youtube-btn:focus-visible svg {
+  filter: none;
 }
 
 /* ANIMATIONS */
