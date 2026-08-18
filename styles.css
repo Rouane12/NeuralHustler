@@ -498,7 +498,7 @@ h3 {
 .profile-backdrop {
   position: fixed;
   inset: 0;
-  z-index: 1000;
+  z-index: 20000;
   background: rgba(2, 3, 7, 0.54);
   backdrop-filter: blur(5px);
   opacity: 0;
@@ -515,7 +515,7 @@ h3 {
   position: fixed;
   top: 50%;
   left: 50%;
-  z-index: 1001;
+  z-index: 20001;
   display: grid;
   grid-template-columns: auto 1fr;
   width: min(620px, calc(100vw - 2rem));
@@ -525,6 +525,37 @@ h3 {
   overflow-y: auto;
   transform: translate(-50%, -50%);
   box-shadow: 0 30px 90px rgba(0, 0, 0, 0.58), 0 1px 0 rgba(255, 255, 255, 0.16) inset;
+}
+
+/* Closing keeps the expanded layout only long enough to run the reverse FLIP.
+   The compact content is restored while the card's geometry is still moving. */
+.hero-profile-card.is-expanded.is-closing .hero-profile-details,
+.hero-profile-card.is-expanded.is-closing .hero-profile-close {
+  opacity: 0;
+  transform: translateY(4px);
+  transition-delay: 0ms;
+  transition-duration: 130ms;
+  pointer-events: none;
+}
+
+.hero-profile-card.is-expanded.is-closing .hero-profile-photo-wrap {
+  width: 88px;
+  height: 88px;
+  transition: width 360ms cubic-bezier(0.22, 1, 0.36, 1), height 360ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero-profile-card.is-expanded.is-closing .hero-profile-name {
+  font-size: 1.05rem;
+  transition: font-size 260ms ease;
+}
+
+.hero-profile-card.is-measuring {
+  visibility: hidden !important;
+  transition: none !important;
+}
+
+.hero-profile-card.is-measuring * {
+  transition: none !important;
 }
 
 .hero-profile-card.is-expanded .hero-profile-photo-wrap {
@@ -606,8 +637,8 @@ html.light .hero-profile-card.is-expanded .hero-profile-photo {
 }
 
 html.light .profile-backdrop {
-  background: rgba(229, 227, 241, 0.46);
-  backdrop-filter: blur(3px);
+  background: rgba(229, 227, 241, 0.72);
+  backdrop-filter: none;
 }
 
 .hero-profile-photo-wrap {

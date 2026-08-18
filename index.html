@@ -823,6 +823,23 @@
         return reducedProfileMotion.matches ? 0 : 460;
       }
 
+      function setProfileBackgroundPaused(paused) {
+        document.documentElement.classList.toggle("profile-background-paused", paused);
+        if (!window.vantaEffect) return;
+
+        if (paused) {
+          // Let Vanta settle on its neutral pointer position before disabling input.
+          window.dispatchEvent(new MouseEvent("mousemove", {
+            clientX: window.innerWidth / 2,
+            clientY: window.innerHeight / 2
+          }));
+        }
+        window.vantaEffect.setOptions({
+          mouseControls: !paused,
+          touchControls: !paused
+        });
+      }
+
       function cancelProfileAnimation({ preserveCurrentStyle = false } = {}) {
         if (!profileAnimation) return;
         if (preserveCurrentStyle) {
@@ -866,6 +883,43 @@
         return profileAnimation.finished;
       }
 
+      function animateProfileGeometry(from, to) {
+        cancelProfileAnimation();
+        const frame = (rect, radius) => ({
+          left: `${rect.left}px`,
+          top: `${rect.top}px`,
+          width: `${rect.width}px`,
+          height: `${rect.height}px`,
+          borderRadius: radius,
+          transform: "none"
+        });
+        profileAnimation = profileCard.animate(
+          [frame(from.rect, from.radius), frame(to.rect, to.radius)],
+          { duration: profileDuration() + (reducedProfileMotion.matches ? 0 : 60), easing: "cubic-bezier(0.22, 1, 0.36, 1)", fill: "both" }
+        );
+        return profileAnimation.finished;
+      }
+
+      function measureCollapsedProfile(expandedRect) {
+        const expandedParent = profileCard.parentNode;
+        const expandedStyle = profileCard.getAttribute("style");
+
+        profileCard.classList.add("is-measuring");
+        profileCard.removeAttribute("style");
+        profileCard.classList.remove("is-expanded", "is-closing");
+        profileSlot.appendChild(profileCard);
+        const rect = profileCard.getBoundingClientRect();
+        const radius = getComputedStyle(profileCard).borderRadius;
+
+        expandedParent.appendChild(profileCard);
+        profileCard.classList.add("is-expanded", "is-closing");
+        if (expandedStyle === null) profileCard.removeAttribute("style");
+        else profileCard.setAttribute("style", expandedStyle);
+        profileCard.classList.remove("is-measuring");
+
+        return { expandedRect, collapsedRect: rect, collapsedRadius: radius };
+      }
+
       function resetProfile({ fromHistory = false } = {}) {
         if (!profileCard) return;
         clearTimeout(profileCloseTimer);
@@ -874,7 +928,7 @@
         cancelProfileAnimation();
         profileCard.getAnimations().forEach((animation) => animation.cancel());
         profileCard.removeAttribute("style");
-        profileCard.classList.remove("is-expanded");
+        profileCard.classList.remove("is-expanded", "is-closing", "is-measuring");
         profileCard.setAttribute("aria-expanded", "false");
         profileDetails?.setAttribute("aria-hidden", "true");
         profileBackdrop?.classList.remove("is-visible");
@@ -884,6 +938,7 @@
         profileSlot?.style.removeProperty("height");
         profileState = PROFILE_STATES.CLOSED;
         pointerInsideProfile = false;
+        setProfileBackgroundPaused(false);
         if (profileHistoryEntry && !fromHistory) history.back();
         profileHistoryEntry = false;
       }
@@ -896,8 +951,28 @@
         let fromTransform;
 
         if (reversingClose) {
-          fromTransform = getComputedStyle(profileCard).transform;
-          cancelProfileAnimation({ preserveCurrentStyle: true });
+          const currentRect = profileCard.getBoundingClientRect();
+          const currentRadius = getComputedStyle(profileCard).borderRadius;
+          cancelProfileAnimation();
+          profileCard.classList.remove("is-closing");
+          profileCard.removeAttribute("style");
+          const targetRect = expandedProfileLayoutRect();
+          profileState = PROFILE_STATES.OPENING;
+          profileDetails.setAttribute("aria-hidden", "false");
+          try {
+            await animateProfileGeometry(
+              { rect: currentRect, radius: currentRadius },
+              { rect: targetRect, radius: getComputedStyle(profileCard).borderRadius }
+            );
+          } catch (_) {
+            // A close may interrupt this reversal.
+          } finally {
+            if (transitionId !== profileTransitionId || profileState !== PROFILE_STATES.OPENING) return;
+            cancelProfileAnimation();
+            profileCard.removeAttribute("style");
+            profileState = PROFILE_STATES.OPEN;
+          }
+          return;
         } else {
           const startRect = profileCard.getBoundingClientRect();
           profileSlot.style.height = `${startRect.height}px`;
@@ -914,6 +989,7 @@
         profileCard.setAttribute("aria-expanded", "true");
         profileDetails.setAttribute("aria-hidden", "false");
         document.body.classList.add("profile-panel-open");
+        setProfileBackgroundPaused(true);
         profileBackdrop.classList.add("is-visible");
         profileBackdrop.setAttribute("aria-hidden", "false");
 
@@ -936,15 +1012,21 @@
         if (!profileCard || profileState === PROFILE_STATES.CLOSED || profileState === PROFILE_STATES.CLOSING) return;
         clearTimeout(profileCloseTimer);
         const transitionId = ++profileTransitionId;
-        const currentTransform = getComputedStyle(profileCard).transform;
-        cancelProfileAnimation({ preserveCurrentStyle: true });
-        const compact = compactProfileTransform(expandedProfileLayoutRect(), profileSlot.getBoundingClientRect());
+        const expandedRect = profileCard.getBoundingClientRect();
+        const expandedRadius = getComputedStyle(profileCard).borderRadius;
+        cancelProfileAnimation();
+        const measurements = measureCollapsedProfile(expandedRect);
         profileState = PROFILE_STATES.CLOSING;
-        profileBackdrop.classList.remove("is-visible");
-        profileBackdrop.setAttribute("aria-hidden", "true");
         profileDetails.setAttribute("aria-hidden", "true");
+        profileCard.style.position = "fixed";
+        profileCard.style.margin = "0";
+        profileCard.style.maxHeight = "none";
+        profileCard.style.overflow = "hidden";
         try {
-          await animateProfile(currentTransform, compact);
+          await animateProfileGeometry(
+            { rect: measurements.expandedRect, radius: expandedRadius },
+            { rect: measurements.collapsedRect, radius: measurements.collapsedRadius }
+          );
         } catch (_) {
           // Cleanup below also covers cancelled or rejected animations.
         } finally {
