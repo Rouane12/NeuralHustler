@@ -801,11 +801,30 @@
         CLOSING: "closing"
       });
       let profileState = PROFILE_STATES.CLOSED;
+      let profileOpenTimer;
       let profileCloseTimer;
       let profileAnimation;
       let profileHistoryEntry = false;
       let profileTransitionId = 0;
       let pointerInsideProfile = false;
+      let suppressHoverOpen = false;
+      let manualCloseInProgress = false;
+
+      function clearProfileHoverTimers() {
+        clearTimeout(profileOpenTimer);
+        clearTimeout(profileCloseTimer);
+        profileOpenTimer = undefined;
+        profileCloseTimer = undefined;
+      }
+
+      function pointerIsOverProfileArea() {
+        return Boolean(profileCard?.matches(":hover") || profileSlot?.matches(":hover"));
+      }
+
+      function releaseManualCloseSuppression() {
+        if (!suppressHoverOpen || manualCloseInProgress || profileState !== PROFILE_STATES.CLOSED) return;
+        if (!pointerInsideProfile && !pointerIsOverProfileArea()) suppressHoverOpen = false;
+      }
 
       function profileDuration() {
         return reducedProfileMotion.matches ? 0 : 460;
@@ -908,10 +927,10 @@
         return { expandedRect, collapsedRect: rect, collapsedRadius: radius };
       }
 
-      function resetProfile({ fromHistory = false } = {}) {
+      function resetProfile({ fromHistory = false, preserveHoverSuppression = false } = {}) {
         if (!profileCard) return;
-        clearTimeout(profileCloseTimer);
-        profileCloseTimer = undefined;
+        const keepHoverSuppressed = preserveHoverSuppression || manualCloseInProgress;
+        clearProfileHoverTimers();
         profileTransitionId += 1;
         cancelProfileAnimation();
         profileCard.getAnimations().forEach((animation) => animation.cancel());
@@ -925,15 +944,19 @@
         profileSlot?.appendChild(profileCard);
         profileSlot?.style.removeProperty("height");
         profileState = PROFILE_STATES.CLOSED;
-        pointerInsideProfile = false;
+        pointerInsideProfile = profileCard.matches(":hover");
+        manualCloseInProgress = false;
+        if (!keepHoverSuppressed) suppressHoverOpen = false;
         setProfileBackgroundPaused(false);
         if (profileHistoryEntry && !fromHistory) history.back();
         profileHistoryEntry = false;
+        releaseManualCloseSuppression();
       }
 
       async function openProfile({ addHistory = true } = {}) {
+        if (suppressHoverOpen || manualCloseInProgress) return;
         if (!profileCard || profileState === PROFILE_STATES.OPENING || profileState === PROFILE_STATES.OPEN) return;
-        clearTimeout(profileCloseTimer);
+        clearProfileHoverTimers();
         const transitionId = ++profileTransitionId;
         const reversingClose = profileState === PROFILE_STATES.CLOSING;
         let fromTransform;
@@ -996,9 +1019,17 @@
         }
       }
 
-      async function closeProfile({ fromHistory = false } = {}) {
+      async function closeProfile({ fromHistory = false, manual = false } = {}) {
+        if (manual) {
+          // The close button owns the transition until the reverse FLIP is complete.
+          // Reparenting/moving the card can synthesize hover changes, so hover must
+          // remain suppressed until the pointer later leaves both possible homes.
+          suppressHoverOpen = true;
+          manualCloseInProgress = true;
+          clearProfileHoverTimers();
+        }
         if (!profileCard || profileState === PROFILE_STATES.CLOSED || profileState === PROFILE_STATES.CLOSING) return;
-        clearTimeout(profileCloseTimer);
+        clearProfileHoverTimers();
         const transitionId = ++profileTransitionId;
         const expandedRect = profileCard.getBoundingClientRect();
         const expandedRadius = getComputedStyle(profileCard).borderRadius;
@@ -1019,14 +1050,14 @@
           // Cleanup below also covers cancelled or rejected animations.
         } finally {
           if (transitionId === profileTransitionId && profileState === PROFILE_STATES.CLOSING) {
-            resetProfile({ fromHistory });
+            resetProfile({ fromHistory, preserveHoverSuppression: manual });
           }
         }
       }
 
       function scheduleProfileClose() {
         clearTimeout(profileCloseTimer);
-        if (profileState === PROFILE_STATES.OPENING) return;
+        if (profileState === PROFILE_STATES.OPENING || manualCloseInProgress) return;
         profileCloseTimer = window.setTimeout(() => {
           if (!pointerInsideProfile && !profileCard.matches(":hover")) closeProfile();
         }, 200);
@@ -1039,7 +1070,7 @@
       function handleProfileClose(event) {
         event.preventDefault();
         event.stopPropagation();
-        closeProfile();
+        closeProfile({ manual: true });
       }
 
       if (profileCard) {
@@ -1047,14 +1078,18 @@
           if (!preciseHover.matches) return;
           pointerInsideProfile = true;
           clearTimeout(profileCloseTimer);
+          if (suppressHoverOpen || manualCloseInProgress) return;
           openProfile();
         });
         profileCard.addEventListener("pointerleave", () => {
           if (!preciseHover.matches) return;
           pointerInsideProfile = false;
+          releaseManualCloseSuppression();
           scheduleProfileClose();
         });
-        profileCard.addEventListener("focus", () => openProfile());
+        profileCard.addEventListener("focus", () => {
+          if (!suppressHoverOpen && !manualCloseInProgress) openProfile();
+        });
         profileCard.addEventListener("click", (event) => {
           if (isProfileCloseEvent(event)) return;
           if (!preciseHover.matches) openProfile();
@@ -1066,6 +1101,10 @@
           }
         });
       }
+      profileSlot?.addEventListener("pointerleave", () => {
+        pointerInsideProfile = profileCard?.matches(":hover") || false;
+        releaseManualCloseSuppression();
+      });
       profileClose?.addEventListener("pointerdown", (event) => {
         event.preventDefault();
         event.stopPropagation();
