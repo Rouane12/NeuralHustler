@@ -54,18 +54,6 @@
 
     <!-- Light theme overrides + animations -->
     <style>
-      [data-theme="light"] {
-        --bg: #f6f6fb;
-        --bg-alt: #ffffff;
-        --card: #ffffff;
-        --text: #05060a;
-        --muted: rgba(5, 6, 10, 0.65);
-        --accent: #7b5cff;
-        --accent-2: #02b3a4;
-        --accent-3: #ff8e3c;
-        --border: rgba(5, 6, 10, 0.1);
-      }
-
       .theme-toggle {
         border-radius: 999px;
         border: 1px solid var(--border);
@@ -1129,10 +1117,11 @@
         if (!window.vantaEffect) return;
 
         window.vantaEffect.setOptions({
-          color: isDark ? 0x00e1ff : 0x005577,
-          backgroundAlpha: isDark ? 0.1 : 0.35,
-          points: isDark ? 16 : 12,
-          maxDistance: isDark ? 32 : 24,
+          color: isDark ? 0x00e1ff : 0x55bfc3,
+          backgroundColor: isDark ? 0x05060a : 0xf3f7fc,
+          backgroundAlpha: isDark ? 0.1 : 1,
+          points: isDark ? 16 : 10,
+          maxDistance: isDark ? 32 : 21,
         });
 
         syncHeroVantaHeight();
@@ -1216,6 +1205,7 @@
           scale: 1.4,
           scaleMobile: 1.8,
           color: 0x00e1ff,
+          backgroundColor: 0x05060a,
           backgroundAlpha: 0.15,
           points: 14.0,
           maxDistance: 28.0,
