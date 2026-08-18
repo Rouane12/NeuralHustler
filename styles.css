@@ -552,6 +552,64 @@ body.profile-panel-open {
   overflow: hidden;
 }
 
+/* Keep the shared-element panel aligned with the site's existing light theme. */
+html.light .hero-profile-card.is-expanded {
+  background: linear-gradient(
+      140deg,
+      rgba(255, 255, 255, 0.96),
+      rgba(123, 92, 255, 0.1)
+    ),
+    rgba(250, 251, 255, 0.98);
+  border-color: rgba(44, 37, 82, 0.2);
+  color: #171427;
+  box-shadow: 0 30px 80px rgba(34, 28, 65, 0.2), 0 1px 0 #fff inset;
+}
+
+html.light .hero-profile-card.is-expanded .hero-profile-name,
+html.light .hero-profile-card.is-expanded .hero-profile-details,
+html.light .hero-profile-card.is-expanded .hero-profile-details p {
+  color: #171427 !important;
+  text-shadow: none !important;
+}
+
+html.light .hero-profile-card.is-expanded .hero-profile-role,
+html.light .hero-profile-card.is-expanded .hero-profile-availability {
+  color: #514d63 !important;
+  text-shadow: none !important;
+}
+
+html.light .hero-profile-card.is-expanded .hero-profile-kicker {
+  color: #167660 !important;
+  text-shadow: none !important;
+}
+
+html.light .hero-profile-card.is-expanded .hero-profile-tags span {
+  border-color: rgba(91, 62, 210, 0.38);
+  background: rgba(91, 62, 210, 0.1);
+  color: #34246f;
+}
+
+html.light .hero-profile-card.is-expanded .hero-profile-close {
+  border-color: rgba(44, 37, 82, 0.25);
+  background: rgba(255, 255, 255, 0.9);
+  color: #171427;
+}
+
+html.light .hero-profile-card.is-expanded .hero-profile-close:hover,
+html.light .hero-profile-card.is-expanded .hero-profile-close:focus-visible {
+  background: #fff;
+  border-color: rgba(91, 62, 210, 0.55);
+}
+
+html.light .hero-profile-card.is-expanded .hero-profile-photo {
+  border-color: rgba(250, 251, 255, 0.96);
+}
+
+html.light .profile-backdrop {
+  background: rgba(229, 227, 241, 0.46);
+  backdrop-filter: blur(3px);
+}
+
 .hero-profile-photo-wrap {
   position: relative;
   width: 88px;
