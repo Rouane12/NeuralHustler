@@ -158,7 +158,9 @@
             <!-- RIGHT: PROFILE + METRICS -->
             <div class="hero-visual fade-in-up">
               <!-- PROFILE CARD with your picture -->
-              <div class="hero-profile-card">
+              <div class="hero-profile-slot">
+              <div class="hero-profile-card" id="heroProfileCard" tabindex="0" role="button" aria-expanded="false" aria-controls="heroProfileDetails" aria-label="Open Rouane Mounssif profile">
+                <button class="hero-profile-close" type="button" aria-label="Close profile">&times;</button>
                 <div class="hero-profile-photo-wrap">
                   <!-- change src to your final file name in the repo -->
                   <img
@@ -168,11 +170,20 @@
                   />
                 </div>
                 <div class="hero-profile-text">
+                  <p class="hero-profile-kicker">Me</p>
                   <p class="hero-profile-name">Rouane Mounssif</p>
                   <p class="hero-profile-role">
                     AI Integration Engineer · Automation & Content Systems
                   </p>
                 </div>
+                <div class="hero-profile-details" id="heroProfileDetails" aria-hidden="true">
+                  <p>I build practical AI integrations and creative automation systems that turn ambitious ideas into reliable, production-ready workflows.</p>
+                  <div class="hero-profile-tags" aria-label="Specialties">
+                    <span>AI Engineering</span><span>Automation</span><span>Creative Ops</span>
+                  </div>
+                  <p class="hero-profile-availability"><span aria-hidden="true"></span> Available for select collaborations</p>
+                </div>
+              </div>
               </div>
 
               <!-- METRICS -->
@@ -205,6 +216,8 @@
         </div>
       </header>
     </section>
+
+    <div class="profile-backdrop" id="profileBackdrop" aria-hidden="true"></div>
 
     <main>
       <!-- ABOUT -->
@@ -784,6 +797,123 @@
           });
         });
       }
+
+      // Shared-element profile expansion (only the hero "Me" card).
+      const profileCard = document.getElementById("heroProfileCard");
+      const profileSlot = document.querySelector(".hero-profile-slot");
+      const profileBackdrop = document.getElementById("profileBackdrop");
+      const profileDetails = document.getElementById("heroProfileDetails");
+      const profileClose = profileCard?.querySelector(".hero-profile-close");
+      const preciseHover = window.matchMedia("(hover: hover) and (pointer: fine)");
+      const reducedProfileMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+      let profileIsOpen = false;
+      let profileCloseTimer;
+      let profileAnimation;
+      let profileHistoryEntry = false;
+
+      function profileDuration() {
+        return reducedProfileMotion.matches ? 0 : 460;
+      }
+
+      function animateProfile(fromRect, opening) {
+        profileAnimation?.cancel();
+        const toRect = opening
+          ? profileCard.getBoundingClientRect()
+          : profileSlot.getBoundingClientRect();
+        const expandedRect = opening ? toRect : fromRect;
+        const destinationRect = opening ? fromRect : toRect;
+        const dx = destinationRect.left + destinationRect.width / 2 -
+          (expandedRect.left + expandedRect.width / 2);
+        const dy = destinationRect.top + destinationRect.height / 2 -
+          (expandedRect.top + expandedRect.height / 2);
+        const sx = destinationRect.width / expandedRect.width;
+        const sy = destinationRect.height / expandedRect.height;
+        const resting = "translate(-50%, -50%) scale(1)";
+        const compact = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) scale(${sx}, ${sy})`;
+
+        profileAnimation = profileCard.animate(
+          opening ? [{ transform: compact }, { transform: resting }] :
+            [{ transform: resting }, { transform: compact }],
+          { duration: profileDuration(), easing: "cubic-bezier(0.22, 1, 0.36, 1)", fill: "both" }
+        );
+        return profileAnimation.finished.catch(() => {});
+      }
+
+      async function openProfile({ addHistory = true } = {}) {
+        if (!profileCard || profileIsOpen) return;
+        clearTimeout(profileCloseTimer);
+        const startRect = profileCard.getBoundingClientRect();
+        profileIsOpen = true;
+        profileSlot.style.height = `${startRect.height}px`;
+        document.body.appendChild(profileCard);
+        profileCard.classList.add("is-expanded");
+        profileCard.setAttribute("aria-expanded", "true");
+        profileDetails.setAttribute("aria-hidden", "false");
+        document.body.classList.add("profile-panel-open");
+        profileBackdrop.classList.add("is-visible");
+        profileBackdrop.setAttribute("aria-hidden", "false");
+        if (!preciseHover.matches && addHistory) {
+          history.pushState({ profilePanel: true }, "");
+          profileHistoryEntry = true;
+        }
+        await animateProfile(startRect, true);
+      }
+
+      async function closeProfile({ fromHistory = false } = {}) {
+        if (!profileCard || !profileIsOpen) return;
+        clearTimeout(profileCloseTimer);
+        profileIsOpen = false;
+        const expandedRect = profileCard.getBoundingClientRect();
+        profileBackdrop.classList.remove("is-visible");
+        profileBackdrop.setAttribute("aria-hidden", "true");
+        profileDetails.setAttribute("aria-hidden", "true");
+        await animateProfile(expandedRect, false);
+        profileAnimation?.cancel();
+        profileCard.classList.remove("is-expanded");
+        profileCard.setAttribute("aria-expanded", "false");
+        profileSlot.appendChild(profileCard);
+        profileSlot.style.height = "";
+        document.body.classList.remove("profile-panel-open");
+        if (profileHistoryEntry && !fromHistory) history.back();
+        profileHistoryEntry = false;
+      }
+
+      function scheduleProfileClose() {
+        clearTimeout(profileCloseTimer);
+        profileCloseTimer = window.setTimeout(() => closeProfile(), 200);
+      }
+
+      if (profileCard) {
+        profileCard.addEventListener("pointerenter", () => {
+          if (!preciseHover.matches) return;
+          clearTimeout(profileCloseTimer);
+          openProfile();
+        });
+        profileCard.addEventListener("pointerleave", () => {
+          if (preciseHover.matches) scheduleProfileClose();
+        });
+        profileCard.addEventListener("focus", () => openProfile());
+        profileCard.addEventListener("click", (event) => {
+          if (!preciseHover.matches && !event.target.closest(".hero-profile-close")) openProfile();
+        });
+        profileCard.addEventListener("keydown", (event) => {
+          if ((event.key === "Enter" || event.key === " ") && !profileIsOpen) {
+            event.preventDefault();
+            openProfile();
+          }
+        });
+      }
+      profileClose?.addEventListener("click", (event) => {
+        event.stopPropagation();
+        closeProfile();
+      });
+      profileBackdrop?.addEventListener("click", () => closeProfile());
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && profileIsOpen) closeProfile();
+      });
+      window.addEventListener("popstate", () => {
+        if (profileIsOpen) closeProfile({ fromHistory: true });
+      });
 
       // Footer year
       const yearSpan = document.getElementById("year");
