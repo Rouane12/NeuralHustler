@@ -23,9 +23,9 @@ body {
   transform: translate3d(var(--atmosphere-x), var(--atmosphere-y), 0) scale(1.015);
   transform-origin: center;
   background:
-    radial-gradient(ellipse 68% 58% at 16% 6%, rgba(123, 92, 255, 0.12), transparent 72%),
-    radial-gradient(ellipse 62% 52% at 84% 8%, rgba(47, 218, 184, 0.10), transparent 74%),
-    radial-gradient(ellipse 58% 46% at 52% 84%, rgba(37, 91, 124, 0.055), transparent 76%),
+    radial-gradient(ellipse 68% 58% at 16% 6%, rgba(123, 92, 255, 0.145), transparent 72%),
+    radial-gradient(ellipse 62% 52% at 84% 8%, rgba(47, 218, 184, 0.125), transparent 74%),
+    radial-gradient(ellipse 58% 46% at 52% 84%, rgba(37, 91, 124, 0.07), transparent 76%),
     #05060a;
   transition: opacity 220ms ease;
   contain: strict;
@@ -44,9 +44,9 @@ body {
 #neural-atmosphere::before {
   z-index: 0;
   background:
-    radial-gradient(circle at 18% 26%, rgba(47, 218, 184, 0.055), transparent 20%),
-    radial-gradient(circle at 77% 38%, rgba(123, 92, 255, 0.055), transparent 22%),
-    radial-gradient(circle at 48% 76%, rgba(72, 126, 160, 0.035), transparent 24%);
+    radial-gradient(circle at 18% 26%, rgba(47, 218, 184, 0.07), transparent 20%),
+    radial-gradient(circle at 77% 38%, rgba(123, 92, 255, 0.07), transparent 22%),
+    radial-gradient(circle at 48% 76%, rgba(72, 126, 160, 0.045), transparent 24%);
   filter: blur(30px);
 }
 
@@ -54,19 +54,19 @@ body {
    loads and is the intentional fallback for CDN/reduced-motion cases. */
 #neural-atmosphere::after {
   z-index: 0;
-  opacity: 0.18;
+  opacity: 0.20;
   background-image:
-    radial-gradient(circle, rgba(214, 230, 242, 0.34) 0 0.65px, transparent 0.9px),
-    radial-gradient(circle, rgba(47, 218, 184, 0.20) 0 0.55px, transparent 0.8px),
-    radial-gradient(circle, rgba(153, 132, 219, 0.20) 0 0.55px, transparent 0.8px);
+    radial-gradient(circle, rgba(214, 230, 242, 0.38) 0 0.68px, transparent 0.95px),
+    radial-gradient(circle, rgba(47, 218, 184, 0.24) 0 0.58px, transparent 0.84px),
+    radial-gradient(circle, rgba(153, 132, 219, 0.24) 0 0.58px, transparent 0.84px);
   background-size: 193px 173px, 271px 239px, 337px 307px;
   background-position: 23px 41px, 111px 79px, 193px 131px;
 }
 
-/* Once the live stars are running, the patterned dust becomes a quieter far
-   layer instead of doubling the perceived particle density. */
+/* Once the live stars are running, the patterned dust becomes the far layer
+   rather than competing with the animated particles. */
 #neural-atmosphere[data-motion='animated']::after {
-  opacity: 0.075;
+  opacity: 0.10;
 }
 
 #neural-atmosphere > canvas {
@@ -92,40 +92,43 @@ main,
   background: transparent !important;
 }
 
-/* Keep the hero a little richer without creating a second visual system. */
+/* Keep the hero slightly richer while still allowing the shared star field to
+   read through it. */
 .hero {
-  background: linear-gradient(135deg, rgba(11, 13, 19, 0.72), rgba(5, 6, 10, 0.56)) !important;
+  background: linear-gradient(135deg, rgba(11, 13, 19, 0.60), rgba(5, 6, 10, 0.44)) !important;
 }
 
 html.light #neural-atmosphere {
   background:
-    radial-gradient(ellipse 68% 58% at 16% 6%, rgba(121, 104, 201, 0.075), transparent 74%),
-    radial-gradient(ellipse 62% 52% at 84% 8%, rgba(31, 146, 145, 0.065), transparent 76%),
-    radial-gradient(ellipse 58% 46% at 52% 84%, rgba(109, 136, 166, 0.055), transparent 78%),
+    radial-gradient(ellipse 68% 58% at 16% 6%, rgba(121, 104, 201, 0.105), transparent 74%),
+    radial-gradient(ellipse 62% 52% at 84% 8%, rgba(31, 146, 145, 0.09), transparent 76%),
+    radial-gradient(ellipse 58% 46% at 52% 84%, rgba(109, 136, 166, 0.075), transparent 78%),
     #f3f7fc;
 }
 
 html.light #neural-atmosphere::before {
   background:
-    radial-gradient(circle at 18% 26%, rgba(50, 151, 147, 0.04), transparent 22%),
-    radial-gradient(circle at 77% 38%, rgba(116, 94, 188, 0.04), transparent 24%),
-    radial-gradient(circle at 48% 76%, rgba(98, 132, 162, 0.035), transparent 26%);
+    radial-gradient(circle at 18% 26%, rgba(50, 151, 147, 0.055), transparent 22%),
+    radial-gradient(circle at 77% 38%, rgba(116, 94, 188, 0.055), transparent 24%),
+    radial-gradient(circle at 48% 76%, rgba(98, 132, 162, 0.05), transparent 26%);
 }
 
 html.light #neural-atmosphere::after {
-  opacity: 0.10;
+  opacity: 0.15;
   background-image:
-    radial-gradient(circle, rgba(74, 95, 119, 0.28) 0 0.55px, transparent 0.8px),
-    radial-gradient(circle, rgba(29, 133, 131, 0.18) 0 0.5px, transparent 0.75px),
-    radial-gradient(circle, rgba(111, 94, 166, 0.17) 0 0.5px, transparent 0.75px);
+    radial-gradient(circle, rgba(57, 79, 103, 0.36) 0 0.62px, transparent 0.9px),
+    radial-gradient(circle, rgba(24, 117, 117, 0.27) 0 0.56px, transparent 0.82px),
+    radial-gradient(circle, rgba(100, 82, 151, 0.25) 0 0.56px, transparent 0.82px);
 }
 
 html.light #neural-atmosphere[data-motion='animated']::after {
-  opacity: 0.04;
+  opacity: 0.085;
 }
 
+/* Light mode needs translucency too; otherwise pale surfaces wash out the
+   digital-dust layer completely. */
 html.light .hero {
-  background: linear-gradient(135deg, rgba(247, 250, 253, 0.78), rgba(239, 246, 250, 0.62)) !important;
+  background: linear-gradient(135deg, rgba(247, 250, 253, 0.62), rgba(239, 246, 250, 0.44)) !important;
 }
 
 /* When the shared profile becomes a modal, keep context visible but quiet. */
@@ -146,19 +149,19 @@ html.profile-background-paused #neural-atmosphere {
   }
 
   #neural-atmosphere::after {
-    opacity: 0.14;
+    opacity: 0.16;
   }
 
   #neural-atmosphere[data-motion='animated']::after {
-    opacity: 0.055;
-  }
-
-  html.light #neural-atmosphere::after {
     opacity: 0.08;
   }
 
+  html.light #neural-atmosphere::after {
+    opacity: 0.12;
+  }
+
   html.light #neural-atmosphere[data-motion='animated']::after {
-    opacity: 0.032;
+    opacity: 0.07;
   }
 }
 
@@ -169,11 +172,11 @@ html.profile-background-paused #neural-atmosphere {
 
   #neural-atmosphere::after,
   #neural-atmosphere[data-motion='static']::after {
-    opacity: 0.20;
+    opacity: 0.23;
   }
 
   html.light #neural-atmosphere::after,
   html.light #neural-atmosphere[data-motion='static']::after {
-    opacity: 0.11;
+    opacity: 0.16;
   }
 }
