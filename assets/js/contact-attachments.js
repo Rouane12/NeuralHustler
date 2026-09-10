@@ -1,33 +1,3 @@
-// Bootstrap the global Neural Hustle atmosphere from the existing deferred entry point.
-// The site stays fully usable if the visual layer or its CDN dependencies fail.
-(() => {
-  if (!document.querySelector('link[data-neural-atmosphere-styles]')) {
-    const stylesheet = document.createElement('link');
-    stylesheet.rel = 'stylesheet';
-    stylesheet.href = 'assets/css/neural-atmosphere.css';
-    stylesheet.dataset.neuralAtmosphereStyles = 'true';
-    document.head.appendChild(stylesheet);
-  }
-
-  // Retire the legacy hero-only Vanta runtime immediately after parsing, before
-  // the replacement module finishes loading, so two animations never continue
-  // running together during normal use.
-  try {
-    window.vantaEffect?.destroy?.();
-  } catch (_) {
-    // Background visuals are progressive enhancement only.
-  }
-  window.vantaEffect = null;
-  document.querySelectorAll('#hero-vanta > canvas, #hero-vanta .vanta-canvas').forEach((canvas) => canvas.remove());
-
-  if (document.querySelector('script[data-neural-atmosphere]')) return;
-  const script = document.createElement('script');
-  script.src = 'assets/js/neural-atmosphere.js';
-  script.async = true;
-  script.dataset.neuralAtmosphere = 'true';
-  document.head.appendChild(script);
-})();
-
 // Native FormSubmit upload; selection stays local until the visitor submits.
 (() => {
   const input = document.getElementById('contactAttachment');
