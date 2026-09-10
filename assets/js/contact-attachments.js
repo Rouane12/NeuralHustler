@@ -1,3 +1,15 @@
+// Load the global Neural Hustle atmosphere from an existing deferred entry point.
+// Keeping this bootstrap here avoids adding another parser-blocking dependency to
+// the static GitHub Pages document.
+(() => {
+  if (document.querySelector('script[data-neural-atmosphere]')) return;
+  const script = document.createElement('script');
+  script.src = 'assets/js/neural-atmosphere.js';
+  script.async = true;
+  script.dataset.neuralAtmosphere = 'true';
+  document.head.appendChild(script);
+})();
+
 // Native FormSubmit upload; selection stays local until the visitor submits.
 (() => {
   const input = document.getElementById('contactAttachment');
