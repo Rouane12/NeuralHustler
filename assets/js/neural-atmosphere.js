@@ -57,6 +57,19 @@
     return layer;
   }
 
+  // The current document still contains the legacy Vanta initializer. Until
+  // those tags are physically removed, destroy its instance and canvas here so
+  // only one animated environment remains active.
+  function retireLegacyVanta() {
+    try {
+      window.vantaEffect?.destroy?.();
+    } catch (_) {
+      // A partially initialized Vanta instance must never block the replacement.
+    }
+    window.vantaEffect = null;
+    document.querySelectorAll('#hero-vanta > canvas, #hero-vanta .vanta-canvas').forEach((canvas) => canvas.remove());
+  }
+
   function loadScriptOnce(src, ready) {
     if (ready()) return Promise.resolve();
 
@@ -310,6 +323,7 @@
 
   installStylesheet();
   ensureLayer();
+  retireLegacyVanta();
   bindLifecycle();
   mountParticles();
 })();
