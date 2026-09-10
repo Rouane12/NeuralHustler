@@ -23,9 +23,9 @@ body {
   transform: translate3d(var(--atmosphere-x), var(--atmosphere-y), 0) scale(1.015);
   transform-origin: center;
   background:
-    radial-gradient(ellipse 68% 58% at 16% 6%, rgba(123, 92, 255, 0.145), transparent 72%),
-    radial-gradient(ellipse 62% 52% at 84% 8%, rgba(47, 218, 184, 0.125), transparent 74%),
-    radial-gradient(ellipse 58% 46% at 52% 84%, rgba(37, 91, 124, 0.07), transparent 76%),
+    radial-gradient(ellipse 76% 64% at 16% 6%, rgba(123, 92, 255, 0.078), transparent 76%),
+    radial-gradient(ellipse 70% 60% at 84% 8%, rgba(47, 218, 184, 0.066), transparent 78%),
+    radial-gradient(ellipse 62% 52% at 52% 84%, rgba(37, 91, 124, 0.035), transparent 80%),
     #05060a;
   transition: opacity 220ms ease;
   contain: strict;
@@ -39,15 +39,15 @@ body {
   pointer-events: none;
 }
 
-/* Soft brand haze makes the field feel digital rather than like a literal
-   astronomy background. */
+/* Keep only a restrained trace of the Neural Hustle teal/purple haze so the
+   star field reads first while the brand atmosphere remains recognizable. */
 #neural-atmosphere::before {
   z-index: 0;
   background:
-    radial-gradient(circle at 18% 26%, rgba(47, 218, 184, 0.07), transparent 20%),
-    radial-gradient(circle at 77% 38%, rgba(123, 92, 255, 0.07), transparent 22%),
-    radial-gradient(circle at 48% 76%, rgba(72, 126, 160, 0.045), transparent 24%);
-  filter: blur(30px);
+    radial-gradient(circle at 18% 26%, rgba(47, 218, 184, 0.035), transparent 24%),
+    radial-gradient(circle at 77% 38%, rgba(123, 92, 255, 0.035), transparent 26%),
+    radial-gradient(circle at 48% 76%, rgba(72, 126, 160, 0.024), transparent 28%);
+  filter: blur(38px);
 }
 
 /* A tiny static dust field prevents a blank background before the library
@@ -66,7 +66,7 @@ body {
 /* Once the live stars are running, the patterned dust becomes the far layer
    rather than competing with the animated particles. */
 #neural-atmosphere[data-motion='animated']::after {
-  opacity: 0.10;
+  opacity: 0.08;
 }
 
 #neural-atmosphere > canvas {
@@ -92,12 +92,14 @@ main,
   background: transparent !important;
 }
 
-/* Keep the hero slightly richer while still allowing the shared star field to
-   read through it. */
+/* Let the stars carry more of the hero atmosphere while keeping enough dark
+   surface behind the copy for contrast. */
 .hero {
-  background: linear-gradient(135deg, rgba(11, 13, 19, 0.60), rgba(5, 6, 10, 0.44)) !important;
+  background: linear-gradient(135deg, rgba(8, 10, 15, 0.50), rgba(5, 6, 10, 0.34)) !important;
 }
 
+/* Light mode intentionally remains identical to the published version in this
+   preview so the comparison only tests dark-mode hue reduction. */
 html.light #neural-atmosphere {
   background:
     radial-gradient(ellipse 68% 58% at 16% 6%, rgba(121, 104, 201, 0.105), transparent 74%),
@@ -125,8 +127,6 @@ html.light #neural-atmosphere[data-motion='animated']::after {
   opacity: 0.085;
 }
 
-/* Light mode needs translucency too; otherwise pale surfaces wash out the
-   digital-dust layer completely. */
 html.light .hero {
   background: linear-gradient(135deg, rgba(247, 250, 253, 0.62), rgba(239, 246, 250, 0.44)) !important;
 }
