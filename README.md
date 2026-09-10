@@ -4,7 +4,7 @@ The professional website of **Rouane Mounssif — Software Engineer / AI Integra
 
 AI integrations, backend systems, automation, developer products, and selected engineering work.
 
-[Website](https://neuralhustleacademy.com/) · [Redesign report](docs/REDESIGN_REPORT.md)
+[Website](https://neuralhustleacademy.com/) · [Redesign report](docs/REDESIGN_REPORT.md) · [Gumroad and polish report](docs/POLISH_REPORT.md)
 
 ## Architecture
 
@@ -33,7 +33,7 @@ Commit the JSON and generated index.html together. On Windows, use python if tha
 
 Products support a stable ID, name, positioning, description, technology tags, details, optional cover, optional price, and verified Gumroad URL.
 
-NeuralStack's gumroad_url, price_label, and cover are deliberately null. Visitors see **Ask about NeuralStack**, linking to Contact. Providing the real gumroad_url and regenerating creates **Get NeuralStack** and the Gumroad purchase note. Add a price only when verified.
+NeuralStack's official Gumroad destination is configured once in its `gumroad_url` field. Regeneration creates **Get NeuralStack**, opening the product page in a new tab with `noopener noreferrer`. Hero and Featured Work discovery links still lead to the local product section. `price_label` and `cover` remain null; add them only when verified. Future products without a purchase URL can use a contact fallback.
 
 A cover object requires src, alt, width, and height. The image must exist inside the repository. Without one, the product uses a typographic treatment. The renderer rejects missing covers, duplicate IDs, unsafe destinations, and prices without a purchase link.
 

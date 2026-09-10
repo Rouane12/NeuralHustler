@@ -12,10 +12,9 @@
         {"title": "A focused foundation", "text": "A starter kit built around FastAPI, with room for your application’s own requirements."},
         {"title": "Built by Neural Hustle", "text": "A developer product informed by hands-on work with APIs, AI integrations, and backend systems."}
       ],
-      "gumroad_url": null,
+      "gumroad_url": "https://rouanemounssif.gumroad.com/l/neuralstack",
       "price_label": null,
-      "cover": null,
-      "contact_label": "Ask about NeuralStack"
+      "cover": null
     }
   ],
   "work": [

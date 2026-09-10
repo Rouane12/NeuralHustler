@@ -1,5 +1,7 @@
 # Neural Hustle redesign — audit and verification
 
+> This documents the first redesign baseline. See [the follow-up polish report](POLISH_REPORT.md) for the connected Gumroad URL, final refinements, and updated screenshots.
+
 Prepared 10 September 2026 from main at 0b357f3777796dff76738465dff8b412e2b3f42b.
 
 ## Audit completed before implementation

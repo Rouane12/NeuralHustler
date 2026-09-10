@@ -51,9 +51,9 @@ def render_product(p):
     if url:
         valid_url(url, gumroad=True)
         cta = link({"label": f'Get {p["name"]}', "url": url, "primary": True})
-        note = "View the full product and purchase securely on Gumroad."
+        note = "Product details and checkout on Gumroad."
     else:
-        cta = link({"label": p["contact_label"], "url": "#contact", "primary": True})
+        cta = link({"label": p.get("contact_label", f'Ask about {p["name"]}'), "url": "#contact", "primary": True})
         note = "Get in touch for pricing and availability."
     price = f'<p class="product-price">{esc(p["price_label"])}</p>' if p.get("price_label") else ""
     if p.get("cover"):
@@ -93,9 +93,12 @@ def render_work(w):
     title = f'<h3>{esc(w["name"])}</h3>'
     headline = f'<p class="work-headline">{esc(w["headline"])}</p>' if w.get("headline") else ""
     caps = "".join(f'<div><h4>{esc(c["title"])}</h4><p>{esc(c["text"])}</p></div>' for c in w["capabilities"])
+    # Supporting work ends with its action, after the technical evidence.
+    supporting = w["layout"] == "supporting"
+    trailing_links = f'\n        {links}' if supporting else ''
     return f'''<article class="work-card work-{esc(w["layout"])} fade-in-up" id="{esc(w["id"])}">
-        <div class="work-copy"><p class="label">{esc(w["category"])}</p>{title}{headline}<p>{esc(w["description"])}</p>{tags(w["tags"])}{links}</div>
-        <div class="work-capabilities">{caps}</div>
+        <div class="work-copy"><p class="label">{esc(w["category"])}</p>{title}{headline}<p>{esc(w["description"])}</p>{tags(w["tags"])}{'' if supporting else links}</div>
+        <div class="work-capabilities">{caps}</div>{trailing_links}
       </article>'''
 
 

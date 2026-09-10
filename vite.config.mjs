@@ -12,7 +12,7 @@ export default defineConfig({
         response.end([
           '<!doctype html><html lang="en"><head><meta charset="utf-8">',
           '<meta name="robots" content="noindex"><title>Neural Hustle responsive review</title>',
-          '<style>body{margin:0;background:#222;color:white;font:14px system-ui}header{padding:12px;display:flex;gap:16px;align-items:center}select,button{font:inherit;padding:8px}iframe{display:block;border:0;background:#05060a;margin:0 auto;transform-origin:top center}main{overflow:clip}</style></head><body>',
+          '<style>body{margin:0;background:#222;color:white;font:14px system-ui}header{padding:12px;display:flex;gap:16px;align-items:center}select,button{font:inherit;padding:8px}iframe{display:block;flex-shrink:0;border:0;background:#05060a;margin:0;transform-origin:top center}main{overflow:clip;display:flex;justify-content:center}</style></head><body>',
           '<header><label>Viewport <select id="viewport"><option value="1920">Large desktop · 1920</option><option value="1366" selected>Laptop · 1366</option><option value="820">Tablet · 820</option><option value="390">Mobile · 390</option><option value="320">Small mobile · 320</option></select></label>',
           '<label>Text size <select id="text"><option value="100">100%</option><option value="200">200%</option></select></label>',
           '<button id="top">Back to top</button><span id="measure"></span></header>',
