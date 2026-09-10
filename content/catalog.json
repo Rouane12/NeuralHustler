@@ -1,0 +1,80 @@
+{
+  "products": [
+    {
+      "id": "neuralstack",
+      "name": "NeuralStack",
+      "category": "FastAPI AI Starter Kit",
+      "positioning": "Build AI backends without rebuilding the foundation every time.",
+      "description": "A focused starting point for developers building AI-powered APIs. Spend less time repeating the setup and more time on the application you want to ship.",
+      "tags": ["Python", "FastAPI", "AI integration"],
+      "details": [
+        {"title": "Made for developers", "text": "For builders who want a practical starting point for an AI backend."},
+        {"title": "A focused foundation", "text": "A starter kit built around FastAPI, with room for your application’s own requirements."},
+        {"title": "Built by Neural Hustle", "text": "A developer product informed by hands-on work with APIs, AI integrations, and backend systems."}
+      ],
+      "gumroad_url": null,
+      "price_label": null,
+      "cover": null,
+      "contact_label": "Ask about NeuralStack"
+    }
+  ],
+  "work": [
+    {
+      "id": "neural-critic",
+      "layout": "featured",
+      "name": "Neural Critic",
+      "category": "Independent product · Operating publication",
+      "headline": "A publication, with a whole system behind it.",
+      "description": "I build and operate a gaming publication that connects a reader-facing website with editorial tools, community features, and automated publishing.",
+      "tags": ["JavaScript", "Supabase", "Editorial tooling", "SEO", "Automation"],
+      "capabilities": [
+        {"title": "Publish", "text": "Editorial studio, content management, and publication automation."},
+        {"title": "Discover", "text": "Canonical story pages, search metadata, sitemaps, RSS, and analytics."},
+        {"title": "Connect", "text": "Reader accounts, community features, and comments."}
+      ],
+      "links": [
+        {"label": "Explore Neural Critic", "url": "https://www.neuralcritic.net/", "primary": true},
+        {"label": "View GitHub", "url": "https://github.com/Rouane12/NeuralCritic"}
+      ]
+    },
+    {
+      "id": "wardrobe",
+      "layout": "supporting",
+      "name": "Wardrobe AI Backend",
+      "category": "Client work · AI / API engineering",
+      "description": "Fashion images become structured data a product can use. I built the AI backend and API integration for a Bubble.io application.",
+      "tags": ["FastAPI", "OpenAI vision", "Structured outputs", "Bubble.io", "Railway"],
+      "capabilities": [
+        {"title": "From image to application", "text": "Image analysis, multi-image style profiles, and text generation exposed through API endpoints."}
+      ],
+      "links": [
+        {"label": "Discuss a similar integration", "url": "#contact"}
+      ]
+    },
+    {
+      "id": "flowforge",
+      "layout": "supporting",
+      "name": "FlowForge",
+      "category": "Personal project · Backend engineering",
+      "description": "My engineering workshop for backend architecture: developing the API structure, data models, migrations, and authentication flows behind a workflow system.",
+      "tags": ["FastAPI", "PostgreSQL", "SQLAlchemy", "Alembic"],
+      "capabilities": [
+        {"title": "Engineering in practice", "text": "An ongoing passion project exploring service boundaries, authentication, and workflow automation concepts."}
+      ],
+      "links": [
+        {"label": "Talk backend architecture", "url": "#contact"}
+      ]
+    },
+    {
+      "id": "neuralstack-engineering",
+      "layout": "reference",
+      "name": "NeuralStack",
+      "category": "Product engineering",
+      "description": "Turning recurring backend work into a focused developer tool. The product is where that engineering becomes reusable.",
+      "tags": ["Python", "FastAPI"],
+      "links": [
+        {"label": "Meet the starter kit", "url": "#neuralstack"}
+      ]
+    }
+  ]
+}

@@ -1,49 +1,54 @@
-# NeuralHustle Academy
+# Neural Hustle
 
-**NeuralHustle Academy** is the personal website of **Rouane Mounssif** – a hub for teachable cohorts, AI automation projects, and AI-powered YouTube channels.
+The professional website of **Rouane Mounssif — Software Engineer / AI Integration Engineer**.
 
-The site is a simple, fast, static page built with **HTML + CSS + a little vanilla JS**, and deployed with **GitHub Pages** on a custom domain:
+AI integrations, backend systems, automation, developer products, and selected engineering work.
 
-> https://neuralhustleacademy.com  
+[Website](https://neuralhustleacademy.com/) · [Redesign report](docs/REDESIGN_REPORT.md)
 
----
+## Architecture
 
-## ✨ Features
+Production remains static HTML, CSS, and vanilla JavaScript on GitHub Pages. There is no new production dependency, application framework, or client-side catalog fetch.
 
-- Hero section introducing NeuralHustle Academy and what it offers  
-- About section with skills & tech stack  
-- Udemy courses section with links to live cohorts  
-- Project highlights for AI / automation builds  
-- YouTube channels (NeuralFC & Ainimal) section with external links
-- Contact form powered by [FormSubmit](https://formsubmit.co/)  
-- Dark / light theme toggle (stored in `localStorage`)  
-- Scroll-in animations for sections  
-- Embedded **D-ID AI Copilot** (Neural Copilot) for interactive assistant on the site  
-- Favicon + custom logo
+| Owner | Responsibility |
+| --- | --- |
+| index.html | Page, SEO, profile state machine, navigation, themes, contact, Vanta and D-ID |
+| styles.css | Established design system and profile geometry |
+| studio.css | Refined hierarchy and responsive product/work components |
+| content/catalog.json | Product and work records |
+| scripts/render_catalog.py | Validates and escapes records; renders static catalog HTML |
+| vite.config.mjs | Development-only preview and responsive review controls |
+| CNAME | Existing custom domain |
 
----
+## Updating content
 
-## 🛠 Tech Stack
+Edit content/catalog.json, then run:
 
-- **HTML5** – layout and semantic structure  
-- **CSS3** – custom styling in `styles.css`  
-- **Vanilla JavaScript** in `index.html` for:
-  - mobile navigation toggle
-  - theme toggle
-  - scroll animations
-- **FormSubmit** – serverless contact form handling
-- **D-ID Agent** – AI video copilot widget  
-- **GitHub Pages** – static hosting  
-- **Namecheap** – custom domain DNS pointing to GitHub Pages
+~~~sh
+python3 scripts/render_catalog.py
+python3 scripts/render_catalog.py --check
+~~~
 
----
+Commit the JSON and generated index.html together. On Windows, use python if that is the installed command. Only the two named catalog marker regions are replaced.
 
-## 📁 Project Structure
+Products support a stable ID, name, positioning, description, technology tags, details, optional cover, optional price, and verified Gumroad URL.
 
-```text
-.
-├── CNAME                     # Custom domain for GitHub Pages
-├── favicon.png               # Site favicon
-├── NeuralHustle Logo.png     # Main logo asset
-├── index.html                # Main website file
-└── styles.css                # Global styles
+NeuralStack's gumroad_url, price_label, and cover are deliberately null. Visitors see **Ask about NeuralStack**, linking to Contact. Providing the real gumroad_url and regenerating creates **Get NeuralStack** and the Gumroad purchase note. Add a price only when verified.
+
+A cover object requires src, alt, width, and height. The image must exist inside the repository. Without one, the product uses a typographic treatment. The renderer rejects missing covers, duplicate IDs, unsafe destinations, and prices without a purchase link.
+
+Work layouts are featured, supporting, and reference. Neural Critic has public website/GitHub links. FlowForge and Wardrobe use contact links because their repositories are private.
+
+## Preview
+
+Node is only needed for preview. Run npm ci, then npm run dev. In ChatGPT Work, use the supervised preview.
+
+The development-only /__qa route offers 1920, 1366, 820, 390, and 320 CSS-pixel iframe viewports, plus 200% text sizing. It is not a production route. GitHub Pages continues serving the committed root files without a Vite build.
+
+Before publishing: check catalog output, themes, navigation, profile closing/focus, disclosures, contact validation, and overflow.
+
+## Compatibility
+
+FormSubmit, Upwork, LinkedIn, both YouTube channels, the portrait, profile animation, D-ID configuration, Vanta/Three.js, favicon, social image, and canonical domain are preserved. FormSubmit now returns to the current domain.
+
+The old #courses and #portfolio anchors route to Products and Work. #projects opens the earlier-work disclosure. Historical course-app work remains separate from retired commercial promotions.
