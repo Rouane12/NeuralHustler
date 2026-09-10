@@ -1,11 +1,12 @@
 // Continuous Neural Hustle atmosphere.
-// The official tsParticles Stars preset provides the particle engine; this
-// file applies the site-specific theme, performance and interaction behavior.
+// Dark mode uses the official tsParticles Stars preset; light mode uses the
+// official Links preset, with both heavily customized to the site's visual system.
 (() => {
   'use strict';
 
   const ENGINE_URL = 'https://cdn.jsdelivr.net/npm/@tsparticles/engine@4.4.0/tsparticles.engine.min.js';
   const STARS_URL = 'https://cdn.jsdelivr.net/npm/@tsparticles/preset-stars@4.4.0/tsparticles.preset.stars.bundle.min.js';
+  const LINKS_URL = 'https://cdn.jsdelivr.net/npm/@tsparticles/preset-links@4.4.0/tsparticles.preset.links.min.js';
   const LAYER_ID = 'neural-atmosphere';
 
   const root = document.documentElement;
@@ -25,7 +26,8 @@
   let pointerY = 0;
   let targetPointerX = 0;
   let targetPointerY = 0;
-  let libraryPromise = null;
+  let enginePromise = null;
+  const presetPromises = new Map();
 
   function isLightTheme() {
     return root.classList.contains('light') || body.getAttribute('data-theme') === 'light';
@@ -73,43 +75,53 @@
     });
   }
 
-  function ensureLibrary() {
-    if (libraryPromise) return libraryPromise;
+  function ensureEngine() {
+    if (enginePromise) return enginePromise;
 
-    libraryPromise = (async () => {
-      await loadScriptOnce(ENGINE_URL, () => Boolean(window.tsParticles));
-      await loadScriptOnce(STARS_URL, () => typeof window.loadStarsPreset === 'function');
-      await window.loadStarsPreset(window.tsParticles);
-    })().catch((error) => {
-      libraryPromise = null;
+    enginePromise = loadScriptOnce(ENGINE_URL, () => Boolean(window.tsParticles)).catch((error) => {
+      enginePromise = null;
       throw error;
     });
 
-    return libraryPromise;
+    return enginePromise;
   }
 
-  function particleOptions() {
-    const light = isLightTheme();
-    const compact = compactViewport.matches;
+  function ensurePreset(name) {
+    if (presetPromises.has(name)) return presetPromises.get(name);
 
+    const promise = (async () => {
+      await ensureEngine();
+
+      if (name === 'links') {
+        await loadScriptOnce(LINKS_URL, () => typeof window.loadLinksPreset === 'function');
+        await window.loadLinksPreset(window.tsParticles);
+      } else {
+        await loadScriptOnce(STARS_URL, () => typeof window.loadStarsPreset === 'function');
+        await window.loadStarsPreset(window.tsParticles);
+      }
+    })().catch((error) => {
+      presetPromises.delete(name);
+      throw error;
+    });
+
+    presetPromises.set(name, promise);
+    return promise;
+  }
+
+  function darkStarOptions(compact) {
     return {
       preset: 'stars',
       fullScreen: { enable: false },
       background: { color: { value: 'transparent' } },
       fpsLimit: compact ? 30 : 45,
-      // Keep the particle count fixed instead of multiplying density on Retina.
       detectRetina: window.devicePixelRatio <= 1.5,
       particles: {
         number: {
-          // The first pass was intentionally too quiet. These counts make the
-          // atmosphere clearly perceptible while remaining well below demo density.
-          value: compact ? (light ? 30 : 36) : (light ? 50 : 64),
+          value: compact ? 36 : 64,
           density: { enable: false }
         },
         color: {
-          value: light
-            ? ['#536b83', '#287f80', '#6f6298', '#8797a8']
-            : ['#ecf5ff', '#bfd0df', '#4ad7ba', '#9c88dc']
+          value: ['#f4f9ff', '#d3e0ec', '#53dec2', '#aa96e8']
         },
         links: { enable: false },
         collisions: { enable: false },
@@ -122,15 +134,15 @@
           outModes: { default: 'out' }
         },
         opacity: {
-          value: light ? { min: 0.16, max: 0.38 } : { min: 0.20, max: 0.58 },
+          value: { min: 0.24, max: 0.66 },
           animation: {
             enable: true,
-            speed: light ? 0.105 : 0.14,
+            speed: 0.14,
             sync: false
           }
         },
         size: {
-          value: light ? { min: 0.58, max: 1.48 } : { min: 0.62, max: 1.8 },
+          value: { min: 0.68, max: 1.95 },
           animation: { enable: false }
         },
         shape: { type: 'circle' }
@@ -143,6 +155,68 @@
         }
       }
     };
+  }
+
+  function lightNetworkOptions(compact) {
+    return {
+      preset: 'links',
+      fullScreen: { enable: false },
+      background: { color: { value: 'transparent' } },
+      fpsLimit: compact ? 30 : 42,
+      detectRetina: window.devicePixelRatio <= 1.5,
+      particles: {
+        number: {
+          value: compact ? 28 : 42,
+          density: { enable: false }
+        },
+        color: {
+          value: ['#315f78', '#168b87', '#7764a8', '#59758d']
+        },
+        links: {
+          enable: true,
+          distance: compact ? 118 : 150,
+          color: '#6f8fa0',
+          opacity: compact ? 0.085 : 0.115,
+          width: 0.65,
+          triangles: { enable: false },
+          shadow: { enable: false }
+        },
+        collisions: { enable: false },
+        move: {
+          enable: true,
+          direction: 'none',
+          random: true,
+          straight: false,
+          speed: compact ? 0.045 : 0.06,
+          outModes: { default: 'out' }
+        },
+        opacity: {
+          value: { min: 0.28, max: 0.54 },
+          animation: {
+            enable: true,
+            speed: 0.085,
+            sync: false
+          }
+        },
+        size: {
+          value: { min: 0.85, max: 1.85 },
+          animation: { enable: false }
+        },
+        shape: { type: 'circle' }
+      },
+      interactivity: {
+        events: {
+          onClick: { enable: false },
+          onHover: { enable: false },
+          resize: { enable: true }
+        }
+      }
+    };
+  }
+
+  function particleOptions() {
+    const compact = compactViewport.matches;
+    return isLightTheme() ? lightNetworkOptions(compact) : darkStarOptions(compact);
   }
 
   async function destroyParticles() {
@@ -162,7 +236,9 @@
   async function mountParticles() {
     const token = ++mountToken;
     const layer = ensureLayer();
-    currentTheme = isLightTheme() ? 'light' : 'dark';
+    const light = isLightTheme();
+    const presetName = light ? 'links' : 'stars';
+    currentTheme = light ? 'light' : 'dark';
     currentCompact = compactViewport.matches;
 
     if (reducedMotion.matches) {
@@ -172,9 +248,10 @@
     }
 
     layer.dataset.motion = 'animated';
+    layer.dataset.variant = presetName;
 
     try {
-      await ensureLibrary();
+      await ensurePreset(presetName);
       if (token !== mountToken) return;
 
       await destroyParticles();
