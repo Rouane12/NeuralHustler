@@ -27,7 +27,7 @@ body {
     radial-gradient(ellipse 62% 52% at 84% 8%, rgba(47, 218, 184, 0.10), transparent 74%),
     radial-gradient(ellipse 58% 46% at 52% 84%, rgba(37, 91, 124, 0.055), transparent 76%),
     #05060a;
-  transition: background-color 240ms ease, opacity 220ms ease;
+  transition: opacity 220ms ease;
   contain: strict;
 }
 
@@ -39,6 +39,8 @@ body {
   pointer-events: none;
 }
 
+/* Soft brand haze makes the field feel digital rather than like a literal
+   astronomy background. */
 #neural-atmosphere::before {
   z-index: 0;
   background:
@@ -48,8 +50,8 @@ body {
   filter: blur(30px);
 }
 
-/* A tiny static dust field keeps the page atmospheric before the library loads,
-   when the CDN is unavailable, and for reduced-motion visitors. */
+/* A tiny static dust field prevents a blank background before the library
+   loads and is the intentional fallback for CDN/reduced-motion cases. */
 #neural-atmosphere::after {
   z-index: 0;
   opacity: 0.18;
@@ -59,6 +61,12 @@ body {
     radial-gradient(circle, rgba(153, 132, 219, 0.20) 0 0.55px, transparent 0.8px);
   background-size: 193px 173px, 271px 239px, 337px 307px;
   background-position: 23px 41px, 111px 79px, 193px 131px;
+}
+
+/* Once the live stars are running, the patterned dust becomes a quieter far
+   layer instead of doubling the perceived particle density. */
+#neural-atmosphere[data-motion='animated']::after {
+  opacity: 0.075;
 }
 
 #neural-atmosphere > canvas {
@@ -78,17 +86,13 @@ main,
   z-index: 1;
 }
 
+/* The historical id remains for compatibility with existing CSS/anchors; it
+   no longer owns a Vanta canvas. */
 #hero-vanta {
   background: transparent !important;
 }
 
-/* Defensive fallback while the old runtime is being retired. */
-#hero-vanta > canvas,
-#hero-vanta .vanta-canvas {
-  display: none !important;
-}
-
-/* Keep the hero visually richer without creating a separate environment. */
+/* Keep the hero a little richer without creating a second visual system. */
 .hero {
   background: linear-gradient(135deg, rgba(11, 13, 19, 0.72), rgba(5, 6, 10, 0.56)) !important;
 }
@@ -116,12 +120,23 @@ html.light #neural-atmosphere::after {
     radial-gradient(circle, rgba(111, 94, 166, 0.17) 0 0.5px, transparent 0.75px);
 }
 
+html.light #neural-atmosphere[data-motion='animated']::after {
+  opacity: 0.04;
+}
+
 html.light .hero {
   background: linear-gradient(135deg, rgba(247, 250, 253, 0.78), rgba(239, 246, 250, 0.62)) !important;
 }
 
+/* When the shared profile becomes a modal, keep context visible but quiet. */
 html.profile-background-paused #neural-atmosphere {
-  opacity: 0.74;
+  opacity: 0.72;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  #neural-atmosphere {
+    will-change: transform;
+  }
 }
 
 @media (max-width: 720px) {
@@ -131,11 +146,19 @@ html.profile-background-paused #neural-atmosphere {
   }
 
   #neural-atmosphere::after {
-    opacity: 0.11;
+    opacity: 0.14;
+  }
+
+  #neural-atmosphere[data-motion='animated']::after {
+    opacity: 0.055;
   }
 
   html.light #neural-atmosphere::after {
-    opacity: 0.065;
+    opacity: 0.08;
+  }
+
+  html.light #neural-atmosphere[data-motion='animated']::after {
+    opacity: 0.032;
   }
 }
 
@@ -144,11 +167,13 @@ html.profile-background-paused #neural-atmosphere {
     transform: none !important;
   }
 
-  #neural-atmosphere::after {
-    opacity: 0.22;
+  #neural-atmosphere::after,
+  #neural-atmosphere[data-motion='static']::after {
+    opacity: 0.20;
   }
 
-  html.light #neural-atmosphere::after {
-    opacity: 0.12;
+  html.light #neural-atmosphere::after,
+  html.light #neural-atmosphere[data-motion='static']::after {
+    opacity: 0.11;
   }
 }
