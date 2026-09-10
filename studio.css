@@ -177,6 +177,25 @@ summary { cursor: pointer; }
 .contact-form input, .contact-form textarea { width: 100%; min-width: 0; border-radius: .5rem; min-height: 48px; }
 .contact-form textarea { resize: vertical; }
 .contact-form .btn { justify-self: start; }
+.cv-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1.25rem; min-width: 0; }
+.cv-actions .cv-view { padding: .65rem 1rem; background: var(--studio-tint); border-color: var(--studio-line); box-shadow: none; font-size: .9rem; }
+.cv-actions .cv-view:hover, .cv-actions .cv-view:focus-visible { border-color: var(--studio-accent); background: var(--studio-tint); }
+html.light .cv-actions .cv-view { border-color: #8b79af; }
+.cv-actions .text-link { padding-block: .5rem; font-size: .9rem; }
+.contact-cv { margin-top: 1.25rem; }
+.attachment-field { min-width: 0; }
+.attachment-field label { flex-direction: row; flex-wrap: wrap; align-items: baseline; gap: .2rem .75rem; }
+.field-optional, .attachment-help { color: var(--studio-muted); font-size: .82rem; }
+.contact-form input[type="file"] { max-width: 100%; padding: 0; color: var(--studio-muted); font-family: inherit; font-size: .85rem; overflow: hidden; text-overflow: ellipsis; border-color: var(--studio-line); cursor: pointer; }
+.contact-form input[type="file"]::file-selector-button { min-height: 48px; max-width: 100%; margin-inline-end: .75rem; padding: .65rem .85rem; border: 0; border-right: 1px solid var(--studio-line); background: var(--studio-tint); color: var(--text); font: inherit; font-weight: 600; cursor: pointer; white-space: normal; }
+.contact-form input[type="file"]:hover::file-selector-button { background: var(--studio-teal-tint); }
+html.light .contact-form input[type="file"] { border-color: #7e899e; }
+.attachment-help { margin-top: .45rem; }
+.attachment-error { margin-top: .45rem; color: #ffb5bd; font-size: .85rem; overflow-wrap: anywhere; }
+html.light .attachment-error { color: #a12239; }
+.contact-form input[aria-invalid="true"] { border-color: #d25668; }
+.attachment-clear { margin-top: .4rem; padding: .25rem 0; border: 0; background: none; font: inherit; font-size: .82rem; cursor: pointer; }
+.attachment-field [hidden] { display: none; }
 .footer { padding: 2.5rem 0 6rem; display: flex; gap: 2rem; align-items: start; justify-content: space-between; background: transparent; }
 html.light .footer { background: transparent; }
 .footer p { font-size: .8125rem; color: var(--studio-muted); max-width: 48ch; margin-top: .65rem; }
@@ -229,7 +248,7 @@ html.light .footer { background: transparent; }
   .hero-profile-card:not(.is-expanded) { flex-direction: row; flex-wrap: wrap; align-items: center; }
   .hero-profile-card:not(.is-expanded) .hero-profile-text { flex: 1 1 8rem; }
   .hero-profile-card:not(.is-expanded) .hero-profile-photo-wrap { width: 64px; height: 64px; }
-  .hero-profile-card.is-expanded { gap: 1rem; }
+  .hero-profile-card.is-expanded { grid-template-columns: minmax(0, 1fr); width: calc(100vw - 32px); max-height: min(720px, calc(100dvh - 32px)); padding: 64px 20px 20px; gap: 1rem; }
   .hero-profile-card.is-expanded .hero-profile-text { padding-right: 0; }
   .desktop-break { display: none; }
   .split-heading, .capability-list, .product-feature, .work-grid, .work-featured, .credentials-layout, .contact-layout, .creative-links, .archive-grid { grid-template-columns: minmax(0, 1fr); }
