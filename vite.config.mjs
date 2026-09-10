@@ -15,10 +15,12 @@ export default defineConfig({
           '<style>body{margin:0;background:#222;color:white;font:14px system-ui}header{padding:12px;display:flex;gap:16px;align-items:center}select,button{font:inherit;padding:8px}iframe{display:block;flex-shrink:0;border:0;background:#05060a;margin:0;transform-origin:top center}main{overflow:clip;display:flex;justify-content:center}</style></head><body>',
           '<header><label>Viewport <select id="viewport"><option value="1920">Large desktop · 1920</option><option value="1366" selected>Laptop · 1366</option><option value="820">Tablet · 820</option><option value="390">Mobile · 390</option><option value="320">Small mobile · 320</option></select></label>',
           '<label>Text size <select id="text"><option value="100">100%</option><option value="200">200%</option></select></label>',
+          '<label>Height <select id="height"><option value="auto">Standard</option><option value="400">Short · 400</option></select></label>',
           '<button id="top">Back to top</button><span id="measure"></span></header>',
           '<main><iframe id="site" title="Website under review" src="/" width="1366" height="900"></iframe></main>',
           '<script>const frame=document.querySelector("#site");const preset=document.querySelector("#viewport");',
-          'function size(){const width=Number(preset.value);frame.style.width=width+"px";const scale=Math.min(1,(innerWidth-24)/width);frame.style.transform="scale("+scale+")";frame.style.height=(width<900?820:900)+"px";document.querySelector("#measure").textContent=width+" CSS px";}',
+          'function size(){const width=Number(preset.value);frame.style.width=width+"px";const scale=Math.min(1,(innerWidth-24)/width);frame.style.transform="scale("+scale+")";const height=document.querySelector("#height").value;frame.style.height=(height==="auto"?(width<900?820:900):Number(height))+"px";document.querySelector("#measure").textContent=width+" CSS px";}',
+          'document.querySelector("#height").addEventListener("change",size);',
           'preset.addEventListener("change",size);window.addEventListener("resize",size);document.querySelector("#text").addEventListener("change",e=>{frame.contentDocument.documentElement.style.fontSize=e.target.value+"%"});document.querySelector("#top").addEventListener("click",()=>frame.contentWindow.scrollTo({top:0,behavior:"instant"}));size();</script>',
           '</body></html>'
         ].join(""));

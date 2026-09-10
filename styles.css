@@ -534,7 +534,7 @@ h3 {
 }
 
 .hero-profile-card.is-expanded .hero-profile-details {
-  max-height: 400px;
+  max-height: none;
   overflow: visible;
   opacity: 1;
   transform: translateY(0);
@@ -630,6 +630,7 @@ html.light .profile-backdrop {
   height: 100%;
   border-radius: 999px;
   object-fit: cover;
+  object-position: 50% 18%;
   display: block;
   border: 3px solid rgba(5, 6, 10, 0.9);
 }
