@@ -46,6 +46,7 @@
 
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="studio.css" />
+    <link rel="stylesheet" href="assets/css/neural-atmosphere.css" />
 
     <!-- Light theme overrides + animations -->
     <style>
@@ -78,7 +79,7 @@
 
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
-    <!-- HERO / VANTA WRAPPER -->
+    <!-- HERO -->
     <section id="hero-vanta">
       <header class="hero" id="hero-section">
         <div class="page-shell">
@@ -346,6 +347,7 @@
     </footer>
 
     <!-- JS SECTION -->
+    <script src="assets/js/neural-atmosphere.js" defer></script>
     <script src="assets/js/contact-attachments.js" defer></script>
     <script>
       // Mobile nav toggle
@@ -444,19 +446,6 @@
 
       function setProfileBackgroundPaused(paused) {
         document.documentElement.classList.toggle("profile-background-paused", paused);
-        if (!window.vantaEffect) return;
-
-        if (paused) {
-          // Let Vanta settle on its neutral pointer position before disabling input.
-          window.dispatchEvent(new MouseEvent("mousemove", {
-            clientX: window.innerWidth / 2,
-            clientY: window.innerHeight / 2
-          }));
-        }
-        window.vantaEffect.setOptions({
-          mouseControls: !paused,
-          touchControls: !paused
-        });
       }
 
       function cancelProfileAnimation({ preserveCurrentStyle = false } = {}) {
@@ -793,53 +782,13 @@
         yearSpan.textContent = new Date().getFullYear();
       }
 
-      // Theme + Vanta integration
+      // Theme integration. The atmosphere module observes the same root/body
+      // theme state and updates its own particle configuration independently.
       const body = document.body;
       const root = document.documentElement;
       const themeToggle = document.getElementById("themeToggle");
       const themeIcon = document.getElementById("themeIcon");
       const themeLabel = document.getElementById("themeLabel");
-      const heroVanta = document.getElementById("hero-vanta");
-      const heroSection = document.getElementById("hero-section");
-
-      function syncHeroVantaHeight() {
-        if (!heroVanta || !heroSection) return;
-        const heroHeight = heroSection.getBoundingClientRect().height;
-        heroVanta.style.minHeight = `${heroHeight}px`;
-        heroVanta.style.height = `${heroHeight}px`;
-
-        if (
-          window.vantaEffect &&
-          typeof window.vantaEffect.resize === "function"
-        ) {
-          window.requestAnimationFrame(() => window.vantaEffect.resize());
-        }
-      }
-
-      const heroResizeObserver =
-        typeof ResizeObserver !== "undefined"
-          ? new ResizeObserver(() => syncHeroVantaHeight())
-          : null;
-
-      if (heroResizeObserver && heroSection) {
-        heroResizeObserver.observe(heroSection);
-      }
-
-      window.addEventListener("resize", syncHeroVantaHeight);
-
-      function updateVantaTheme(isDark) {
-        if (!window.vantaEffect) return;
-
-        window.vantaEffect.setOptions({
-          color: isDark ? 0x00e1ff : 0x55bfc3,
-          backgroundColor: isDark ? 0x05060a : 0xf3f7fc,
-          backgroundAlpha: isDark ? 0.1 : 1,
-          points: isDark ? 16 : 10,
-          maxDistance: isDark ? 32 : 21,
-        });
-
-        syncHeroVantaHeight();
-      }
 
       function applyTheme(isLight) {
         if (isLight) {
@@ -858,29 +807,18 @@
 
         themeToggle?.setAttribute("aria-label", isLight ? "Switch to dark theme" : "Switch to light theme");
         themeToggle?.setAttribute("aria-pressed", String(isLight));
-        updateVantaTheme(!isLight);
-        syncHeroVantaHeight();
       }
 
       let storedTheme;
       try { storedTheme = localStorage.getItem("neuralhustle-theme"); } catch (_) {}
       applyTheme(storedTheme === "light");
 
-      requestAnimationFrame(() =>
-        updateVantaTheme(body.getAttribute("data-theme") !== "light")
-      );
-
       if (themeToggle) {
         themeToggle.addEventListener("click", () => {
           const isLight = body.getAttribute("data-theme") === "light";
           applyTheme(!isLight);
-          requestAnimationFrame(() =>
-            updateVantaTheme(body.getAttribute("data-theme") !== "light")
-          );
         });
       }
-
-      syncHeroVantaHeight();
 
       // Intersection observer for fade-in
       const animated = document.querySelectorAll(".fade-in-up");
@@ -904,42 +842,6 @@
       });
     </script>
 
-    <!-- VANTA / THREE -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.net.min.js"></script>
-    <script>
-      const heroTarget = document.getElementById("hero-vanta");
-      const heroContent = document.getElementById("hero-section");
-      const heroContentHeight =
-        heroContent?.getBoundingClientRect().height || 560;
-
-      if (heroTarget && window.VANTA?.NET && !prefersReducedMotion) {
-        try {
-        window.vantaEffect = VANTA.NET({
-          el: "#hero-vanta",
-          mouseControls: true,
-          touchControls: true,
-          minHeight: heroContentHeight,
-          minWidth: 200.0,
-          scale: 1.4,
-          scaleMobile: 1.8,
-          color: 0x00e1ff,
-          backgroundColor: 0x05060a,
-          backgroundAlpha: 0.15,
-          points: 14.0,
-          maxDistance: 28.0,
-          spacing: 16.0,
-        });
-        } catch (_) { /* The gradient background remains usable without WebGL. */ }
-      }
-
-      const isDarkTheme = body.getAttribute("data-theme") !== "light";
-      updateVantaTheme(isDarkTheme);
-
-      if (typeof syncHeroVantaHeight === "function") {
-        syncHeroVantaHeight();
-      }
-    </script>
     <!-- Draggable D-ID Agent -->
     <script>
     function makeDraggable() {

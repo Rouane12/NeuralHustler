@@ -8,13 +8,15 @@ AI integrations, backend systems, automation, developer products, and selected e
 
 ## Architecture
 
-Production remains static HTML, CSS, and vanilla JavaScript on GitHub Pages. There is no new production dependency, application framework, or client-side catalog fetch.
+Production remains static HTML, CSS, and vanilla JavaScript on GitHub Pages. There is no application framework or client-side catalog fetch. The site uses the official tsParticles Stars browser bundles (pinned to 4.4.0) only for the decorative global atmosphere.
 
 | Owner | Responsibility |
 | --- | --- |
-| index.html | Page, SEO, profile state machine, navigation, themes, contact, Vanta and D-ID |
+| index.html | Page, SEO, profile state machine, navigation, themes, contact and D-ID |
 | styles.css | Established design system and profile geometry |
 | studio.css | Refined hierarchy and responsive product/work components |
+| assets/css/neural-atmosphere.css | Global atmosphere layering, theme art direction and static fallback |
+| assets/js/neural-atmosphere.js | tsParticles lifecycle, theme sync, pointer parallax and motion safeguards |
 | assets/images/rouane-mounssif.webp | Canonical compact and expanded profile portrait |
 | assets/documents/Rouane-Mounssif-CV.pdf | Public CV; preserve this URL when updating it |
 | assets/js/contact-attachments.js | Optional attachment type and size feedback |
@@ -48,11 +50,13 @@ Node is only needed for preview. Run npm ci, then npm run dev. In ChatGPT Work, 
 
 The development-only /__qa route offers 1920, 1366, 820, 390, and 320 CSS-pixel iframe viewports, plus 200% text sizing and a 400px short-height preset. It is not a production route. GitHub Pages continues serving the committed root files without a Vite build.
 
-Before publishing: check catalog output, themes, navigation, profile closing/focus, disclosures, contact validation, and overflow.
+Before publishing: check catalog output, themes, navigation, profile closing/focus, disclosures, contact validation, atmosphere continuity and overflow.
 
 ## Compatibility
 
-FormSubmit, Upwork, LinkedIn, both YouTube channels, the shared-element profile animation, D-ID configuration, Vanta/Three.js, favicon, social image, and canonical domain are preserved. The profile uses the supplied updated portrait. FormSubmit returns to the current domain.
+FormSubmit, Upwork, LinkedIn, both YouTube channels, the shared-element profile animation, D-ID configuration, favicon, social image, and canonical domain are preserved. Vanta/Three.js were removed when the hero-only background was replaced by the global tsParticles atmosphere. The profile uses the supplied updated portrait. FormSubmit returns to the current domain.
+
+The atmosphere is one fixed decorative layer from hero through footer. Dark mode uses a restrained cool-white/teal/purple star field; light mode uses a lower-contrast blue-gray/teal/lavender version. The layer does not receive pointer events, reduces work on compact viewports, pauses on hidden tabs and while the profile modal is open, and falls back to static CSS when reduced motion is requested or the CDN cannot load.
 
 The old #courses and #portfolio anchors route to Products and Work. #projects opens the earlier-work disclosure. Historical course-app work remains separate from retired commercial promotions.
 
