@@ -6,7 +6,6 @@
 
   const ENGINE_URL = 'https://cdn.jsdelivr.net/npm/@tsparticles/engine@4.3.3/tsparticles.engine.min.js';
   const STARS_URL = 'https://cdn.jsdelivr.net/npm/@tsparticles/preset-stars@4.3.3/tsparticles.preset.stars.bundle.min.js';
-  const STYLESHEET_URL = 'assets/css/neural-atmosphere.css';
   const LAYER_ID = 'neural-atmosphere';
 
   const root = document.documentElement;
@@ -36,15 +35,6 @@
     return root.classList.contains('profile-background-paused');
   }
 
-  function installStylesheet() {
-    if (document.querySelector('link[data-neural-atmosphere-styles]')) return;
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = STYLESHEET_URL;
-    link.dataset.neuralAtmosphereStyles = 'true';
-    document.head.appendChild(link);
-  }
-
   function ensureLayer() {
     let layer = document.getElementById(LAYER_ID);
     if (layer) return layer;
@@ -55,19 +45,6 @@
     layer.setAttribute('role', 'presentation');
     body.prepend(layer);
     return layer;
-  }
-
-  // The current document still contains the legacy Vanta initializer. Until
-  // those tags are physically removed, destroy its instance and canvas here so
-  // only one animated environment remains active.
-  function retireLegacyVanta() {
-    try {
-      window.vantaEffect?.destroy?.();
-    } catch (_) {
-      // A partially initialized Vanta instance must never block the replacement.
-    }
-    window.vantaEffect = null;
-    document.querySelectorAll('#hero-vanta > canvas, #hero-vanta .vanta-canvas').forEach((canvas) => canvas.remove());
   }
 
   function loadScriptOnce(src, ready) {
@@ -321,9 +298,7 @@
     observer.observe(body, { attributes: true, attributeFilter: ['data-theme'] });
   }
 
-  installStylesheet();
   ensureLayer();
-  retireLegacyVanta();
   bindLifecycle();
   mountParticles();
 })();
