@@ -6,7 +6,6 @@
 
   const ENGINE_URL = 'https://cdn.jsdelivr.net/npm/@tsparticles/engine@4.3.3/tsparticles.engine.min.js';
   const STARS_URL = 'https://cdn.jsdelivr.net/npm/@tsparticles/preset-stars@4.3.3/tsparticles.preset.stars.bundle.min.js';
-  const STYLESHEET_URL = 'assets/css/neural-atmosphere.css';
   const LAYER_ID = 'neural-atmosphere';
 
   const root = document.documentElement;
@@ -21,6 +20,7 @@
   let mountToken = 0;
   let resizeTimer = null;
   let pointerFrame = null;
+  let themeFrame = null;
   let pointerX = 0;
   let pointerY = 0;
   let targetPointerX = 0;
@@ -35,15 +35,6 @@
     return root.classList.contains('profile-background-paused');
   }
 
-  function installStylesheet() {
-    if (document.querySelector('link[data-neural-atmosphere-styles]')) return;
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = STYLESHEET_URL;
-    link.dataset.neuralAtmosphereStyles = 'true';
-    document.head.appendChild(link);
-  }
-
   function ensureLayer() {
     let layer = document.getElementById(LAYER_ID);
     if (layer) return layer;
@@ -54,22 +45,6 @@
     layer.setAttribute('role', 'presentation');
     body.prepend(layer);
     return layer;
-  }
-
-  // Vanta currently initializes from legacy inline code before this deferred
-  // module executes. Destroying its instance removes the hero-only animation;
-  // the defensive CSS also prevents a stale Vanta canvas from being visible.
-  function retireVantaRuntime() {
-    try {
-      window.vantaEffect?.destroy?.();
-    } catch (_) {
-      // A partially initialized WebGL instance must not block the replacement.
-    }
-    window.vantaEffect = null;
-
-    document.querySelectorAll('#hero-vanta > canvas, #hero-vanta .vanta-canvas').forEach((canvas) => {
-      canvas.remove();
-    });
   }
 
   function loadScriptOnce(src, ready) {
@@ -121,11 +96,15 @@
       preset: 'stars',
       fullScreen: { enable: false },
       background: { color: { value: 'transparent' } },
-      fpsLimit: compact ? 32 : 45,
-      detectRetina: true,
+      fpsLimit: compact ? 30 : 45,
+      // Fixed low particle counts are more important here than retina-scale
+      // rendering. CSS still sizes the canvas sharply while avoiding a 4x GPU
+      // cost on common DPR=2 displays.
+      detectRetina: window.devicePixelRatio <= 1.5,
       particles: {
         number: {
-          value: compact ? (light ? 21 : 27) : (light ? 34 : 46)
+          value: compact ? (light ? 18 : 24) : (light ? 32 : 44),
+          density: { enable: false }
         },
         color: {
           value: light
@@ -139,19 +118,19 @@
           direction: 'none',
           random: true,
           straight: false,
-          speed: compact ? 0.055 : 0.075,
+          speed: compact ? 0.05 : 0.072,
           outModes: { default: 'out' }
         },
         opacity: {
-          value: light ? { min: 0.08, max: 0.24 } : { min: 0.11, max: 0.42 },
+          value: light ? { min: 0.08, max: 0.22 } : { min: 0.12, max: 0.4 },
           animation: {
             enable: true,
-            speed: light ? 0.11 : 0.14,
+            speed: light ? 0.1 : 0.13,
             sync: false
           }
         },
         size: {
-          value: light ? { min: 0.45, max: 1.25 } : { min: 0.5, max: 1.55 },
+          value: light ? { min: 0.45, max: 1.2 } : { min: 0.5, max: 1.5 },
           animation: { enable: false }
         },
         shape: { type: 'circle' }
@@ -238,6 +217,16 @@
     mountParticles();
   }
 
+  function scheduleThemeSync() {
+    if (themeFrame !== null) return;
+    themeFrame = requestAnimationFrame(() => {
+      themeFrame = null;
+      syncTheme();
+      syncPauseState();
+      if (profileIsOpen()) resetPointer();
+    });
+  }
+
   function animatePointer() {
     pointerX += (targetPointerX - pointerX) * 0.075;
     pointerY += (targetPointerY - pointerY) * 0.075;
@@ -305,18 +294,12 @@
     compactViewport.addEventListener?.('change', handleResponsiveChange);
     precisePointer.addEventListener?.('change', resetPointer);
 
-    const observer = new MutationObserver(() => {
-      syncTheme();
-      syncPauseState();
-      if (profileIsOpen()) resetPointer();
-    });
+    const observer = new MutationObserver(scheduleThemeSync);
     observer.observe(root, { attributes: true, attributeFilter: ['class'] });
     observer.observe(body, { attributes: true, attributeFilter: ['data-theme'] });
   }
 
-  installStylesheet();
   ensureLayer();
-  retireVantaRuntime();
   bindLifecycle();
   mountParticles();
 })();
