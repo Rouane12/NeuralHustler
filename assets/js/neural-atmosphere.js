@@ -1,13 +1,13 @@
 // Continuous Neural Hustle atmosphere.
-// Uses the official tsParticles Stars preset as the engine, then applies a
-// restrained theme-aware configuration for this site.
+// The official tsParticles Stars preset provides the particle engine; this
+// file applies the site-specific theme, performance and interaction behavior.
 (() => {
   'use strict';
 
   const ENGINE_URL = 'https://cdn.jsdelivr.net/npm/@tsparticles/engine@4.3.3/tsparticles.engine.min.js';
   const STARS_URL = 'https://cdn.jsdelivr.net/npm/@tsparticles/preset-stars@4.3.3/tsparticles.preset.stars.bundle.min.js';
+  const STYLESHEET_URL = 'assets/css/neural-atmosphere.css';
   const LAYER_ID = 'neural-atmosphere';
-  const STYLE_ID = 'neural-atmosphere-styles';
 
   const root = document.documentElement;
   const body = document.body;
@@ -25,6 +25,7 @@
   let pointerY = 0;
   let targetPointerX = 0;
   let targetPointerY = 0;
+  let libraryPromise = null;
 
   function isLightTheme() {
     return root.classList.contains('light') || body.getAttribute('data-theme') === 'light';
@@ -34,165 +35,13 @@
     return root.classList.contains('profile-background-paused');
   }
 
-  function installStyles() {
-    if (document.getElementById(STYLE_ID)) return;
-
-    const style = document.createElement('style');
-    style.id = STYLE_ID;
-    style.textContent = `
-      html {
-        background: #05060a;
-      }
-
-      html.light {
-        background: #f3f7fc;
-      }
-
-      body {
-        background: transparent !important;
-      }
-
-      #${LAYER_ID} {
-        --atmosphere-x: 0px;
-        --atmosphere-y: 0px;
-        position: fixed;
-        inset: -14px;
-        z-index: 0;
-        pointer-events: none;
-        overflow: hidden;
-        transform: translate3d(var(--atmosphere-x), var(--atmosphere-y), 0) scale(1.015);
-        transform-origin: center;
-        background:
-          radial-gradient(ellipse 68% 58% at 16% 6%, rgba(123, 92, 255, 0.12), transparent 72%),
-          radial-gradient(ellipse 62% 52% at 84% 8%, rgba(47, 218, 184, 0.10), transparent 74%),
-          radial-gradient(ellipse 58% 46% at 52% 84%, rgba(37, 91, 124, 0.055), transparent 76%),
-          #05060a;
-        transition: background-color 240ms ease, opacity 220ms ease;
-        contain: strict;
-      }
-
-      #${LAYER_ID}::before,
-      #${LAYER_ID}::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-      }
-
-      #${LAYER_ID}::before {
-        z-index: 0;
-        background:
-          radial-gradient(circle at 18% 26%, rgba(47, 218, 184, 0.055), transparent 20%),
-          radial-gradient(circle at 77% 38%, rgba(123, 92, 255, 0.055), transparent 22%),
-          radial-gradient(circle at 48% 76%, rgba(72, 126, 160, 0.035), transparent 24%);
-        filter: blur(30px);
-      }
-
-      #${LAYER_ID}::after {
-        z-index: 0;
-        opacity: 0.18;
-        background-image:
-          radial-gradient(circle, rgba(214, 230, 242, 0.34) 0 0.65px, transparent 0.9px),
-          radial-gradient(circle, rgba(47, 218, 184, 0.20) 0 0.55px, transparent 0.8px),
-          radial-gradient(circle, rgba(153, 132, 219, 0.20) 0 0.55px, transparent 0.8px);
-        background-size: 193px 173px, 271px 239px, 337px 307px;
-        background-position: 23px 41px, 111px 79px, 193px 131px;
-      }
-
-      #${LAYER_ID} > canvas {
-        position: absolute !important;
-        inset: 0 !important;
-        z-index: 1 !important;
-        width: 100% !important;
-        height: 100% !important;
-        pointer-events: none !important;
-      }
-
-      /* Keep the atmosphere behind every page surface without disturbing the
-         existing modal and profile stacking contexts. */
-      #hero-vanta,
-      main,
-      .footer {
-        position: relative;
-        z-index: 1;
-      }
-
-      #hero-vanta {
-        background: transparent !important;
-      }
-
-      /* Vanta may have already initialized before this deferred module runs.
-         Its canvas is removed in JS; this is a defensive visual fallback. */
-      #hero-vanta > canvas,
-      #hero-vanta .vanta-canvas {
-        display: none !important;
-      }
-
-      .hero {
-        background: linear-gradient(135deg, rgba(11, 13, 19, 0.72), rgba(5, 6, 10, 0.56)) !important;
-      }
-
-      html.light #${LAYER_ID} {
-        background:
-          radial-gradient(ellipse 68% 58% at 16% 6%, rgba(121, 104, 201, 0.075), transparent 74%),
-          radial-gradient(ellipse 62% 52% at 84% 8%, rgba(31, 146, 145, 0.065), transparent 76%),
-          radial-gradient(ellipse 58% 46% at 52% 84%, rgba(109, 136, 166, 0.055), transparent 78%),
-          #f3f7fc;
-      }
-
-      html.light #${LAYER_ID}::before {
-        background:
-          radial-gradient(circle at 18% 26%, rgba(50, 151, 147, 0.04), transparent 22%),
-          radial-gradient(circle at 77% 38%, rgba(116, 94, 188, 0.04), transparent 24%),
-          radial-gradient(circle at 48% 76%, rgba(98, 132, 162, 0.035), transparent 26%);
-      }
-
-      html.light #${LAYER_ID}::after {
-        opacity: 0.10;
-        background-image:
-          radial-gradient(circle, rgba(74, 95, 119, 0.28) 0 0.55px, transparent 0.8px),
-          radial-gradient(circle, rgba(29, 133, 131, 0.18) 0 0.5px, transparent 0.75px),
-          radial-gradient(circle, rgba(111, 94, 166, 0.17) 0 0.5px, transparent 0.75px);
-      }
-
-      html.light .hero {
-        background: linear-gradient(135deg, rgba(247, 250, 253, 0.78), rgba(239, 246, 250, 0.62)) !important;
-      }
-
-      html.profile-background-paused #${LAYER_ID} {
-        opacity: 0.74;
-      }
-
-      @media (max-width: 720px) {
-        #${LAYER_ID} {
-          inset: -8px;
-          transform: none !important;
-        }
-
-        #${LAYER_ID}::after {
-          opacity: 0.11;
-        }
-
-        html.light #${LAYER_ID}::after {
-          opacity: 0.065;
-        }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        #${LAYER_ID} {
-          transform: none !important;
-        }
-
-        #${LAYER_ID}::after {
-          opacity: 0.22;
-        }
-
-        html.light #${LAYER_ID}::after {
-          opacity: 0.12;
-        }
-      }
-    `;
-    document.head.appendChild(style);
+  function installStylesheet() {
+    if (document.querySelector('link[data-neural-atmosphere-styles]')) return;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = STYLESHEET_URL;
+    link.dataset.neuralAtmosphereStyles = 'true';
+    document.head.appendChild(link);
   }
 
   function ensureLayer() {
@@ -207,11 +56,14 @@
     return layer;
   }
 
-  function removeVanta() {
+  // Vanta currently initializes from legacy inline code before this deferred
+  // module executes. Destroying its instance removes the hero-only animation;
+  // the defensive CSS also prevents a stale Vanta canvas from being visible.
+  function retireVantaRuntime() {
     try {
       window.vantaEffect?.destroy?.();
     } catch (_) {
-      // A partially initialized WebGL instance should never block the fallback.
+      // A partially initialized WebGL instance must not block the replacement.
     }
     window.vantaEffect = null;
 
@@ -226,11 +78,12 @@
     const existing = [...document.scripts].find((script) => script.src === src);
     if (existing) {
       return new Promise((resolve, reject) => {
-        if (ready()) resolve();
-        else {
-          existing.addEventListener('load', resolve, { once: true });
-          existing.addEventListener('error', reject, { once: true });
+        if (ready()) {
+          resolve();
+          return;
         }
+        existing.addEventListener('load', resolve, { once: true });
+        existing.addEventListener('error', reject, { once: true });
       });
     }
 
@@ -245,7 +98,6 @@
     });
   }
 
-  let libraryPromise = null;
   function ensureLibrary() {
     if (libraryPromise) return libraryPromise;
 
@@ -314,39 +166,38 @@
     };
   }
 
-  function setStaticFallback(enabled) {
-    const layer = ensureLayer();
-    layer.dataset.motion = enabled ? 'static' : 'animated';
-  }
-
   async function destroyParticles() {
     if (!particleContainer) return;
     try {
       particleContainer.destroy();
     } catch (_) {
-      // The next mount still uses the same single layer.
+      // A fresh instance can still be created in the same layer.
     }
     particleContainer = null;
+  }
+
+  function useStaticFallback() {
+    ensureLayer().dataset.motion = 'static';
   }
 
   async function mountParticles() {
     const token = ++mountToken;
     const layer = ensureLayer();
-    const light = isLightTheme();
-    currentTheme = light ? 'light' : 'dark';
+    currentTheme = isLightTheme() ? 'light' : 'dark';
     currentCompact = compactViewport.matches;
 
     if (reducedMotion.matches) {
       await destroyParticles();
-      setStaticFallback(true);
+      useStaticFallback();
       return;
     }
 
-    setStaticFallback(false);
+    layer.dataset.motion = 'animated';
 
     try {
       await ensureLibrary();
       if (token !== mountToken) return;
+
       await destroyParticles();
       if (token !== mountToken) return;
 
@@ -362,9 +213,8 @@
 
       syncPauseState();
     } catch (error) {
-      // The layered CSS background is the intentional no-JS/CDN fallback.
-      setStaticFallback(true);
-      console.warn('Neural Hustle atmosphere fell back to its static background.', error);
+      useStaticFallback();
+      console.warn('Neural Hustle atmosphere is using its static fallback.', error);
     }
   }
 
@@ -375,7 +225,7 @@
       if (shouldPause) particleContainer.pause?.();
       else particleContainer.play?.();
     } catch (_) {
-      // Pause/resume is an optimization, never a functional dependency.
+      // Pause/resume is a performance optimization, not a dependency.
     }
   }
 
@@ -398,7 +248,10 @@
       layer.style.setProperty('--atmosphere-y', `${pointerY.toFixed(2)}px`);
     }
 
-    const moving = Math.abs(targetPointerX - pointerX) > 0.02 || Math.abs(targetPointerY - pointerY) > 0.02;
+    const moving =
+      Math.abs(targetPointerX - pointerX) > 0.02 ||
+      Math.abs(targetPointerY - pointerY) > 0.02;
+
     if (moving) pointerFrame = requestAnimationFrame(animatePointer);
     else pointerFrame = null;
   }
@@ -408,7 +261,13 @@
   }
 
   function handlePointerMove(event) {
-    if (!precisePointer.matches || compactViewport.matches || reducedMotion.matches || profileIsOpen()) return;
+    if (
+      !precisePointer.matches ||
+      compactViewport.matches ||
+      reducedMotion.matches ||
+      profileIsOpen()
+    ) return;
+
     const normalizedX = event.clientX / Math.max(window.innerWidth, 1) - 0.5;
     const normalizedY = event.clientY / Math.max(window.innerHeight, 1) - 0.5;
     targetPointerX = normalizedX * -5;
@@ -446,18 +305,18 @@
     compactViewport.addEventListener?.('change', handleResponsiveChange);
     precisePointer.addEventListener?.('change', resetPointer);
 
-    const themeObserver = new MutationObserver(() => {
+    const observer = new MutationObserver(() => {
       syncTheme();
       syncPauseState();
       if (profileIsOpen()) resetPointer();
     });
-    themeObserver.observe(root, { attributes: true, attributeFilter: ['class'] });
-    themeObserver.observe(body, { attributes: true, attributeFilter: ['data-theme'] });
+    observer.observe(root, { attributes: true, attributeFilter: ['class'] });
+    observer.observe(body, { attributes: true, attributeFilter: ['data-theme'] });
   }
 
-  installStyles();
+  installStylesheet();
   ensureLayer();
-  removeVanta();
+  retireVantaRuntime();
   bindLifecycle();
   mountParticles();
 })();
