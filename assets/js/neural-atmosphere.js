@@ -4,8 +4,8 @@
 (() => {
   'use strict';
 
-  const ENGINE_URL = 'https://cdn.jsdelivr.net/npm/@tsparticles/engine@4.3.3/tsparticles.engine.min.js';
-  const STARS_URL = 'https://cdn.jsdelivr.net/npm/@tsparticles/preset-stars@4.3.3/tsparticles.preset.stars.bundle.min.js';
+  const ENGINE_URL = 'https://cdn.jsdelivr.net/npm/@tsparticles/engine@4.4.0/tsparticles.engine.min.js';
+  const STARS_URL = 'https://cdn.jsdelivr.net/npm/@tsparticles/preset-stars@4.4.0/tsparticles.preset.stars.bundle.min.js';
   const LAYER_ID = 'neural-atmosphere';
 
   const root = document.documentElement;
