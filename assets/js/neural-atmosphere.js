@@ -117,11 +117,11 @@
       detectRetina: window.devicePixelRatio <= 1.5,
       particles: {
         number: {
-          value: compact ? 36 : 64,
+          value: compact ? 40 : 72,
           density: { enable: false }
         },
         color: {
-          value: ['#f4f9ff', '#d3e0ec', '#53dec2', '#aa96e8']
+          value: ['#f7fbff', '#d6e4ef', '#55e0c4', '#ad99ea']
         },
         links: { enable: false },
         collisions: { enable: false },
@@ -134,7 +134,7 @@
           outModes: { default: 'out' }
         },
         opacity: {
-          value: { min: 0.24, max: 0.66 },
+          value: { min: 0.28, max: 0.74 },
           animation: {
             enable: true,
             speed: 0.14,
@@ -142,7 +142,7 @@
           }
         },
         size: {
-          value: { min: 0.68, max: 1.95 },
+          value: { min: 0.7, max: 2.05 },
           animation: { enable: false }
         },
         shape: { type: 'circle' }
@@ -166,18 +166,20 @@
       detectRetina: window.devicePixelRatio <= 1.5,
       particles: {
         number: {
-          value: compact ? 28 : 42,
+          // More nodes plus a larger link radius are intentional here: the previous
+          // tuning produced too few neighboring pairs on wide desktop viewports.
+          value: compact ? 32 : 52,
           density: { enable: false }
         },
         color: {
-          value: ['#315f78', '#168b87', '#7764a8', '#59758d']
+          value: ['#294f69', '#147d7a', '#6e5d9d', '#516b80']
         },
         links: {
           enable: true,
-          distance: compact ? 118 : 150,
-          color: '#6f8fa0',
-          opacity: compact ? 0.085 : 0.115,
-          width: 0.65,
+          distance: compact ? 150 : 205,
+          color: '#66899b',
+          opacity: compact ? 0.14 : 0.19,
+          width: compact ? 0.72 : 0.82,
           triangles: { enable: false },
           shadow: { enable: false }
         },
@@ -191,7 +193,7 @@
           outModes: { default: 'out' }
         },
         opacity: {
-          value: { min: 0.28, max: 0.54 },
+          value: { min: 0.34, max: 0.64 },
           animation: {
             enable: true,
             speed: 0.085,
@@ -199,7 +201,7 @@
           }
         },
         size: {
-          value: { min: 0.85, max: 1.85 },
+          value: { min: 0.95, max: 2.0 },
           animation: { enable: false }
         },
         shape: { type: 'circle' }
