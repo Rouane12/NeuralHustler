@@ -97,18 +97,19 @@
       fullScreen: { enable: false },
       background: { color: { value: 'transparent' } },
       fpsLimit: compact ? 30 : 45,
-      // Fixed low particle counts matter more here than retina-scale rendering.
-      // This avoids a large GPU jump on common DPR=2 displays.
+      // Keep the particle count fixed instead of multiplying density on Retina.
       detectRetina: window.devicePixelRatio <= 1.5,
       particles: {
         number: {
-          value: compact ? (light ? 18 : 24) : (light ? 32 : 44),
+          // The first pass was intentionally too quiet. These counts make the
+          // atmosphere clearly perceptible while remaining well below demo density.
+          value: compact ? (light ? 30 : 36) : (light ? 50 : 64),
           density: { enable: false }
         },
         color: {
           value: light
-            ? ['#71839a', '#4c9695', '#887caf']
-            : ['#dce8f3', '#b7c9d8', '#45c8ae', '#8c78cd']
+            ? ['#536b83', '#287f80', '#6f6298', '#8797a8']
+            : ['#ecf5ff', '#bfd0df', '#4ad7ba', '#9c88dc']
         },
         links: { enable: false },
         collisions: { enable: false },
@@ -117,19 +118,19 @@
           direction: 'none',
           random: true,
           straight: false,
-          speed: compact ? 0.05 : 0.072,
+          speed: compact ? 0.055 : 0.078,
           outModes: { default: 'out' }
         },
         opacity: {
-          value: light ? { min: 0.08, max: 0.22 } : { min: 0.12, max: 0.4 },
+          value: light ? { min: 0.16, max: 0.38 } : { min: 0.20, max: 0.58 },
           animation: {
             enable: true,
-            speed: light ? 0.1 : 0.13,
+            speed: light ? 0.105 : 0.14,
             sync: false
           }
         },
         size: {
-          value: light ? { min: 0.45, max: 1.2 } : { min: 0.5, max: 1.5 },
+          value: light ? { min: 0.58, max: 1.48 } : { min: 0.62, max: 1.8 },
           animation: { enable: false }
         },
         shape: { type: 'circle' }
