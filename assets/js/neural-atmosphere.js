@@ -6,6 +6,7 @@
 
   const ENGINE_URL = 'https://cdn.jsdelivr.net/npm/@tsparticles/engine@4.3.3/tsparticles.engine.min.js';
   const STARS_URL = 'https://cdn.jsdelivr.net/npm/@tsparticles/preset-stars@4.3.3/tsparticles.preset.stars.bundle.min.js';
+  const STYLESHEET_URL = 'assets/css/neural-atmosphere.css';
   const LAYER_ID = 'neural-atmosphere';
 
   const root = document.documentElement;
@@ -33,6 +34,15 @@
 
   function profileIsOpen() {
     return root.classList.contains('profile-background-paused');
+  }
+
+  function installStylesheet() {
+    if (document.querySelector('link[data-neural-atmosphere-styles]')) return;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = STYLESHEET_URL;
+    link.dataset.neuralAtmosphereStyles = 'true';
+    document.head.appendChild(link);
   }
 
   function ensureLayer() {
@@ -97,9 +107,8 @@
       fullScreen: { enable: false },
       background: { color: { value: 'transparent' } },
       fpsLimit: compact ? 30 : 45,
-      // Fixed low particle counts are more important here than retina-scale
-      // rendering. CSS still sizes the canvas sharply while avoiding a 4x GPU
-      // cost on common DPR=2 displays.
+      // Fixed low particle counts matter more here than retina-scale rendering.
+      // This avoids a large GPU jump on common DPR=2 displays.
       detectRetina: window.devicePixelRatio <= 1.5,
       particles: {
         number: {
@@ -299,6 +308,7 @@
     observer.observe(body, { attributes: true, attributeFilter: ['data-theme'] });
   }
 
+  installStylesheet();
   ensureLayer();
   bindLifecycle();
   mountParticles();
