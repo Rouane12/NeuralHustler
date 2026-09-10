@@ -4,6 +4,11 @@
   if (!input) return;
   const error = document.getElementById('attachmentError');
   const clear = input.closest('.attachment-field').querySelector('.attachment-clear');
+  const control = input.closest('.attachment-control');
+  const filename = control.querySelector('.attachment-filename');
+  // Keep the native input's accessible file value; display one clean visual label.
+  control.classList.add('has-filename-display');
+  filename.hidden = false;
   // FormSubmit documents a 10 MB combined attachment limit. There is one file here.
   const maxBytes = 10_000_000;
   const types = {
@@ -27,6 +32,8 @@
     input.setCustomValidity(message);
     input.setAttribute('aria-invalid', String(Boolean(message)));
     input.title = file?.name || '';
+    filename.textContent = file?.name || 'No file chosen';
+    filename.title = file?.name || '';
     error.textContent = message;
     error.hidden = !message;
     clear.hidden = !file;

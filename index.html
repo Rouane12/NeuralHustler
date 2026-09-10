@@ -320,7 +320,10 @@
             <label>What would you like to build?<textarea name="message" rows="5" required></textarea></label>
             <div class="attachment-field">
               <label for="contactAttachment">Attach CV or project brief <span class="field-optional">Optional</span></label>
-              <input type="file" id="contactAttachment" name="attachment" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" aria-describedby="attachmentHelp attachmentError" />
+              <div class="attachment-control">
+                <input type="file" id="contactAttachment" name="attachment" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" aria-describedby="attachmentHelp attachmentError" />
+                <span class="attachment-filename" aria-hidden="true" hidden>No file chosen</span>
+              </div>
               <p class="attachment-help" id="attachmentHelp">PDF, DOC or DOCX. Up to 10 MB.</p>
               <p class="attachment-error" id="attachmentError" role="status" aria-live="polite" hidden></p>
               <button class="text-link attachment-clear" type="button" hidden>Remove file</button>

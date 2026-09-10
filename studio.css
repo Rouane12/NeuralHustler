@@ -190,6 +190,15 @@ html.light .cv-actions .cv-view { border-color: #8b79af; }
 .contact-form input[type="file"]::file-selector-button { min-height: 48px; max-width: 100%; margin-inline-end: .75rem; padding: .65rem .85rem; border: 0; border-right: 1px solid var(--studio-line); background: var(--studio-tint); color: var(--text); font: inherit; font-weight: 600; cursor: pointer; white-space: normal; }
 .contact-form input[type="file"]:hover::file-selector-button { background: var(--studio-teal-tint); }
 html.light .contact-form input[type="file"] { border-color: #7e899e; }
+.attachment-control.has-filename-display { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; min-width: 0; margin-top: .5rem; border: 1px solid var(--studio-line); border-radius: .5rem; background: rgba(255, 255, 255, .03); }
+.attachment-control.has-filename-display input[type="file"] { width: auto; margin: 0; border: 0; border-radius: .5rem 0 0 .5rem; font-size: 0; }
+.attachment-control.has-filename-display input[type="file"]::file-selector-button { margin: 0; font-size: .85rem; }
+.attachment-filename { display: block; min-width: 0; padding-inline: .75rem; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; color: var(--studio-muted); font-size: .85rem; }
+.attachment-control.has-filename-display:focus-within { outline: 3px solid rgba(47, 218, 184, .35); outline-offset: 2px; border-color: var(--accent-2); }
+.attachment-control.has-filename-display input[type="file"]:focus-visible { outline: none; box-shadow: none; }
+html.light .attachment-control.has-filename-display { border-color: #7e899e; background: #fff; }
+html.light .attachment-control.has-filename-display:focus-within { outline-color: #087f83; border-color: #087f83; }
+.attachment-control.has-filename-display:has(input[aria-invalid="true"]) { border-color: #d25668; }
 .attachment-help { margin-top: .45rem; }
 .attachment-error { margin-top: .45rem; color: #ffb5bd; font-size: .85rem; overflow-wrap: anywhere; }
 html.light .attachment-error { color: #a12239; }
