@@ -8,13 +8,15 @@ AI integrations, backend systems, automation, developer products, and selected e
 
 ## Architecture
 
-Production remains static HTML, CSS, and vanilla JavaScript on GitHub Pages. There is no new production dependency, application framework, or client-side catalog fetch.
+Production remains static HTML, CSS, and vanilla JavaScript on GitHub Pages. There is no application framework or client-side catalog fetch. The only visual runtime dependency is the official tsParticles engine/stars preset loaded from a pinned CDN version, with a CSS fallback if it is unavailable.
 
 | Owner | Responsibility |
 | --- | --- |
-| index.html | Page, SEO, profile state machine, navigation, themes, contact, Vanta and D-ID |
+| index.html | Page, SEO, profile state machine, navigation, themes, contact, atmosphere entry point, and D-ID |
 | styles.css | Established design system and profile geometry |
 | studio.css | Refined hierarchy and responsive product/work components |
+| assets/css/neural-atmosphere.css | Global atmosphere layering, dark/light art direction, and static fallback |
+| assets/js/neural-atmosphere.js | tsParticles lifecycle, theme sync, subtle parallax, motion preferences, and pause/resume behavior |
 | assets/images/rouane-mounssif.webp | Canonical compact and expanded profile portrait |
 | assets/documents/Rouane-Mounssif-CV.pdf | Public CV; preserve this URL when updating it |
 | assets/js/contact-attachments.js | Optional attachment type and size feedback |
@@ -48,11 +50,17 @@ Node is only needed for preview. Run npm ci, then npm run dev. In ChatGPT Work, 
 
 The development-only /__qa route offers 1920, 1366, 820, 390, and 320 CSS-pixel iframe viewports, plus 200% text sizing and a 400px short-height preset. It is not a production route. GitHub Pages continues serving the committed root files without a Vite build.
 
-Before publishing: check catalog output, themes, navigation, profile closing/focus, disclosures, contact validation, and overflow.
+Before publishing: check catalog output, themes, navigation, profile closing/focus, disclosures, contact validation, atmosphere readability/performance, and overflow.
+
+## Global atmosphere
+
+The site uses one fixed `#neural-atmosphere` layer behind the full page rather than a hero-only effect. It starts from the official tsParticles Stars preset and overrides it with a sparse Neural Hustle configuration: slow cool-white particles with restrained teal/purple accents in dark mode, and lower-contrast blue-gray/teal/lavender digital dust in light mode.
+
+The layer is decorative (`aria-hidden`, no pointer events), uses reduced particle counts and FPS on mobile, disables cursor parallax on compact/touch layouts, pauses while the document is hidden or the expanded profile is open, and falls back to a static CSS atmosphere for `prefers-reduced-motion` or CDN failure. Vanta and Three.js are no longer loaded by the page.
 
 ## Compatibility
 
-FormSubmit, Upwork, LinkedIn, both YouTube channels, the shared-element profile animation, D-ID configuration, Vanta/Three.js, favicon, social image, and canonical domain are preserved. The profile uses the supplied updated portrait. FormSubmit returns to the current domain.
+FormSubmit, Upwork, LinkedIn, both YouTube channels, the shared-element profile animation, D-ID configuration, favicon, social image, and canonical domain are preserved. The profile uses the supplied updated portrait. FormSubmit returns to the current domain.
 
 The old #courses and #portfolio anchors route to Products and Work. #projects opens the earlier-work disclosure. Historical course-app work remains separate from retired commercial promotions.
 
