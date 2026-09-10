@@ -1,0 +1,11 @@
+{
+  "name": "neural-hustle",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "check:content": "python3 scripts/render_catalog.py --check"
+  },
+  "devDependencies": {
+    "vite": "8.3.0"
+  }
+}
