@@ -1,6 +1,6 @@
 // Continuous Neural Hustle atmosphere.
-// The official tsParticles Stars preset provides the particle engine; this
-// file applies the site-specific theme, performance and interaction behavior.
+// Dark mode uses the official tsParticles Stars preset. Light mode leaves the
+// global particle canvas idle so the hero can use the restored Vanta NET effect.
 (() => {
   'use strict';
 
@@ -11,14 +11,11 @@
   const root = document.documentElement;
   const body = document.body;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const compactViewport = window.matchMedia('(max-width: 720px)');
   const precisePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
 
   let particleContainer = null;
   let currentTheme = null;
-  let currentCompact = compactViewport.matches;
   let mountToken = 0;
-  let resizeTimer = null;
   let pointerFrame = null;
   let themeFrame = null;
   let pointerX = 0;
@@ -88,60 +85,13 @@
     return libraryPromise;
   }
 
+  // Keep the official Stars preset appearance intact. We override only the
+  // canvas ownership/background so the preset can live inside our fixed layer.
   function particleOptions() {
-    const light = isLightTheme();
-    const compact = compactViewport.matches;
-
     return {
       preset: 'stars',
       fullScreen: { enable: false },
-      background: { color: { value: 'transparent' } },
-      fpsLimit: compact ? 30 : 45,
-      // Keep the particle count fixed instead of multiplying density on Retina.
-      detectRetina: window.devicePixelRatio <= 1.5,
-      particles: {
-        number: {
-          // The first pass was intentionally too quiet. These counts make the
-          // atmosphere clearly perceptible while remaining well below demo density.
-          value: compact ? (light ? 30 : 36) : (light ? 50 : 64),
-          density: { enable: false }
-        },
-        color: {
-          value: light
-            ? ['#536b83', '#287f80', '#6f6298', '#8797a8']
-            : ['#ecf5ff', '#bfd0df', '#4ad7ba', '#9c88dc']
-        },
-        links: { enable: false },
-        collisions: { enable: false },
-        move: {
-          enable: true,
-          direction: 'none',
-          random: true,
-          straight: false,
-          speed: compact ? 0.055 : 0.078,
-          outModes: { default: 'out' }
-        },
-        opacity: {
-          value: light ? { min: 0.16, max: 0.38 } : { min: 0.20, max: 0.58 },
-          animation: {
-            enable: true,
-            speed: light ? 0.105 : 0.14,
-            sync: false
-          }
-        },
-        size: {
-          value: light ? { min: 0.58, max: 1.48 } : { min: 0.62, max: 1.8 },
-          animation: { enable: false }
-        },
-        shape: { type: 'circle' }
-      },
-      interactivity: {
-        events: {
-          onClick: { enable: false },
-          onHover: { enable: false },
-          resize: { enable: true }
-        }
-      }
+      background: { color: { value: 'transparent' } }
     };
   }
 
@@ -155,15 +105,23 @@
     particleContainer = null;
   }
 
-  function useStaticFallback() {
-    ensureLayer().dataset.motion = 'static';
+  function useStaticFallback(state = 'static') {
+    ensureLayer().dataset.motion = state;
   }
 
   async function mountParticles() {
     const token = ++mountToken;
     const layer = ensureLayer();
     currentTheme = isLightTheme() ? 'light' : 'dark';
-    currentCompact = compactViewport.matches;
+
+    // Light mode intentionally has no global Stars canvas. The hero-only Vanta
+    // module owns motion there. Reduced-motion keeps the static fallback only.
+    if (isLightTheme()) {
+      await destroyParticles();
+      useStaticFallback('light');
+      resetPointer();
+      return;
+    }
 
     if (reducedMotion.matches) {
       await destroyParticles();
@@ -175,17 +133,17 @@
 
     try {
       await ensureLibrary();
-      if (token !== mountToken) return;
+      if (token !== mountToken || isLightTheme()) return;
 
       await destroyParticles();
-      if (token !== mountToken) return;
+      if (token !== mountToken || isLightTheme()) return;
 
       particleContainer = await window.tsParticles.load({
         id: LAYER_ID,
         options: particleOptions()
       });
 
-      if (token !== mountToken) {
+      if (token !== mountToken || isLightTheme()) {
         await destroyParticles();
         return;
       }
@@ -223,7 +181,7 @@
       themeFrame = null;
       syncTheme();
       syncPauseState();
-      if (profileIsOpen()) resetPointer();
+      if (profileIsOpen() || isLightTheme()) resetPointer();
     });
   }
 
@@ -251,8 +209,8 @@
 
   function handlePointerMove(event) {
     if (
+      isLightTheme() ||
       !precisePointer.matches ||
-      compactViewport.matches ||
       reducedMotion.matches ||
       profileIsOpen()
     ) return;
@@ -270,13 +228,6 @@
     requestPointerFrame();
   }
 
-  function handleResponsiveChange() {
-    clearTimeout(resizeTimer);
-    resizeTimer = window.setTimeout(() => {
-      if (compactViewport.matches !== currentCompact) mountParticles();
-    }, 180);
-  }
-
   function bindLifecycle() {
     window.addEventListener('pointermove', handlePointerMove, { passive: true });
     window.addEventListener('pointerout', (event) => {
@@ -284,14 +235,12 @@
     }, { passive: true });
 
     document.addEventListener('visibilitychange', syncPauseState);
-    window.addEventListener('resize', handleResponsiveChange, { passive: true });
 
     reducedMotion.addEventListener?.('change', () => {
       resetPointer();
       mountParticles();
     });
 
-    compactViewport.addEventListener?.('change', handleResponsiveChange);
     precisePointer.addEventListener?.('change', resetPointer);
 
     const observer = new MutationObserver(scheduleThemeSync);
@@ -302,4 +251,15 @@
   ensureLayer();
   bindLifecycle();
   mountParticles();
+})();
+
+// The light-theme Vanta implementation is isolated from the dark Stars path.
+// Its third-party libraries are loaded lazily only when light mode is active.
+(() => {
+  if (document.querySelector('script[data-neural-light-vanta]')) return;
+  const script = document.createElement('script');
+  script.src = 'assets/js/light-vanta.js';
+  script.defer = true;
+  script.dataset.neuralLightVanta = 'true';
+  document.head.appendChild(script);
 })();
