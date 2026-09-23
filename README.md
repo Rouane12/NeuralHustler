@@ -8,7 +8,7 @@ AI integrations, backend systems, automation, developer products, and selected e
 
 ## Architecture
 
-Production remains static HTML, CSS, and vanilla JavaScript on GitHub Pages. There is no application framework or client-side catalog fetch. One pinned tsParticles runtime (4.4.0) owns the decorative atmosphere: the official Stars preset in dark mode and a custom sparse neural-links configuration in light mode.
+Production remains static HTML, CSS, and vanilla JavaScript on GitHub Pages. There is no application framework or client-side catalog fetch. The decorative atmosphere is rendered locally with Canvas 2D: a bright drifting star field in dark mode and a sparse moving neural-link field in light mode. No third-party animation runtime or CDN is required.
 
 | Owner | Responsibility |
 | --- | --- |
@@ -16,7 +16,7 @@ Production remains static HTML, CSS, and vanilla JavaScript on GitHub Pages. The
 | styles.css | Established design system and profile geometry |
 | studio.css | Refined hierarchy and responsive product/work components |
 | assets/css/neural-atmosphere.css | Global atmosphere layering, theme art direction and static fallback |
-| assets/js/neural-atmosphere.js | Single-engine tsParticles lifecycle, theme switching, performance limits and motion safeguards |
+| assets/js/neural-atmosphere.js | Local Canvas 2D renderer, theme switching, performance limits and motion safeguards |
 | assets/images/rouane-mounssif.webp | Canonical compact and expanded profile portrait |
 | assets/documents/Rouane-Mounssif-CV.pdf | Public CV; preserve this URL when updating it |
 | assets/js/contact-attachments.js | Optional attachment type and size feedback |
@@ -54,9 +54,9 @@ Before publishing: check catalog output, themes, navigation, profile closing/foc
 
 ## Compatibility
 
-FormSubmit, Upwork, LinkedIn, both YouTube channels, the shared-element profile animation, D-ID configuration, favicon, social image, and canonical domain are preserved. Both themes use the same tsParticles engine, with no secondary hero animation runtime. The profile uses the supplied updated portrait. FormSubmit returns to the current domain.
+FormSubmit, Upwork, LinkedIn, both YouTube channels, the shared-element profile animation, D-ID configuration, favicon, social image, and canonical domain are preserved. The atmosphere has no external animation dependency; both themes use the same local Canvas 2D renderer. The profile uses the supplied updated portrait. FormSubmit returns to the current domain.
 
-The atmosphere is one fixed decorative layer from hero through footer. Dark mode is neutral near-black with brighter cool-white stars and no colored hero haze. Light mode uses sparse blue-gray/teal/lavender nodes connected by thin links. The layer does not receive pointer events, uses capped frame rates and smaller mobile particle counts, pauses on hidden tabs and while the profile modal is open, and has CSS fallbacks if the CDN cannot load.
+The atmosphere is one fixed decorative layer from hero through footer. Dark mode is neutral near-black with visible cool-white drifting stars and no colored hero haze. Light mode uses sparse blue-gray/teal/lavender nodes connected by thin moving links. The renderer does not receive pointer events, caps itself at 30 FPS, uses smaller mobile fields, pauses visual updates while the page is hidden or the profile modal is open, and has a CSS-only fallback if Canvas is unavailable.
 
 The old #courses and #portfolio anchors route to Products and Work. #projects opens the earlier-work disclosure. Historical course-app work remains separate from retired commercial promotions.
 
