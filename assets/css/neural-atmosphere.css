@@ -1,5 +1,5 @@
 /* Neural Hustle global atmosphere.
-   One fixed tsParticles layer serves both themes. */
+   One local Canvas 2D layer serves both themes. */
 html {
   background: #020306;
 }
@@ -19,7 +19,6 @@ body {
   pointer-events: none;
   overflow: hidden;
   background: #020306;
-  transition: opacity 180ms ease;
   contain: strict;
 }
 
@@ -28,49 +27,40 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  z-index: 0;
   pointer-events: none;
 }
 
-/* Dark mode: deliberately neutral and very dark. No teal/purple hero haze.
-   The stars carry the visual identity instead of a colored glow. */
+/* Dark mode stays genuinely dark. There is no teal/purple haze over the hero. */
 #neural-atmosphere::before {
+  z-index: 0;
   background:
-    radial-gradient(ellipse 90% 70% at 50% -12%, rgba(255, 255, 255, 0.018), transparent 62%),
-    linear-gradient(180deg, #020306 0%, #000103 68%, #010205 100%);
+    radial-gradient(ellipse 90% 70% at 50% -12%, rgba(255, 255, 255, 0.014), transparent 62%),
+    linear-gradient(180deg, #020306 0%, #000103 70%, #010205 100%);
 }
 
-/* Static star fallback if the particle runtime is unavailable. */
+/* Static fallback used only before the local canvas is ready. */
 #neural-atmosphere::after {
+  z-index: 0;
   opacity: 0.22;
   background-image:
-    radial-gradient(circle, rgba(255, 255, 255, 0.92) 0 0.8px, transparent 1.08px),
-    radial-gradient(circle, rgba(222, 232, 242, 0.68) 0 0.68px, transparent 0.96px),
-    radial-gradient(circle, rgba(183, 199, 214, 0.46) 0 0.58px, transparent 0.86px),
-    radial-gradient(circle, rgba(255, 255, 255, 0.34) 0 0.48px, transparent 0.76px);
-  background-size: 149px 137px, 223px 199px, 307px 277px, 401px 367px;
-  background-position: 19px 31px, 91px 67px, 171px 119px, 257px 181px;
+    radial-gradient(circle, rgba(255, 255, 255, 0.90) 0 0.9px, transparent 1.2px),
+    radial-gradient(circle, rgba(215, 226, 236, 0.60) 0 0.72px, transparent 1px),
+    radial-gradient(circle, rgba(173, 190, 205, 0.38) 0 0.58px, transparent 0.86px);
+  background-size: 157px 143px, 241px 211px, 337px 307px;
+  background-position: 19px 31px, 103px 71px, 199px 139px;
 }
 
-#neural-atmosphere[data-motion='animated']::after {
-  opacity: 0.045;
+#neural-atmosphere[data-ready='true']::after {
+  opacity: 0;
 }
 
-#neural-atmosphere[data-motion='reduced']::after {
-  opacity: 0.11;
-}
-
-#neural-atmosphere[data-motion='static']::after {
-  opacity: 0.34;
-}
-
-#neural-atmosphere > canvas {
-  position: absolute !important;
-  inset: 0 !important;
-  z-index: 1 !important;
-  width: 100% !important;
-  height: 100% !important;
-  pointer-events: none !important;
+.neural-atmosphere-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 
 #hero-atmosphere,
@@ -80,98 +70,64 @@ main,
   z-index: 1;
 }
 
-/* Hero content stays above the shared atmosphere canvas. */
 #hero-atmosphere,
 html.light #hero-atmosphere {
   background: transparent !important;
 }
 
-/* styles.css historically painted purple/teal glows into the hero itself.
-   Remove those in dark mode so the top of the site reads as true near-black. */
-html:not(.light) .hero::before {
+/* Remove old hero glow layers from both themes. */
+html:not(.light) .hero::before,
+html.light .hero::before {
   background: none !important;
   filter: none !important;
 }
 
 html:not(.light) .hero {
-  background: rgba(2, 3, 6, 0.22) !important;
+  background: rgba(2, 3, 6, 0.14) !important;
 }
 
-/* Light mode: a clean paper-like field with a faint neutral depth layer.
-   The custom linked nodes are rendered by the same tsParticles canvas. */
+/* Light mode is intentionally clean enough for the neural links to remain
+   visible behind the content instead of being covered by a white surface. */
 html.light #neural-atmosphere {
   background: #f5f8fc;
 }
 
 html.light #neural-atmosphere::before {
   background:
-    radial-gradient(circle at 18% 14%, rgba(47, 133, 139, 0.035), transparent 28%),
-    radial-gradient(circle at 82% 20%, rgba(123, 107, 173, 0.03), transparent 30%),
+    radial-gradient(circle at 18% 14%, rgba(47, 133, 139, 0.03), transparent 30%),
+    radial-gradient(circle at 82% 20%, rgba(123, 107, 173, 0.025), transparent 32%),
     linear-gradient(180deg, #f9fbfe 0%, #f4f8fc 100%);
 }
 
 html.light #neural-atmosphere::after {
   opacity: 0.12;
   background-image:
-    radial-gradient(circle, rgba(47, 133, 139, 0.34) 0 0.75px, transparent 1.05px),
-    radial-gradient(circle, rgba(96, 127, 155, 0.27) 0 0.68px, transparent 0.98px),
-    radial-gradient(circle, rgba(123, 107, 173, 0.24) 0 0.62px, transparent 0.92px);
+    radial-gradient(circle, rgba(47, 133, 139, 0.34) 0 0.8px, transparent 1.1px),
+    radial-gradient(circle, rgba(96, 127, 155, 0.26) 0 0.7px, transparent 1px),
+    radial-gradient(circle, rgba(123, 107, 173, 0.22) 0 0.62px, transparent 0.92px);
   background-size: 211px 191px, 283px 251px, 367px 331px;
   background-position: 37px 53px, 127px 91px, 223px 151px;
 }
 
-html.light #neural-atmosphere[data-motion='loading']::after {
-  opacity: 0.14;
-}
-
-html.light #neural-atmosphere[data-motion='animated']::after {
-  opacity: 0.01;
-}
-
-html.light #neural-atmosphere[data-motion='reduced']::after {
-  opacity: 0.035;
-}
-
-html.light #neural-atmosphere[data-motion='static']::before {
-  background:
-    linear-gradient(32deg, transparent 49.7%, rgba(112, 136, 157, 0.08) 50%, transparent 50.3%) 0 0 / 180px 140px,
-    linear-gradient(148deg, transparent 49.7%, rgba(112, 136, 157, 0.065) 50%, transparent 50.3%) 40px 20px / 220px 170px,
-    #f5f8fc;
-}
-
-html.light #neural-atmosphere[data-motion='static']::after {
-  opacity: 0.22;
-}
-
-html.light .hero::before {
-  background: none !important;
-  filter: none !important;
+html.light #neural-atmosphere[data-ready='true']::after {
+  opacity: 0;
 }
 
 html.light .hero {
-  /* Keep copy readable without washing out the linked particle field. */
-  background: rgba(248, 251, 254, 0.18) !important;
+  background: rgba(248, 251, 254, 0.10) !important;
 }
 
 html.profile-background-paused #neural-atmosphere {
-  opacity: 0.68;
+  opacity: 0.72;
 }
 
 @media (max-width: 720px) {
-  #neural-atmosphere::after {
-    opacity: 0.16;
+  html:not(.light) .hero {
+    background: rgba(2, 3, 6, 0.18) !important;
   }
 
-  #neural-atmosphere[data-motion='animated']::after {
-    opacity: 0.035;
-  }
-
-  html.light #neural-atmosphere::after {
-    opacity: 0.09;
-  }
-
-  html.light #neural-atmosphere[data-motion='animated']::after {
-    opacity: 0.015;
+  html.light .hero {
+    background: rgba(248, 251, 254, 0.14) !important;
   }
 }
 
