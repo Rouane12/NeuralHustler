@@ -104,9 +104,9 @@ html.light #neural-atmosphere {
 
 html.light #neural-atmosphere::before {
   background:
-    radial-gradient(circle at 18% 14%, rgba(47, 133, 139, 0.055), transparent 26%),
-    radial-gradient(circle at 82% 20%, rgba(123, 107, 173, 0.045), transparent 28%),
-    linear-gradient(180deg, #f8fbfe 0%, #f4f8fc 100%);
+    radial-gradient(circle at 18% 14%, rgba(47, 133, 139, 0.035), transparent 28%),
+    radial-gradient(circle at 82% 20%, rgba(123, 107, 173, 0.03), transparent 30%),
+    linear-gradient(180deg, #f9fbfe 0%, #f4f8fc 100%);
 }
 
 html.light #neural-atmosphere::after {
@@ -119,12 +119,16 @@ html.light #neural-atmosphere::after {
   background-position: 37px 53px, 127px 91px, 223px 151px;
 }
 
+html.light #neural-atmosphere[data-motion='loading']::after {
+  opacity: 0.14;
+}
+
 html.light #neural-atmosphere[data-motion='animated']::after {
-  opacity: 0.035;
+  opacity: 0.018;
 }
 
 html.light #neural-atmosphere[data-motion='reduced']::after {
-  opacity: 0.08;
+  opacity: 0.035;
 }
 
 html.light #neural-atmosphere[data-motion='static']::before {
@@ -144,7 +148,8 @@ html.light .hero::before {
 }
 
 html.light .hero {
-  background: rgba(248, 251, 254, 0.60) !important;
+  /* Keep copy readable without washing out the linked particle field. */
+  background: rgba(248, 251, 254, 0.28) !important;
 }
 
 html.profile-background-paused #neural-atmosphere {
@@ -165,7 +170,7 @@ html.profile-background-paused #neural-atmosphere {
   }
 
   html.light #neural-atmosphere[data-motion='animated']::after {
-    opacity: 0.03;
+    opacity: 0.015;
   }
 }
 
