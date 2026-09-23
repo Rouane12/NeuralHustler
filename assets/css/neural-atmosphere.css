@@ -59,6 +59,20 @@ body {
   opacity: 0.07;
 }
 
+/* If the third-party particle runtime is unavailable (or motion is reduced),
+   keep the visual identity recognizable instead of degrading to nearly empty
+   black. This is intentionally static and therefore accessibility-safe. */
+#neural-atmosphere[data-motion='static']::after {
+  opacity: 0.42;
+  background-image:
+    radial-gradient(circle, rgba(245, 248, 255, 0.88) 0 0.82px, transparent 1.08px),
+    radial-gradient(circle, rgba(211, 221, 236, 0.66) 0 0.72px, transparent 1px),
+    radial-gradient(circle, rgba(173, 187, 207, 0.48) 0 0.64px, transparent 0.92px),
+    radial-gradient(circle, rgba(255, 255, 255, 0.36) 0 0.52px, transparent 0.82px);
+  background-size: 137px 131px, 211px 193px, 293px 271px, 389px 353px;
+  background-position: 17px 29px, 89px 61px, 157px 109px, 241px 173px;
+}
+
 #neural-atmosphere > canvas {
   position: absolute !important;
   inset: 0 !important;
@@ -112,6 +126,24 @@ html.light #neural-atmosphere::after {
 
 html.light #neural-atmosphere[data-motion='animated']::after {
   opacity: 0.085;
+}
+
+/* Static visual fallback for the light hero. The animated Vanta canvas is the
+   primary path; this only appears when WebGL/CDN loading is unavailable or the
+   visitor explicitly prefers reduced motion. */
+html.light #hero-vanta.vanta-light-fallback {
+  background:
+    radial-gradient(circle at 18% 20%, rgba(61, 177, 175, 0.12), transparent 24%),
+    radial-gradient(circle at 82% 18%, rgba(119, 94, 201, 0.11), transparent 26%),
+    linear-gradient(rgba(71, 132, 150, 0.10) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(71, 132, 150, 0.10) 1px, transparent 1px),
+    #f3f7fc !important;
+  background-size: auto, auto, 48px 48px, 48px 48px, auto;
+  background-position: center;
+}
+
+html.light #hero-vanta.vanta-light-fallback .hero {
+  background: rgba(243, 247, 252, 0.72) !important;
 }
 
 html.light .hero {
