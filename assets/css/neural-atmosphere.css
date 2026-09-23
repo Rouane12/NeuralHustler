@@ -73,16 +73,15 @@ body {
   pointer-events: none !important;
 }
 
-#hero-vanta,
+#hero-atmosphere,
 main,
 .footer {
   position: relative;
   z-index: 1;
 }
 
-/* Keep the historical wrapper id for layout compatibility; it no longer owns
-   a Vanta/Three.js canvas. */
-#hero-vanta {
+/* Hero content stays above the shared atmosphere canvas. */
+#hero-atmosphere {
   background: transparent !important;
 }
 
