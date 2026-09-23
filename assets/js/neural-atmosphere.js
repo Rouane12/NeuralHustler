@@ -1,7 +1,7 @@
 // Neural Hustle atmosphere.
 // One tsParticles engine powers both themes:
-// - dark: a high-contrast Stars preset on near-black
-// - light: a custom sparse neural-link field
+// - dark: official Stars preset, customized for a deeper near-black field
+// - light: official Links preset, customized into a sparse neural network
 (() => {
   'use strict';
 
@@ -16,6 +16,10 @@
   const STARS_URLS = [
     'https://cdn.jsdelivr.net/npm/@tsparticles/preset-stars@4.4.0/tsparticles.preset.stars.bundle.min.js',
     'https://unpkg.com/@tsparticles/preset-stars@4.4.0/tsparticles.preset.stars.bundle.min.js'
+  ];
+  const LINKS_URLS = [
+    'https://cdn.jsdelivr.net/npm/@tsparticles/preset-links@4.4.0/tsparticles.preset.links.min.js',
+    'https://unpkg.com/@tsparticles/preset-links@4.4.0/tsparticles.preset.links.min.js'
   ];
 
   const LAYER_ID = 'neural-atmosphere';
@@ -34,6 +38,10 @@
     return root.classList.contains('light') || body.getAttribute('data-theme') === 'light';
   }
 
+  function currentTheme() {
+    return isLightTheme() ? 'light' : 'dark';
+  }
+
   function profileIsOpen() {
     return root.classList.contains('profile-background-paused');
   }
@@ -50,10 +58,19 @@
     return layer;
   }
 
+  function setLayerState(theme, state) {
+    const layer = ensureLayer();
+    layer.dataset.theme = theme;
+    layer.dataset.motion = state;
+    layer.dataset.atmosphereStatus = state;
+  }
+
   function loadScriptOnce(src, ready) {
     if (ready()) return Promise.resolve();
 
-    const existing = [...document.scripts].find((script) => script.src === src);
+    const absolute = new URL(src, document.baseURI).href;
+    const existing = [...document.scripts].find((script) => script.src === absolute);
+
     if (existing) {
       return new Promise((resolve, reject) => {
         if (ready()) {
@@ -99,8 +116,12 @@
       await loadScriptWithFallback(ENGINE_URLS, () => Boolean(window.tsParticles?.load));
       await loadScriptWithFallback(SLIM_URLS, () => typeof window.loadSlim === 'function');
       await window.loadSlim(window.tsParticles);
+
       await loadScriptWithFallback(STARS_URLS, () => typeof window.loadStarsPreset === 'function');
       await window.loadStarsPreset(window.tsParticles);
+
+      await loadScriptWithFallback(LINKS_URLS, () => typeof window.loadLinksPreset === 'function');
+      await window.loadLinksPreset(window.tsParticles);
     })().catch((error) => {
       libraryPromise = null;
       throw error;
@@ -127,20 +148,24 @@
       preset: 'stars',
       fullScreen: { enable: false },
       background: { color: { value: 'transparent' } },
-      fpsLimit: reduced ? 18 : 30,
+      fpsLimit: reduced ? 20 : 32,
       detectRetina: false,
       interactivity: baseInteractivity(),
       particles: {
-        number: { value: compact ? 46 : 68 },
-        color: { value: ['#ffffff', '#edf4fb', '#cbd9e6'] },
+        number: { value: compact ? 54 : 78 },
+        color: { value: ['#ffffff', '#edf4fb', '#d7e2ec'] },
         opacity: {
-          value: { min: 0.55, max: 1 },
-          animation: { enable: !reduced, speed: 0.35, sync: false }
+          value: { min: 0.52, max: 1 },
+          animation: {
+            enable: true,
+            speed: reduced ? 0.16 : 0.42,
+            sync: false
+          }
         },
-        size: { value: { min: 0.55, max: 1.7 } },
+        size: { value: { min: 0.65, max: 1.9 } },
         move: {
-          enable: !reduced,
-          speed: 0.08,
+          enable: true,
+          speed: reduced ? 0.12 : 0.34,
           direction: 'none',
           random: true,
           straight: false,
@@ -155,32 +180,33 @@
     const compact = compactViewport.matches;
 
     return {
+      preset: 'links',
       fullScreen: { enable: false },
       background: { color: { value: 'transparent' } },
-      fpsLimit: reduced ? 18 : 30,
+      fpsLimit: reduced ? 20 : 32,
       detectRetina: false,
       interactivity: baseInteractivity(),
       particles: {
-        number: { value: compact ? 20 : 32 },
-        color: { value: ['#2f858b', '#607f9b', '#7b6bad'] },
+        number: { value: compact ? 28 : 44 },
+        color: { value: ['#287f86', '#587b98', '#7568a6'] },
         links: {
           enable: true,
-          distance: compact ? 118 : 148,
-          color: '#70889d',
-          opacity: 0.18,
+          distance: compact ? 132 : 162,
+          color: '#667f96',
+          opacity: 0.28,
           width: 1
         },
         move: {
-          enable: !reduced,
-          speed: compact ? 0.11 : 0.15,
+          enable: true,
+          speed: reduced ? 0.10 : 0.26,
           direction: 'none',
           random: false,
           straight: false,
           outModes: { default: 'out' }
         },
-        opacity: { value: { min: 0.34, max: 0.62 } },
+        opacity: { value: { min: 0.52, max: 0.82 } },
         shape: { type: 'circle' },
-        size: { value: { min: 1.05, max: 2.15 } }
+        size: { value: { min: 1.25, max: 2.5 } }
       }
     };
   }
@@ -195,26 +221,23 @@
     try {
       particleContainer.destroy();
     } catch (_) {
-      // A new instance can still be created in the same layer.
+      // A fresh instance can still be created in the same layer.
     }
 
     particleContainer = null;
   }
 
   function useStaticFallback(theme) {
-    const layer = ensureLayer();
-    layer.dataset.theme = theme;
-    layer.dataset.motion = 'static';
+    mountedTheme = theme;
+    setLayerState(theme, 'static');
   }
 
   async function mountParticles() {
     const token = ++mountToken;
-    const layer = ensureLayer();
-    const theme = isLightTheme() ? 'light' : 'dark';
+    const theme = currentTheme();
 
     mountedTheme = theme;
-    layer.dataset.theme = theme;
-    layer.dataset.motion = reducedMotion.matches ? 'reduced' : 'animated';
+    setLayerState(theme, 'loading');
 
     try {
       await ensureLibrary();
@@ -228,11 +251,12 @@
         options: optionsForTheme(theme)
       });
 
-      if (token !== mountToken || theme !== (isLightTheme() ? 'light' : 'dark')) {
+      if (token !== mountToken || theme !== currentTheme()) {
         await destroyParticles();
         return;
       }
 
+      setLayerState(theme, reducedMotion.matches ? 'reduced' : 'animated');
       syncPauseState();
     } catch (error) {
       await destroyParticles();
@@ -254,7 +278,7 @@
   }
 
   function syncTheme() {
-    const nextTheme = isLightTheme() ? 'light' : 'dark';
+    const nextTheme = currentTheme();
 
     if (nextTheme === mountedTheme && particleContainer) {
       syncPauseState();
@@ -288,6 +312,16 @@
     observer.observe(root, { attributes: true, attributeFilter: ['class'] });
     observer.observe(body, { attributes: true, attributeFilter: ['data-theme'] });
   }
+
+  // Expose a tiny read-only diagnostic helper for browser troubleshooting.
+  window.__neuralAtmosphereStatus = () => ({
+    theme: currentTheme(),
+    mountedTheme,
+    hasContainer: Boolean(particleContainer),
+    reducedMotion: reducedMotion.matches,
+    compactViewport: compactViewport.matches,
+    state: document.getElementById(LAYER_ID)?.dataset.atmosphereStatus || 'missing'
+  });
 
   ensureLayer();
   bindLifecycle();
