@@ -54,7 +54,7 @@ Before publishing: check catalog output, themes, navigation, profile closing/foc
 
 ## Compatibility
 
-FormSubmit, Upwork, LinkedIn, both YouTube channels, the shared-element profile animation, D-ID configuration, favicon, social image, and canonical domain are preserved. Vanta and Three.js are not part of production; both themes now use the same tsParticles engine. The profile uses the supplied updated portrait. FormSubmit returns to the current domain.
+FormSubmit, Upwork, LinkedIn, both YouTube channels, the shared-element profile animation, D-ID configuration, favicon, social image, and canonical domain are preserved. Both themes use the same tsParticles engine, with no secondary hero animation runtime. The profile uses the supplied updated portrait. FormSubmit returns to the current domain.
 
 The atmosphere is one fixed decorative layer from hero through footer. Dark mode is neutral near-black with brighter cool-white stars and no colored hero haze. Light mode uses sparse blue-gray/teal/lavender nodes connected by thin links. The layer does not receive pointer events, uses capped frame rates and smaller mobile particle counts, pauses on hidden tabs and while the profile modal is open, and has CSS fallbacks if the CDN cannot load.
 
