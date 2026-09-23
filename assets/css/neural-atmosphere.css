@@ -81,7 +81,8 @@ main,
 }
 
 /* Hero content stays above the shared atmosphere canvas. */
-#hero-atmosphere {
+#hero-atmosphere,
+html.light #hero-atmosphere {
   background: transparent !important;
 }
 
@@ -124,7 +125,7 @@ html.light #neural-atmosphere[data-motion='loading']::after {
 }
 
 html.light #neural-atmosphere[data-motion='animated']::after {
-  opacity: 0.018;
+  opacity: 0.01;
 }
 
 html.light #neural-atmosphere[data-motion='reduced']::after {
@@ -149,7 +150,7 @@ html.light .hero::before {
 
 html.light .hero {
   /* Keep copy readable without washing out the linked particle field. */
-  background: rgba(248, 251, 254, 0.28) !important;
+  background: rgba(248, 251, 254, 0.18) !important;
 }
 
 html.profile-background-paused #neural-atmosphere {
