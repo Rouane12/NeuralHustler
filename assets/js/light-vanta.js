@@ -4,8 +4,17 @@
 (() => {
   'use strict';
 
-  const THREE_URL = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js';
-  const VANTA_URL = 'https://cdn.jsdelivr.net/npm/vanta/dist/vanta.net.min.js';
+  // Pin the pair Vanta documents against and keep a second CDN available.
+  // Leaving Vanta unversioned made this background vulnerable to upstream
+  // changes while Three stayed on an older revision.
+  const THREE_URLS = [
+    'https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js',
+    'https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.min.js'
+  ];
+  const VANTA_URLS = [
+    'https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.net.min.js',
+    'https://unpkg.com/vanta@0.5.24/dist/vanta.net.min.js'
+  ];
 
   const root = document.documentElement;
   const body = document.body;
@@ -52,12 +61,28 @@
     });
   }
 
+  async function loadScriptWithFallback(urls, ready) {
+    if (ready()) return;
+
+    let lastError;
+    for (const url of urls) {
+      try {
+        await loadScriptOnce(url, ready);
+        if (ready()) return;
+      } catch (error) {
+        lastError = error;
+      }
+    }
+
+    throw lastError || new Error('Unable to load required light-mode library.');
+  }
+
   function ensureLibrary() {
     if (libraryPromise) return libraryPromise;
 
     libraryPromise = (async () => {
-      await loadScriptOnce(THREE_URL, () => Boolean(window.THREE));
-      await loadScriptOnce(VANTA_URL, () => Boolean(window.VANTA?.NET));
+      await loadScriptWithFallback(THREE_URLS, () => Boolean(window.THREE));
+      await loadScriptWithFallback(VANTA_URLS, () => Boolean(window.VANTA?.NET));
     })().catch((error) => {
       libraryPromise = null;
       throw error;
@@ -115,8 +140,11 @@
 
     if (!heroTarget || !isLightTheme() || reducedMotion.matches) {
       destroyEffect();
+      if (heroTarget && isLightTheme()) heroTarget.classList.add('vanta-light-fallback');
       return;
     }
+
+    heroTarget.classList.remove('vanta-light-fallback');
 
     if (effect) {
       syncControls();
@@ -150,18 +178,33 @@
       }
 
       window.vantaEffect = effect;
+      heroTarget.classList.remove('vanta-light-fallback');
       heroTarget.classList.add('vanta-light-active');
       syncControls();
       resizeEffect();
     } catch (error) {
       destroyEffect();
+      heroTarget?.classList.add('vanta-light-fallback');
       console.warn('Neural Hustle light hero is using its static fallback.', error);
     }
   }
 
   function syncTheme() {
-    if (isLightTheme() && !reducedMotion.matches) mountEffect();
-    else destroyEffect();
+    if (!heroTarget) return;
+
+    if (!isLightTheme()) {
+      destroyEffect();
+      heroTarget.classList.remove('vanta-light-fallback');
+      return;
+    }
+
+    if (reducedMotion.matches) {
+      destroyEffect();
+      heroTarget.classList.add('vanta-light-fallback');
+      return;
+    }
+
+    mountEffect();
   }
 
   function scheduleSync() {
@@ -184,6 +227,10 @@
   resizeObserver?.observe(heroSection);
 
   window.addEventListener('resize', resizeEffect, { passive: true });
+  window.addEventListener('pageshow', syncTheme);
+  window.addEventListener('online', () => {
+    if (isLightTheme() && !effect && !reducedMotion.matches) mountEffect();
+  });
   document.addEventListener('visibilitychange', syncControls);
   reducedMotion.addEventListener?.('change', syncTheme);
 
