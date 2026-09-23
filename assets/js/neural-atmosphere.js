@@ -120,8 +120,8 @@
       preset: 'stars',
       fullScreen: { enable: false },
       background: { color: { value: 'transparent' } },
-      fpsLimit: reduced ? 24 : 42,
-      detectRetina: true,
+      fpsLimit: reduced ? 20 : 32,
+      detectRetina: false,
       interactivity: {
         events: {
           onHover: { enable: false },
@@ -247,7 +247,7 @@
 (() => {
   if (document.querySelector('script[data-neural-light-vanta]')) return;
   const script = document.createElement('script');
-  script.src = 'assets/js/light-vanta.js?v=20260923c';
+  script.src = 'assets/js/light-vanta.js?v=20260923d';
   script.defer = true;
   script.dataset.neuralLightVanta = 'true';
   document.head.appendChild(script);
