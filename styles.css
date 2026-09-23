@@ -1522,7 +1522,7 @@ html.light body[data-theme="light"] label {
 }
 
 html.light #hero-atmosphere {
-  background: #f5f8fc !important;
+  background: transparent !important;
 }
 
 html.light .hero {
