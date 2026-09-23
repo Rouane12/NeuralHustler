@@ -154,7 +154,7 @@
 
     try {
       await ensureLibrary();
-      if (token !== mountToken || !isLightTheme() || reducedMotion.matches) return;
+      if (token !== mountToken || !isLightTheme()) return;
 
       const reduced = reducedMotion.matches;
       effect = window.VANTA.NET({
@@ -163,14 +163,14 @@
         touchControls: !profileIsOpen() && !reduced,
         minHeight: heroHeight(),
         minWidth: 200.0,
-        scale: 1.25,
-        scaleMobile: 1.5,
+        scale: 1.0,
+        scaleMobile: 1.0,
         color: 0x55bfc3,
         backgroundColor: 0xf3f7fc,
         backgroundAlpha: 1,
-        points: reduced ? 6.0 : 9.0,
-        maxDistance: reduced ? 16.0 : 20.0,
-        spacing: reduced ? 19.0 : 17.0
+        points: reduced ? 6.0 : 8.0,
+        maxDistance: reduced ? 16.0 : 19.0,
+        spacing: reduced ? 19.0 : 18.0
       });
 
       if (token !== mountToken || !isLightTheme()) {
