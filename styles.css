@@ -71,7 +71,7 @@ textarea {
   color: var(--muted);
 }
 
-/* VANTA HERO WRAPPER */
+/* HERO ATMOSPHERE WRAPPER (historical id retained for compatibility) */
 #hero-vanta {
   position: relative;
   overflow: hidden;
@@ -79,14 +79,7 @@ textarea {
   background: transparent !important;
 }
 
-#hero-vanta canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100% !important;
-  z-index: 0;
-  pointer-events: none;
-}
+/* The animated atmosphere canvas now lives in #neural-atmosphere. */
 
 /* HERO SHELL */
 .hero {
