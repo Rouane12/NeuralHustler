@@ -1,22 +1,62 @@
 {
-  "products": [
-    {
-      "id": "neuralstack",
-      "name": "NeuralStack",
-      "category": "FastAPI AI Starter Kit",
-      "positioning": "Build AI backends without rebuilding the foundation every time.",
-      "description": "A focused starting point for developers building AI-powered APIs. Spend less time repeating the setup and more time on the application you want to ship.",
-      "tags": ["Python", "FastAPI", "AI integration"],
-      "details": [
-        {"title": "Made for developers", "text": "For builders who want a practical starting point for an AI backend."},
-        {"title": "A focused foundation", "text": "A starter kit built around FastAPI, with room for your application’s own requirements."},
-        {"title": "Built by Neural Hustle", "text": "A developer product informed by hands-on work with APIs, AI integrations, and backend systems."}
-      ],
-      "gumroad_url": "https://rouanemounssif.gumroad.com/l/neuralstack",
-      "price_label": null,
-      "cover": null
-    }
-  ],
+  "github": {
+    "handle": "Rouane12",
+    "profile_url": "https://github.com/Rouane12",
+    "description": "Public repositories for the products, systems, and experiments I keep building and improving.",
+    "tags": [
+      "Software engineering",
+      "AI",
+      "Automation",
+      "Product development"
+    ],
+    "repos": [
+      {
+        "id": "github-neural-critic",
+        "name": "NeuralCritic",
+        "category": "Gaming publication platform",
+        "status": "Operating",
+        "description": "Reader experience, editorial tooling, publishing automation, search/discovery, and Supabase-backed systems.",
+        "tags": [
+          "JavaScript",
+          "Supabase",
+          "Automation"
+        ],
+        "github_url": "https://github.com/Rouane12/NeuralCritic",
+        "live_url": "https://www.neuralcritic.net/",
+        "preview": "publication"
+      },
+      {
+        "id": "github-pdfbright",
+        "name": "pdfbright",
+        "category": "PDF diagnostics & repair",
+        "status": "In development",
+        "description": "A focused upload → diagnose → fix → validate workflow for messy PDFs, built as a narrow product rather than a tool directory.",
+        "tags": [
+          "Next.js",
+          "TypeScript",
+          "React"
+        ],
+        "github_url": "https://github.com/Rouane12/pdfbright",
+        "live_url": "https://pdfbright.vercel.app",
+        "preview": "document"
+      },
+      {
+        "id": "github-trafficverdict",
+        "name": "TrafficVerdict",
+        "category": "Analytics reconciliation",
+        "status": "V1 hardening",
+        "description": "Explains why GA4, Search Console, and Cloudflare disagree, then shows the evidence behind each diagnosis.",
+        "tags": [
+          "Next.js",
+          "FastAPI",
+          "PostgreSQL"
+        ],
+        "github_url": "https://github.com/Rouane12/TrafficVerdict",
+        "live_url": null,
+        "preview": "analytics"
+      }
+    ]
+  },
   "work": [
     {
       "id": "neural-critic",
@@ -25,16 +65,133 @@
       "category": "Independent product · Operating publication",
       "headline": "A publication, with a whole system behind it.",
       "description": "I build and operate a gaming publication that connects a reader-facing website with editorial tools, community features, and automated publishing.",
-      "tags": ["JavaScript", "Supabase", "Editorial tooling", "SEO", "Automation"],
+      "tags": [
+        "JavaScript",
+        "Supabase",
+        "Editorial tooling",
+        "SEO",
+        "Automation"
+      ],
       "capabilities": [
-        {"title": "Publish", "text": "Editorial studio, content management, and publication automation."},
-        {"title": "Discover", "text": "Canonical story pages, search metadata, sitemaps, RSS, and analytics."},
-        {"title": "Connect", "text": "Reader accounts, community features, and comments."}
+        {
+          "title": "Publish",
+          "text": "Editorial studio, content management, and publication automation."
+        },
+        {
+          "title": "Discover",
+          "text": "Canonical story pages, search metadata, sitemaps, RSS, and analytics."
+        },
+        {
+          "title": "Connect",
+          "text": "Reader accounts, community features, and comments."
+        }
       ],
       "links": [
-        {"label": "Explore Neural Critic", "url": "https://www.neuralcritic.net/", "primary": true},
-        {"label": "View GitHub", "url": "https://github.com/Rouane12/NeuralCritic"}
+        {
+          "label": "Explore Neural Critic",
+          "url": "https://www.neuralcritic.net/",
+          "primary": true
+        },
+        {
+          "label": "View GitHub",
+          "url": "https://github.com/Rouane12/NeuralCritic"
+        }
       ]
+    },
+    {
+      "id": "pdfbright",
+      "layout": "project",
+      "name": "PDFbright",
+      "category": "Current product · PDF diagnostics",
+      "status": "In development",
+      "description": "A focused PDF cleanup product that diagnoses document problems before applying targeted fixes.",
+      "tags": [
+        "Next.js",
+        "TypeScript",
+        "React",
+        "Document processing"
+      ],
+      "links": [
+        {
+          "label": "Open preview",
+          "url": "https://pdfbright.vercel.app",
+          "primary": true
+        },
+        {
+          "label": "View GitHub",
+          "url": "https://github.com/Rouane12/pdfbright"
+        }
+      ]
+    },
+    {
+      "id": "trafficverdict",
+      "layout": "project",
+      "name": "TrafficVerdict",
+      "category": "Current product · Analytics",
+      "status": "V1 hardening",
+      "description": "Reconciles GA4, Search Console, and Cloudflare data with evidence-backed explanations instead of another generic dashboard.",
+      "tags": [
+        "Next.js",
+        "FastAPI",
+        "PostgreSQL",
+        "Analytics"
+      ],
+      "links": [
+        {
+          "label": "View GitHub",
+          "url": "https://github.com/Rouane12/TrafficVerdict"
+        }
+      ]
+    },
+    {
+      "id": "terminalia",
+      "layout": "project",
+      "name": "Terminalia",
+      "category": "Current product · Creative software",
+      "status": "Private build",
+      "description": "A browser-based studio for creating and performing cinematic fictional computer scenes across multiple environments.",
+      "tags": [
+        "Next.js",
+        "TypeScript",
+        "Interactive UI",
+        "Web Audio"
+      ],
+      "links": []
+    },
+    {
+      "id": "copyrail",
+      "layout": "project",
+      "name": "CopyRail",
+      "category": "Current product · Brand QA",
+      "status": "Foundation",
+      "description": "A pre-publish quality layer that checks drafts against brand voice, terminology, and writing rules before content ships.",
+      "tags": [
+        "Next.js",
+        "TypeScript",
+        "Neon",
+        "Drizzle"
+      ],
+      "links": [
+        {
+          "label": "Open preview",
+          "url": "https://copyrail-phi.vercel.app"
+        }
+      ]
+    },
+    {
+      "id": "runwitness",
+      "layout": "project",
+      "name": "RunWitness",
+      "category": "Current product · Automation accountability",
+      "status": "Foundation",
+      "description": "Turns workflow evidence into readable run receipts and verifies whether the expected business outcome was actually proven.",
+      "tags": [
+        "FastAPI",
+        "Next.js",
+        "PostgreSQL",
+        "RBAC"
+      ],
+      "links": []
     },
     {
       "id": "wardrobe",
@@ -42,12 +199,24 @@
       "name": "Wardrobe AI Backend",
       "category": "Client work · AI / API engineering",
       "description": "Fashion images become structured data a product can use. I built the AI backend and API integration for a Bubble.io application.",
-      "tags": ["FastAPI", "OpenAI vision", "Structured outputs", "Bubble.io", "Railway"],
+      "tags": [
+        "FastAPI",
+        "OpenAI vision",
+        "Structured outputs",
+        "Bubble.io",
+        "Railway"
+      ],
       "capabilities": [
-        {"title": "From image to application", "text": "Image analysis, multi-image style profiles, and text generation exposed through API endpoints."}
+        {
+          "title": "From image to application",
+          "text": "Image analysis, multi-image style profiles, and text generation exposed through API endpoints."
+        }
       ],
       "links": [
-        {"label": "Discuss a similar integration", "url": "#contact"}
+        {
+          "label": "Discuss a similar integration",
+          "url": "#contact"
+        }
       ]
     },
     {
@@ -56,23 +225,43 @@
       "name": "FlowForge",
       "category": "Personal project · Backend engineering",
       "description": "My engineering workshop for backend architecture: developing the API structure, data models, migrations, and authentication flows behind a workflow system.",
-      "tags": ["FastAPI", "PostgreSQL", "SQLAlchemy", "Alembic"],
+      "tags": [
+        "FastAPI",
+        "PostgreSQL",
+        "SQLAlchemy",
+        "Alembic"
+      ],
       "capabilities": [
-        {"title": "Engineering in practice", "text": "An ongoing passion project exploring service boundaries, authentication, and workflow automation concepts."}
+        {
+          "title": "Engineering in practice",
+          "text": "An ongoing passion project exploring service boundaries, authentication, and workflow automation concepts."
+        }
       ],
       "links": [
-        {"label": "Talk backend architecture", "url": "#contact"}
+        {
+          "label": "Talk backend architecture",
+          "url": "#contact"
+        }
       ]
     },
     {
-      "id": "neuralstack-engineering",
-      "layout": "reference",
+      "id": "neuralstack",
+      "layout": "project",
       "name": "NeuralStack",
-      "category": "Product engineering",
-      "description": "Turning recurring backend work into a focused developer tool. The product is where that engineering becomes reusable.",
-      "tags": ["Python", "FastAPI"],
+      "category": "Developer product · FastAPI starter",
+      "status": "Release candidate",
+      "description": "A reusable FastAPI foundation for AI-powered APIs with provider abstraction, validation, reliability patterns, tests, and buyer-facing documentation.",
+      "tags": [
+        "Python",
+        "FastAPI",
+        "OpenAI",
+        "Pydantic"
+      ],
       "links": [
-        {"label": "Meet the starter kit", "url": "#neuralstack"}
+        {
+          "label": "View product",
+          "url": "https://rouanemounssif.gumroad.com/l/neuralstack"
+        }
       ]
     }
   ]
