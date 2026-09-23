@@ -32,7 +32,8 @@
   let mountedTheme = null;
   let mountToken = 0;
   let syncFrame = null;
-  let libraryPromise = null;
+  let corePromise = null;
+  const presetPromises = { dark: null, light: null };
 
   function isLightTheme() {
     return root.classList.contains('light') || body.getAttribute('data-theme') === 'light';
@@ -69,7 +70,12 @@
     if (ready()) return Promise.resolve();
 
     const absolute = new URL(src, document.baseURI).href;
-    const existing = [...document.scripts].find((script) => script.src === absolute);
+    let existing = [...document.scripts].find((script) => script.src === absolute);
+
+    if (existing?.dataset.neuralLoadState === 'error') {
+      existing.remove();
+      existing = null;
+    }
 
     if (existing) {
       return new Promise((resolve, reject) => {
@@ -77,8 +83,19 @@
           resolve();
           return;
         }
-        existing.addEventListener('load', resolve, { once: true });
-        existing.addEventListener('error', reject, { once: true });
+
+        const onLoad = () => {
+          existing.dataset.neuralLoadState = 'loaded';
+          ready() ? resolve() : reject(new Error(`Loaded ${src}, but its API is unavailable.`));
+        };
+        const onError = () => {
+          existing.dataset.neuralLoadState = 'error';
+          existing.remove();
+          reject(new Error(`Failed to load ${src}`));
+        };
+
+        existing.addEventListener('load', onLoad, { once: true });
+        existing.addEventListener('error', onError, { once: true });
       });
     }
 
@@ -87,8 +104,19 @@
       script.src = src;
       script.async = true;
       script.crossOrigin = 'anonymous';
-      script.addEventListener('load', resolve, { once: true });
-      script.addEventListener('error', reject, { once: true });
+      script.dataset.neuralLoadState = 'loading';
+
+      script.addEventListener('load', () => {
+        script.dataset.neuralLoadState = 'loaded';
+        ready() ? resolve() : reject(new Error(`Loaded ${src}, but its API is unavailable.`));
+      }, { once: true });
+
+      script.addEventListener('error', () => {
+        script.dataset.neuralLoadState = 'error';
+        script.remove();
+        reject(new Error(`Failed to load ${src}`));
+      }, { once: true });
+
       document.head.appendChild(script);
     });
   }
@@ -109,25 +137,40 @@
     throw lastError || new Error('Unable to load the atmosphere runtime.');
   }
 
-  function ensureLibrary() {
-    if (libraryPromise) return libraryPromise;
+  function ensureCore() {
+    if (corePromise) return corePromise;
 
-    libraryPromise = (async () => {
+    corePromise = (async () => {
       await loadScriptWithFallback(ENGINE_URLS, () => Boolean(window.tsParticles?.load));
       await loadScriptWithFallback(SLIM_URLS, () => typeof window.loadSlim === 'function');
       await window.loadSlim(window.tsParticles);
-
-      await loadScriptWithFallback(STARS_URLS, () => typeof window.loadStarsPreset === 'function');
-      await window.loadStarsPreset(window.tsParticles);
-
-      await loadScriptWithFallback(LINKS_URLS, () => typeof window.loadLinksPreset === 'function');
-      await window.loadLinksPreset(window.tsParticles);
     })().catch((error) => {
-      libraryPromise = null;
+      corePromise = null;
       throw error;
     });
 
-    return libraryPromise;
+    return corePromise;
+  }
+
+  function ensurePreset(theme) {
+    if (presetPromises[theme]) return presetPromises[theme];
+
+    presetPromises[theme] = (async () => {
+      await ensureCore();
+
+      if (theme === 'light') {
+        await loadScriptWithFallback(LINKS_URLS, () => typeof window.loadLinksPreset === 'function');
+        await window.loadLinksPreset(window.tsParticles);
+      } else {
+        await loadScriptWithFallback(STARS_URLS, () => typeof window.loadStarsPreset === 'function');
+        await window.loadStarsPreset(window.tsParticles);
+      }
+    })().catch((error) => {
+      presetPromises[theme] = null;
+      throw error;
+    });
+
+    return presetPromises[theme];
   }
 
   function baseInteractivity() {
@@ -240,7 +283,7 @@
     setLayerState(theme, 'loading');
 
     try {
-      await ensureLibrary();
+      await ensurePreset(theme);
       if (token !== mountToken) return;
 
       await destroyParticles();
