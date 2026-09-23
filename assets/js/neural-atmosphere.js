@@ -1,13 +1,10 @@
-// Continuous Neural Hustle atmosphere.
-// Dark mode uses the official tsParticles Stars preset. Light mode leaves the
-// global particle canvas idle so the hero can use the restored Vanta NET effect.
+// Neural Hustle atmosphere.
+// One tsParticles engine powers both themes:
+// - dark: a high-contrast Stars preset on near-black
+// - light: a custom sparse neural-link field
 (() => {
   'use strict';
 
-  // Keep all tsParticles packages on the same pinned version. The engine alone
-  // does not include the runtime features required by presets, so Stars must be
-  // registered after the slim bundle. Each package also gets a second CDN path
-  // so a transient provider failure does not silently remove the atmosphere.
   const ENGINE_URLS = [
     'https://cdn.jsdelivr.net/npm/@tsparticles/engine@4.4.0/tsparticles.engine.min.js',
     'https://unpkg.com/@tsparticles/engine@4.4.0/tsparticles.engine.min.js'
@@ -20,16 +17,17 @@
     'https://cdn.jsdelivr.net/npm/@tsparticles/preset-stars@4.4.0/tsparticles.preset.stars.bundle.min.js',
     'https://unpkg.com/@tsparticles/preset-stars@4.4.0/tsparticles.preset.stars.bundle.min.js'
   ];
-  const LAYER_ID = 'neural-atmosphere';
 
+  const LAYER_ID = 'neural-atmosphere';
   const root = document.documentElement;
   const body = document.body;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const compactViewport = window.matchMedia('(max-width: 720px)');
 
   let particleContainer = null;
-  let currentTheme = null;
+  let mountedTheme = null;
   let mountToken = 0;
-  let themeFrame = null;
+  let syncFrame = null;
   let libraryPromise = null;
 
   function isLightTheme() {
@@ -91,7 +89,7 @@
       }
     }
 
-    throw lastError || new Error('Unable to load required animation library.');
+    throw lastError || new Error('Unable to load the atmosphere runtime.');
   }
 
   function ensureLibrary() {
@@ -111,89 +109,141 @@
     return libraryPromise;
   }
 
-  // Keep the official Stars preset appearance intact. We override only the
-  // canvas ownership/background so the preset can live inside our fixed layer.
-  function particleOptions() {
+  function baseInteractivity() {
+    return {
+      events: {
+        onHover: { enable: false },
+        onClick: { enable: false },
+        resize: { enable: true }
+      }
+    };
+  }
+
+  function darkOptions() {
     const reduced = reducedMotion.matches;
+    const compact = compactViewport.matches;
 
     return {
       preset: 'stars',
       fullScreen: { enable: false },
       background: { color: { value: 'transparent' } },
-      fpsLimit: reduced ? 20 : 32,
+      fpsLimit: reduced ? 18 : 30,
       detectRetina: false,
-      interactivity: {
-        events: {
-          onHover: { enable: false },
-          onClick: { enable: false },
-          resize: { enable: true }
+      interactivity: baseInteractivity(),
+      particles: {
+        number: { value: compact ? 46 : 68 },
+        color: { value: ['#ffffff', '#edf4fb', '#cbd9e6'] },
+        opacity: {
+          value: { min: 0.55, max: 1 },
+          animation: { enable: !reduced, speed: 0.35, sync: false }
+        },
+        size: { value: { min: 0.55, max: 1.7 } },
+        move: {
+          enable: !reduced,
+          speed: 0.08,
+          direction: 'none',
+          random: true,
+          straight: false,
+          outModes: { default: 'out' }
         }
-      },
-      ...(reduced ? {
-        particles: {
-          number: { value: 42 },
-          move: { enable: true, speed: 0.18 },
-          opacity: { value: { min: 0.35, max: 0.85 }, animation: { enable: false } }
-        }
-      } : {})
+      }
     };
+  }
+
+  function lightOptions() {
+    const reduced = reducedMotion.matches;
+    const compact = compactViewport.matches;
+
+    return {
+      fullScreen: { enable: false },
+      background: { color: { value: 'transparent' } },
+      fpsLimit: reduced ? 18 : 30,
+      detectRetina: false,
+      interactivity: baseInteractivity(),
+      particles: {
+        number: { value: compact ? 20 : 32 },
+        color: { value: ['#2f858b', '#607f9b', '#7b6bad'] },
+        links: {
+          enable: true,
+          distance: compact ? 118 : 148,
+          color: '#70889d',
+          opacity: 0.18,
+          width: 1
+        },
+        move: {
+          enable: !reduced,
+          speed: compact ? 0.11 : 0.15,
+          direction: 'none',
+          random: false,
+          straight: false,
+          outModes: { default: 'out' }
+        },
+        opacity: { value: { min: 0.34, max: 0.62 } },
+        shape: { type: 'circle' },
+        size: { value: { min: 1.05, max: 2.15 } }
+      }
+    };
+  }
+
+  function optionsForTheme(theme) {
+    return theme === 'light' ? lightOptions() : darkOptions();
   }
 
   async function destroyParticles() {
     if (!particleContainer) return;
+
     try {
       particleContainer.destroy();
     } catch (_) {
-      // A fresh instance can still be created in the same layer.
+      // A new instance can still be created in the same layer.
     }
+
     particleContainer = null;
   }
 
-  function useStaticFallback(state = 'static') {
-    ensureLayer().dataset.motion = state;
+  function useStaticFallback(theme) {
+    const layer = ensureLayer();
+    layer.dataset.theme = theme;
+    layer.dataset.motion = 'static';
   }
 
   async function mountParticles() {
     const token = ++mountToken;
     const layer = ensureLayer();
-    currentTheme = isLightTheme() ? 'light' : 'dark';
+    const theme = isLightTheme() ? 'light' : 'dark';
 
-    // Light mode intentionally has no global Stars canvas. The hero-only Vanta
-    // module owns motion there.
-    if (isLightTheme()) {
-      await destroyParticles();
-      useStaticFallback('light');
-      return;
-    }
-
+    mountedTheme = theme;
+    layer.dataset.theme = theme;
     layer.dataset.motion = reducedMotion.matches ? 'reduced' : 'animated';
 
     try {
       await ensureLibrary();
-      if (token !== mountToken || isLightTheme()) return;
+      if (token !== mountToken) return;
 
       await destroyParticles();
-      if (token !== mountToken || isLightTheme()) return;
+      if (token !== mountToken) return;
 
       particleContainer = await window.tsParticles.load({
         id: LAYER_ID,
-        options: particleOptions()
+        options: optionsForTheme(theme)
       });
 
-      if (token !== mountToken || isLightTheme()) {
+      if (token !== mountToken || theme !== (isLightTheme() ? 'light' : 'dark')) {
         await destroyParticles();
         return;
       }
 
       syncPauseState();
     } catch (error) {
-      useStaticFallback();
+      await destroyParticles();
+      useStaticFallback(theme);
       console.warn('Neural Hustle atmosphere is using its static fallback.', error);
     }
   }
 
   function syncPauseState() {
     if (!particleContainer) return;
+
     const shouldPause = document.hidden || profileIsOpen();
     try {
       if (shouldPause) particleContainer.pause?.();
@@ -205,17 +255,20 @@
 
   function syncTheme() {
     const nextTheme = isLightTheme() ? 'light' : 'dark';
-    if (nextTheme === currentTheme) {
+
+    if (nextTheme === mountedTheme && particleContainer) {
       syncPauseState();
       return;
     }
+
     mountParticles();
   }
 
-  function scheduleThemeSync() {
-    if (themeFrame !== null) return;
-    themeFrame = requestAnimationFrame(() => {
-      themeFrame = null;
+  function scheduleSync() {
+    if (syncFrame !== null) return;
+
+    syncFrame = requestAnimationFrame(() => {
+      syncFrame = null;
       syncTheme();
       syncPauseState();
     });
@@ -223,16 +276,15 @@
 
   function bindLifecycle() {
     document.addEventListener('visibilitychange', syncPauseState);
-    window.addEventListener('pageshow', scheduleThemeSync);
+    window.addEventListener('pageshow', scheduleSync);
     window.addEventListener('online', () => {
-      if (!isLightTheme() && !particleContainer) mountParticles();
+      if (!particleContainer) mountParticles();
     });
 
-    reducedMotion.addEventListener?.('change', () => {
-      mountParticles();
-    });
+    reducedMotion.addEventListener?.('change', mountParticles);
+    compactViewport.addEventListener?.('change', mountParticles);
 
-    const observer = new MutationObserver(scheduleThemeSync);
+    const observer = new MutationObserver(scheduleSync);
     observer.observe(root, { attributes: true, attributeFilter: ['class'] });
     observer.observe(body, { attributes: true, attributeFilter: ['data-theme'] });
   }
@@ -240,15 +292,4 @@
   ensureLayer();
   bindLifecycle();
   mountParticles();
-})();
-
-// The light-theme Vanta implementation is isolated from the dark Stars path.
-// Its third-party libraries are loaded lazily only when light mode is active.
-(() => {
-  if (document.querySelector('script[data-neural-light-vanta]')) return;
-  const script = document.createElement('script');
-  script.src = 'assets/js/light-vanta.js?v=20260923d';
-  script.defer = true;
-  script.dataset.neuralLightVanta = 'true';
-  document.head.appendChild(script);
 })();
