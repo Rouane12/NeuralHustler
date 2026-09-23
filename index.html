@@ -410,7 +410,7 @@
     </footer>
 
     <!-- JS SECTION -->
-    <script src="assets/js/neural-atmosphere.js?v=20260923c" defer></script>
+    <script src="assets/js/neural-atmosphere.js?v=20260923d" defer></script>
     <script src="assets/js/contact-attachments.js" defer></script>
     <script>
       // Mobile nav toggle
@@ -905,93 +905,157 @@
       });
     </script>
 
-    <!-- Draggable D-ID Agent -->
+    <!-- AI assistant: opt-in load so the third-party avatar runtime does not
+         compete with the portfolio animations during initial page load. -->
+    <button
+      id="didAgentLauncher"
+      type="button"
+      aria-label="Open AI assistant"
+      title="Open AI assistant"
+      style="
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        z-index: 9999;
+        width: 52px;
+        height: 52px;
+        border-radius: 999px;
+        border: 1px solid rgba(123, 92, 255, 0.42);
+        background: rgba(12, 15, 24, 0.9);
+        color: #f4f7ff;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
+        cursor: pointer;
+        font: 600 12px/1 'Space Grotesk', sans-serif;
+        backdrop-filter: blur(10px);
+      "
+    >AI</button>
     <script>
-    function makeDraggable() {
-    const agent = document.querySelector('did-agent');
-    if (!agent) { setTimeout(makeDraggable, 500); return; }
+      (() => {
+        const launcher = document.getElementById("didAgentLauncher");
+        if (!launcher) return;
 
-    const handle = document.createElement('div');
-    handle.style.cssText = `
-      position: fixed;
-      width: 60px;
-      height: 60px;
-      bottom: 20px;
-      right: 20px;
-      z-index: 10000;
-      cursor: grab;
-      border-radius: 50%;
-      background: rgba(123, 92, 255, 0.3);
-      border: 2px dashed rgba(123, 92, 255, 0.6);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      user-select: none;
-      pointer-events: all;
-    `;
-    handle.innerHTML = '✥';
-    document.body.appendChild(handle);
+        let loading = false;
+        let dragHandle = null;
 
-    let isDragging = false;
-    let startX, startY, offsetX, offsetY;
+        function attachDrag(agent) {
+          if (!agent || dragHandle) return;
 
-    handle.addEventListener('mousedown', (e) => {
-      startX = e.clientX;
-      startY = e.clientY;
-      offsetX = e.clientX - handle.getBoundingClientRect().left;
-      offsetY = e.clientY - handle.getBoundingClientRect().top;
-      handle.style.cursor = 'grabbing';
-      e.preventDefault();
-      e.stopPropagation();
+          dragHandle = document.createElement("button");
+          dragHandle.type = "button";
+          dragHandle.setAttribute("aria-label", "Drag AI assistant");
+          dragHandle.title = "Drag AI assistant";
+          dragHandle.textContent = "✥";
+          dragHandle.style.cssText = [
+            "position:fixed",
+            "width:38px",
+            "height:38px",
+            "right:16px",
+            "bottom:82px",
+            "z-index:10000",
+            "cursor:grab",
+            "border-radius:50%",
+            "background:rgba(12,15,24,.82)",
+            "color:#f4f7ff",
+            "border:1px solid rgba(123,92,255,.4)",
+            "display:grid",
+            "place-items:center",
+            "user-select:none",
+            "touch-action:none"
+          ].join(";");
 
-      function onMouseMove(e) {
-        const dx = e.clientX - startX;
-        const dy = e.clientY - startY;
-        if (!isDragging && (Math.abs(dx) > 3 || Math.abs(dy) > 3)) {
-          isDragging = true;
+          document.body.appendChild(dragHandle);
+
+          let dragging = false;
+          let offsetX = 0;
+          let offsetY = 0;
+
+          const move = (event) => {
+            if (!dragging) return;
+            const x = Math.min(Math.max(0, event.clientX - offsetX), window.innerWidth - 38);
+            const y = Math.min(Math.max(0, event.clientY - offsetY), window.innerHeight - 38);
+
+            dragHandle.style.left = x + "px";
+            dragHandle.style.top = y + "px";
+            dragHandle.style.right = "auto";
+            dragHandle.style.bottom = "auto";
+
+            agent.style.position = "fixed";
+            agent.style.left = Math.max(0, x - 12) + "px";
+            agent.style.top = Math.max(0, y - 12) + "px";
+            agent.style.right = "auto";
+            agent.style.bottom = "auto";
+          };
+
+          const stop = () => {
+            dragging = false;
+            dragHandle.style.cursor = "grab";
+            window.removeEventListener("pointermove", move);
+            window.removeEventListener("pointerup", stop);
+          };
+
+          dragHandle.addEventListener("pointerdown", (event) => {
+            const rect = dragHandle.getBoundingClientRect();
+            offsetX = event.clientX - rect.left;
+            offsetY = event.clientY - rect.top;
+            dragging = true;
+            dragHandle.style.cursor = "grabbing";
+            dragHandle.setPointerCapture?.(event.pointerId);
+            window.addEventListener("pointermove", move, { passive: true });
+            window.addEventListener("pointerup", stop, { once: true });
+            event.preventDefault();
+          });
         }
-        if (!isDragging) return;
 
-        const x = e.clientX - offsetX;
-        const y = e.clientY - offsetY;
-        handle.style.left   = `${x}px`;
-        handle.style.top    = `${y}px`;
-        handle.style.right  = 'auto';
-        handle.style.bottom = 'auto';
-        agent.style.position = 'fixed';
-        agent.style.left    = `${x - 10}px`;
-        agent.style.top     = `${y - 10}px`;
-        agent.style.right   = 'auto';
-        agent.style.bottom  = 'auto';
-      }
+        function waitForAgent() {
+          const existing = document.querySelector("did-agent");
+          if (existing) {
+            launcher.hidden = true;
+            attachDrag(existing);
+            return;
+          }
 
-      function onMouseUp() {
-        isDragging = false;
-        handle.style.cursor = 'grab';
-        document.removeEventListener('mousemove', onMouseMove);
-        document.removeEventListener('mouseup', onMouseUp);
-      }
+          const observer = new MutationObserver(() => {
+            const agent = document.querySelector("did-agent");
+            if (!agent) return;
+            observer.disconnect();
+            launcher.hidden = true;
+            attachDrag(agent);
+          });
 
-      document.addEventListener('mousemove', onMouseMove);
-      document.addEventListener('mouseup', onMouseUp);
-    });
-  }
+          observer.observe(document.body, { childList: true, subtree: true });
+          window.setTimeout(() => observer.disconnect(), 15000);
+        }
 
-  makeDraggable();
-</script>
+        function loadAgent() {
+          if (loading) return;
+          loading = true;
+          launcher.disabled = true;
+          launcher.textContent = "…";
 
-<!-- D-ID AI Copilot Script -->
-<script
-  type="module"
-  src="https://agent.d-id.com/v2/index.js"
-  data-mode="fabio"
-  data-client-key="Z29vZ2xlLW9hdXRoMnwxMTQ2NTU1OTc0MjM1NDYwMDIwMTc6clIyM0lMMHFjNjRiLVN5SzNMTW91"
-  data-agent-id="v2_agt_7IN1Ch8z"
-  data-name="did-agent"
-  data-monitor="true"
-  data-orientation="horizontal"
-  data-position="right"
-  ></script>
+          const script = document.createElement("script");
+          script.type = "module";
+          script.src = "https://agent.d-id.com/v2/index.js";
+          script.dataset.mode = "fabio";
+          script.dataset.clientKey = "Z29vZ2xlLW9hdXRoMnwxMTQ2NTU1OTc0MjM1NDYwMDIwMTc6clIyM0lMMHFjNjRiLVN5SzNMTW91";
+          script.dataset.agentId = "v2_agt_7IN1Ch8z";
+          script.dataset.name = "did-agent";
+          script.dataset.monitor = "true";
+          script.dataset.orientation = "horizontal";
+          script.dataset.position = "right";
+
+          script.addEventListener("load", waitForAgent, { once: true });
+          script.addEventListener("error", () => {
+            loading = false;
+            launcher.disabled = false;
+            launcher.textContent = "AI";
+            launcher.title = "Could not load assistant. Try again.";
+          }, { once: true });
+
+          document.body.appendChild(script);
+        }
+
+        launcher.addEventListener("click", loadAgent);
+      })();
+    </script>
   </body>
 </html>
