@@ -4,8 +4,22 @@
 (() => {
   'use strict';
 
-  const ENGINE_URL = 'https://cdn.jsdelivr.net/npm/@tsparticles/engine@4.4.0/tsparticles.engine.min.js';
-  const STARS_URL = 'https://cdn.jsdelivr.net/npm/@tsparticles/preset-stars@4.4.0/tsparticles.preset.stars.bundle.min.js';
+  // Keep all tsParticles packages on the same pinned version. The engine alone
+  // does not include the runtime features required by presets, so Stars must be
+  // registered after the slim bundle. Each package also gets a second CDN path
+  // so a transient provider failure does not silently remove the atmosphere.
+  const ENGINE_URLS = [
+    'https://cdn.jsdelivr.net/npm/@tsparticles/engine@4.4.0/tsparticles.engine.min.js',
+    'https://unpkg.com/@tsparticles/engine@4.4.0/tsparticles.engine.min.js'
+  ];
+  const SLIM_URLS = [
+    'https://cdn.jsdelivr.net/npm/@tsparticles/slim@4.4.0/tsparticles.slim.bundle.min.js',
+    'https://unpkg.com/@tsparticles/slim@4.4.0/tsparticles.slim.bundle.min.js'
+  ];
+  const STARS_URLS = [
+    'https://cdn.jsdelivr.net/npm/@tsparticles/preset-stars@4.4.0/tsparticles.preset.stars.bundle.min.js',
+    'https://unpkg.com/@tsparticles/preset-stars@4.4.0/tsparticles.preset.stars.bundle.min.js'
+  ];
   const LAYER_ID = 'neural-atmosphere';
 
   const root = document.documentElement;
@@ -70,12 +84,30 @@
     });
   }
 
+  async function loadScriptWithFallback(urls, ready) {
+    if (ready()) return;
+
+    let lastError;
+    for (const url of urls) {
+      try {
+        await loadScriptOnce(url, ready);
+        if (ready()) return;
+      } catch (error) {
+        lastError = error;
+      }
+    }
+
+    throw lastError || new Error('Unable to load required animation library.');
+  }
+
   function ensureLibrary() {
     if (libraryPromise) return libraryPromise;
 
     libraryPromise = (async () => {
-      await loadScriptOnce(ENGINE_URL, () => Boolean(window.tsParticles));
-      await loadScriptOnce(STARS_URL, () => typeof window.loadStarsPreset === 'function');
+      await loadScriptWithFallback(ENGINE_URLS, () => Boolean(window.tsParticles?.load));
+      await loadScriptWithFallback(SLIM_URLS, () => typeof window.loadSlim === 'function');
+      await window.loadSlim(window.tsParticles);
+      await loadScriptWithFallback(STARS_URLS, () => typeof window.loadStarsPreset === 'function');
       await window.loadStarsPreset(window.tsParticles);
     })().catch((error) => {
       libraryPromise = null;
@@ -235,6 +267,10 @@
     }, { passive: true });
 
     document.addEventListener('visibilitychange', syncPauseState);
+    window.addEventListener('pageshow', scheduleThemeSync);
+    window.addEventListener('online', () => {
+      if (!isLightTheme() && !particleContainer && !reducedMotion.matches) mountParticles();
+    });
 
     reducedMotion.addEventListener?.('change', () => {
       resetPointer();
