@@ -25,17 +25,11 @@
   const root = document.documentElement;
   const body = document.body;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const precisePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
 
   let particleContainer = null;
   let currentTheme = null;
   let mountToken = 0;
-  let pointerFrame = null;
   let themeFrame = null;
-  let pointerX = 0;
-  let pointerY = 0;
-  let targetPointerX = 0;
-  let targetPointerY = 0;
   let libraryPromise = null;
 
   function isLightTheme() {
@@ -120,10 +114,28 @@
   // Keep the official Stars preset appearance intact. We override only the
   // canvas ownership/background so the preset can live inside our fixed layer.
   function particleOptions() {
+    const reduced = reducedMotion.matches;
+
     return {
       preset: 'stars',
       fullScreen: { enable: false },
-      background: { color: { value: 'transparent' } }
+      background: { color: { value: 'transparent' } },
+      fpsLimit: reduced ? 24 : 42,
+      detectRetina: true,
+      interactivity: {
+        events: {
+          onHover: { enable: false },
+          onClick: { enable: false },
+          resize: { enable: true }
+        }
+      },
+      ...(reduced ? {
+        particles: {
+          number: { value: 42 },
+          move: { enable: true, speed: 0.18 },
+          opacity: { value: { min: 0.35, max: 0.85 }, animation: { enable: false } }
+        }
+      } : {})
     };
   }
 
@@ -147,21 +159,14 @@
     currentTheme = isLightTheme() ? 'light' : 'dark';
 
     // Light mode intentionally has no global Stars canvas. The hero-only Vanta
-    // module owns motion there. Reduced-motion keeps the static fallback only.
+    // module owns motion there.
     if (isLightTheme()) {
       await destroyParticles();
       useStaticFallback('light');
-      resetPointer();
       return;
     }
 
-    if (reducedMotion.matches) {
-      await destroyParticles();
-      useStaticFallback();
-      return;
-    }
-
-    layer.dataset.motion = 'animated';
+    layer.dataset.motion = reducedMotion.matches ? 'reduced' : 'animated';
 
     try {
       await ensureLibrary();
@@ -188,7 +193,7 @@
   }
 
   function syncPauseState() {
-    if (!particleContainer || reducedMotion.matches) return;
+    if (!particleContainer) return;
     const shouldPause = document.hidden || profileIsOpen();
     try {
       if (shouldPause) particleContainer.pause?.();
@@ -213,71 +218,19 @@
       themeFrame = null;
       syncTheme();
       syncPauseState();
-      if (profileIsOpen() || isLightTheme()) resetPointer();
     });
-  }
-
-  function animatePointer() {
-    pointerX += (targetPointerX - pointerX) * 0.075;
-    pointerY += (targetPointerY - pointerY) * 0.075;
-
-    const layer = document.getElementById(LAYER_ID);
-    if (layer) {
-      layer.style.setProperty('--atmosphere-x', `${pointerX.toFixed(2)}px`);
-      layer.style.setProperty('--atmosphere-y', `${pointerY.toFixed(2)}px`);
-    }
-
-    const moving =
-      Math.abs(targetPointerX - pointerX) > 0.02 ||
-      Math.abs(targetPointerY - pointerY) > 0.02;
-
-    if (moving) pointerFrame = requestAnimationFrame(animatePointer);
-    else pointerFrame = null;
-  }
-
-  function requestPointerFrame() {
-    if (!pointerFrame) pointerFrame = requestAnimationFrame(animatePointer);
-  }
-
-  function handlePointerMove(event) {
-    if (
-      isLightTheme() ||
-      !precisePointer.matches ||
-      reducedMotion.matches ||
-      profileIsOpen()
-    ) return;
-
-    const normalizedX = event.clientX / Math.max(window.innerWidth, 1) - 0.5;
-    const normalizedY = event.clientY / Math.max(window.innerHeight, 1) - 0.5;
-    targetPointerX = normalizedX * -5;
-    targetPointerY = normalizedY * -4;
-    requestPointerFrame();
-  }
-
-  function resetPointer() {
-    targetPointerX = 0;
-    targetPointerY = 0;
-    requestPointerFrame();
   }
 
   function bindLifecycle() {
-    window.addEventListener('pointermove', handlePointerMove, { passive: true });
-    window.addEventListener('pointerout', (event) => {
-      if (!event.relatedTarget) resetPointer();
-    }, { passive: true });
-
     document.addEventListener('visibilitychange', syncPauseState);
     window.addEventListener('pageshow', scheduleThemeSync);
     window.addEventListener('online', () => {
-      if (!isLightTheme() && !particleContainer && !reducedMotion.matches) mountParticles();
+      if (!isLightTheme() && !particleContainer) mountParticles();
     });
 
     reducedMotion.addEventListener?.('change', () => {
-      resetPointer();
       mountParticles();
     });
-
-    precisePointer.addEventListener?.('change', resetPointer);
 
     const observer = new MutationObserver(scheduleThemeSync);
     observer.observe(root, { attributes: true, attributeFilter: ['class'] });
@@ -294,7 +247,7 @@
 (() => {
   if (document.querySelector('script[data-neural-light-vanta]')) return;
   const script = document.createElement('script');
-  script.src = 'assets/js/light-vanta.js';
+  script.src = 'assets/js/light-vanta.js?v=20260923c';
   script.defer = true;
   script.dataset.neuralLightVanta = 'true';
   document.head.appendChild(script);
