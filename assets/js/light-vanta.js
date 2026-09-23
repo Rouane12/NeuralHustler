@@ -113,11 +113,12 @@
   function syncControls() {
     if (!effect || !isLightTheme()) return;
     const paused = profileIsOpen() || document.hidden;
+    const reduced = reducedMotion.matches;
 
     try {
       effect.setOptions({
-        mouseControls: !paused,
-        touchControls: !paused
+        mouseControls: !paused && !reduced,
+        touchControls: !paused && !reduced
       });
     } catch (_) {
       // Input control is an enhancement; the animation can keep rendering.
@@ -138,9 +139,8 @@
   async function mountEffect() {
     const token = ++mountToken;
 
-    if (!heroTarget || !isLightTheme() || reducedMotion.matches) {
+    if (!heroTarget || !isLightTheme()) {
       destroyEffect();
-      if (heroTarget && isLightTheme()) heroTarget.classList.add('vanta-light-fallback');
       return;
     }
 
@@ -156,20 +156,21 @@
       await ensureLibrary();
       if (token !== mountToken || !isLightTheme() || reducedMotion.matches) return;
 
+      const reduced = reducedMotion.matches;
       effect = window.VANTA.NET({
         el: '#hero-vanta',
-        mouseControls: !profileIsOpen(),
-        touchControls: !profileIsOpen(),
+        mouseControls: !profileIsOpen() && !reduced,
+        touchControls: !profileIsOpen() && !reduced,
         minHeight: heroHeight(),
         minWidth: 200.0,
-        scale: 1.4,
-        scaleMobile: 1.8,
+        scale: 1.25,
+        scaleMobile: 1.5,
         color: 0x55bfc3,
         backgroundColor: 0xf3f7fc,
         backgroundAlpha: 1,
-        points: 10.0,
-        maxDistance: 21.0,
-        spacing: 16.0
+        points: reduced ? 6.0 : 9.0,
+        maxDistance: reduced ? 16.0 : 20.0,
+        spacing: reduced ? 19.0 : 17.0
       });
 
       if (token !== mountToken || !isLightTheme()) {
@@ -198,12 +199,6 @@
       return;
     }
 
-    if (reducedMotion.matches) {
-      destroyEffect();
-      heroTarget.classList.add('vanta-light-fallback');
-      return;
-    }
-
     mountEffect();
   }
 
@@ -229,7 +224,7 @@
   window.addEventListener('resize', resizeEffect, { passive: true });
   window.addEventListener('pageshow', syncTheme);
   window.addEventListener('online', () => {
-    if (isLightTheme() && !effect && !reducedMotion.matches) mountEffect();
+    if (isLightTheme() && !effect) mountEffect();
   });
   document.addEventListener('visibilitychange', syncControls);
   reducedMotion.addEventListener?.('change', syncTheme);
