@@ -1833,17 +1833,19 @@ html.light .youtube-btn:focus-visible svg {
     scroll-behavior: auto;
   }
 
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
+  /*
+   * Reduced motion should soften ambient/looping effects, not make core UI
+   * interactions look broken. Profile expansion and ordinary hover/focus
+   * transitions remain short and usable; the atmosphere modules independently
+   * lower their motion intensity when this preference is active.
+   */
+  .hero-highlight div,
+  .floating-card {
+    animation: none !important;
   }
 
-  #hero-vanta canvas {
-    display: none;
+  .fade-in-up {
+    transform: none !important;
   }
 }
 
