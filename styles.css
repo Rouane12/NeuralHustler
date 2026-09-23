@@ -25,10 +25,7 @@
 body {
   font-family: "Space Grotesk", system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", sans-serif;
-  background:
-    radial-gradient(ellipse 900px 720px at 20% 0%, rgba(123, 92, 255, 0.18), transparent 70%),
-    radial-gradient(ellipse 800px 650px at 80% 0%, rgba(47, 218, 184, 0.15), transparent 75%),
-    var(--bg);
+  background: var(--bg);
   color: var(--text);
   line-height: 1.6;
   min-height: 100vh;
@@ -71,8 +68,8 @@ textarea {
   color: var(--muted);
 }
 
-/* HERO ATMOSPHERE WRAPPER (historical id retained for compatibility) */
-#hero-vanta {
+/* HERO ATMOSPHERE WRAPPER */
+#hero-atmosphere {
   position: relative;
   overflow: hidden;
   z-index: 0;
@@ -84,11 +81,7 @@ textarea {
 /* HERO SHELL */
 .hero {
   padding: 2rem 0 2.5rem;
-  background: linear-gradient(
-    135deg,
-    rgba(11, 13, 19, 0.95),
-    rgba(5, 6, 10, 0.95)
-  );
+  background: rgba(2, 3, 6, 0.92);
   border-bottom: 1px solid var(--border);
   position: relative;
   overflow: hidden;
@@ -103,18 +96,8 @@ textarea {
 }
 
 .hero::before {
-  background:
-    radial-gradient(
-      circle at 25% 20%,
-      rgba(123, 92, 255, 0.16),
-      transparent 35%
-    ),
-    radial-gradient(
-      circle at 80% 10%,
-      rgba(47, 218, 184, 0.16),
-      transparent 38%
-    );
-  filter: blur(12px);
+  background: none;
+  filter: none;
 }
 
 .hero::after {
@@ -1538,12 +1521,8 @@ html.light body[data-theme="light"] label {
   -webkit-text-stroke: 0 !important;
 }
 
-html.light #hero-vanta {
-  background: #f3f7fc !important;
-}
-
-html.light #hero-vanta canvas {
-  opacity: 0.48;
+html.light #hero-atmosphere {
+  background: #f5f8fc !important;
 }
 
 html.light .hero {
@@ -1552,12 +1531,9 @@ html.light .hero {
 }
 
 html.light .hero::before {
-  background:
-    radial-gradient(circle at 24% 18%, var(--animation-glow-purple), transparent 34%),
-    radial-gradient(circle at 78% 12%, var(--animation-glow-cyan), transparent 38%),
-    radial-gradient(circle at 65% 80%, var(--animation-glow-teal), transparent 42%);
-  filter: blur(18px);
-  opacity: 0.65;
+  background: none;
+  filter: none;
+  opacity: 1;
 }
 
 html.light .hero::after {
