@@ -44,7 +44,7 @@
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="styles.css?v=20260923i" />
+    <link rel="stylesheet" href="styles.css?v=20260924a" />
     <link rel="stylesheet" href="studio.css?v=20260923c" />
     <link rel="stylesheet" href="assets/css/neural-atmosphere.css?v=20260923i" />
 
@@ -503,8 +503,9 @@
         if (!pointerIsOverProfileArea()) suppressHoverOpen = false;
       }
 
-      function profileDuration() {
-        return reducedProfileMotion.matches ? 180 : 460;
+      function profileDuration(kind = "open") {
+        if (reducedProfileMotion.matches) return kind === "close" ? 130 : 150;
+        return kind === "close" ? 240 : 300;
       }
 
       function setProfileBackgroundPaused(paused) {
@@ -545,28 +546,16 @@
         };
       }
 
-      function animateProfile(fromTransform, toTransform) {
+      function animateProfile(fromTransform, toTransform, kind = "open") {
         cancelProfileAnimation();
         profileAnimation = profileCard.animate(
           [{ transform: fromTransform }, { transform: toTransform }],
-          { duration: profileDuration(), easing: "cubic-bezier(0.22, 1, 0.36, 1)", fill: "both" }
-        );
-        return profileAnimation.finished;
-      }
-
-      function animateProfileGeometry(from, to) {
-        cancelProfileAnimation();
-        const frame = (rect, radius) => ({
-          left: `${rect.left}px`,
-          top: `${rect.top}px`,
-          width: `${rect.width}px`,
-          height: `${rect.height}px`,
-          borderRadius: radius,
-          transform: "none"
-        });
-        profileAnimation = profileCard.animate(
-          [frame(from.rect, from.radius), frame(to.rect, to.radius)],
-          { duration: profileDuration() + (reducedProfileMotion.matches ? 0 : 60), easing: "cubic-bezier(0.22, 1, 0.36, 1)", fill: "both" }
+          {
+            duration: profileDuration(kind),
+            easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+            fill: "both",
+            composite: "replace"
+          }
         );
         return profileAnimation.finished;
       }
@@ -637,26 +626,24 @@
         let fromTransform;
 
         if (reversingClose) {
-          const currentRect = profileCard.getBoundingClientRect();
-          const currentRadius = getComputedStyle(profileCard).borderRadius;
-          cancelProfileAnimation();
+          const currentTransform = getComputedStyle(profileCard).transform;
+          cancelProfileAnimation({ preserveCurrentStyle: true });
           profileCard.classList.remove("is-closing");
-          profileCard.removeAttribute("style");
-          const targetRect = expandedProfileLayoutRect();
           profileState = PROFILE_STATES.OPENING;
           profileDetails.setAttribute("aria-hidden", "false");
           profileDetails.removeAttribute("inert");
           try {
-            await animateProfileGeometry(
-              { rect: currentRect, radius: currentRadius },
-              { rect: targetRect, radius: getComputedStyle(profileCard).borderRadius }
+            await animateProfile(
+              currentTransform === "none" ? "translate(-50%, -50%) scale(1)" : currentTransform,
+              "translate(-50%, -50%) scale(1)",
+              "open"
             );
           } catch (_) {
             // A close may interrupt this reversal.
           } finally {
             if (transitionId !== profileTransitionId || profileState !== PROFILE_STATES.OPENING) return;
             cancelProfileAnimation();
-            profileCard.removeAttribute("style");
+            profileCard.style.removeProperty("transform");
             profileState = PROFILE_STATES.OPEN;
           }
           return;
@@ -713,21 +700,25 @@
         if (!profileCard || profileState === PROFILE_STATES.CLOSED || profileState === PROFILE_STATES.CLOSING) return;
         clearProfileHoverTimers();
         const transitionId = ++profileTransitionId;
-        const expandedRect = profileCard.getBoundingClientRect();
-        const expandedRadius = getComputedStyle(profileCard).borderRadius;
-        cancelProfileAnimation();
+
+        // Closing used to animate left/top/width/height on every frame, forcing
+        // layout and paint work. Keep the expanded card's geometry fixed and
+        // reverse the same compositor-friendly FLIP transform used for opening.
+        const currentTransform = getComputedStyle(profileCard).transform;
+        cancelProfileAnimation({ preserveCurrentStyle: true });
+        const expandedRect = expandedProfileLayoutRect();
         const measurements = measureCollapsedProfile(expandedRect);
+        const collapsedTransform = compactProfileTransform(expandedRect, measurements.collapsedRect);
+
         profileState = PROFILE_STATES.CLOSING;
         profileDetails.setAttribute("aria-hidden", "true");
         profileDetails.setAttribute("inert", "");
-        profileCard.style.position = "fixed";
-        profileCard.style.margin = "0";
-        profileCard.style.maxHeight = "none";
-        profileCard.style.overflow = "hidden";
+
         try {
-          await animateProfileGeometry(
-            { rect: measurements.expandedRect, radius: expandedRadius },
-            { rect: measurements.collapsedRect, radius: measurements.collapsedRadius }
+          await animateProfile(
+            currentTransform === "none" ? "translate(-50%, -50%) scale(1)" : currentTransform,
+            collapsedTransform,
+            "close"
           );
         } catch (_) {
           // Cleanup below also covers cancelled or rejected animations.
@@ -743,7 +734,7 @@
         if (profileState === PROFILE_STATES.OPENING || manualCloseInProgress || keyboardProfile) return;
         profileCloseTimer = window.setTimeout(() => {
           if (!keyboardProfile && !pointerInsideProfile && !profileCard.matches(":hover")) closeProfile();
-        }, 200);
+        }, 140);
       }
 
       function isProfileCloseEvent(event) {
